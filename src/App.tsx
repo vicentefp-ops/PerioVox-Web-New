@@ -862,9 +862,13 @@ export default function App() {
 
       {/* Cookie Banner */}
       {showCookieBanner && !showCookieModal && (
-        <div className="fixed bottom-4 right-4 z-50 bg-white p-4 rounded-2xl shadow-lg border border-zinc-100 flex items-center gap-4">
-          <p className="text-sm text-zinc-600">We use cookies to improve your experience.</p>
-          <button onClick={() => setShowCookieModal(true)} className="px-4 py-2 bg-sky-500 text-white rounded-full text-sm font-semibold hover:bg-sky-600">Manage</button>
+        <div className="fixed bottom-4 right-4 z-50 bg-white p-6 rounded-2xl shadow-lg border border-zinc-100 flex flex-col gap-4 max-w-sm">
+          <p className="text-sm text-zinc-600">We use cookies to improve your experience. Please choose your preferences.</p>
+          <div className="flex gap-2">
+            <button onClick={acceptAllCookies} className="px-4 py-2 bg-sky-500 text-white rounded-full text-sm font-semibold hover:bg-sky-600">Accept all</button>
+            <button onClick={declineAllCookies} className="px-4 py-2 bg-zinc-100 text-zinc-700 rounded-full text-sm font-semibold hover:bg-zinc-200">Reject all</button>
+            <button onClick={() => setShowCookieModal(true)} className="px-4 py-2 bg-white text-zinc-700 border border-zinc-200 rounded-full text-sm font-semibold hover:bg-zinc-50">Manage</button>
+          </div>
         </div>
       )}
 
