@@ -7,6 +7,7 @@ export default function App() {
   const [lang, setLang] = useState<'en' | 'es'>('en');
   const t = (path: string) => path.split('.').reduce((acc, part) => acc[part], translations[lang] as any);
   const [showCookieBanner, setShowCookieBanner] = useState(false);
+  const [showCookieModal, setShowCookieModal] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [cookieSettings, setCookieSettings] = useState({
     preferences: true,
@@ -43,6 +44,7 @@ export default function App() {
     localStorage.setItem('cookie-settings', JSON.stringify({ preferences: true, analytics: true, advertising: true }));
     setCookieSettings({ preferences: true, analytics: true, advertising: true });
     setShowCookieBanner(false);
+    setShowCookieModal(false);
   };
 
   const declineAllCookies = () => {
@@ -50,12 +52,14 @@ export default function App() {
     localStorage.setItem('cookie-settings', JSON.stringify({ preferences: false, analytics: false, advertising: false }));
     setCookieSettings({ preferences: false, analytics: false, advertising: false });
     setShowCookieBanner(false);
+    setShowCookieModal(false);
   };
 
   const savePreferences = () => {
     localStorage.setItem('cookie-consent', 'custom');
     localStorage.setItem('cookie-settings', JSON.stringify(cookieSettings));
     setShowCookieBanner(false);
+    setShowCookieModal(false);
   };
 
   const toggleSetting = (key: keyof typeof cookieSettings) => {
@@ -856,8 +860,16 @@ export default function App() {
         </div>
       </footer>
 
+      {/* Cookie Banner */}
+      {showCookieBanner && !showCookieModal && (
+        <div className="fixed bottom-4 right-4 z-50 bg-white p-4 rounded-2xl shadow-lg border border-zinc-100 flex items-center gap-4">
+          <p className="text-sm text-zinc-600">We use cookies to improve your experience.</p>
+          <button onClick={() => setShowCookieModal(true)} className="px-4 py-2 bg-sky-500 text-white rounded-full text-sm font-semibold hover:bg-sky-600">Manage</button>
+        </div>
+      )}
+
       {/* Cookie Banner Modal */}
-      {showCookieBanner && (
+      {showCookieModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/20 backdrop-blur-sm">
           <motion.div 
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -878,7 +890,7 @@ export default function App() {
                   </p>
                 </div>
                 <button 
-                  onClick={() => setShowCookieBanner(false)}
+                  onClick={() => setShowCookieModal(false)}
                   className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-zinc-400 hover:text-zinc-600 shadow-sm transition-colors flex-shrink-0"
                 >
                   <X className="w-5 h-5" />
