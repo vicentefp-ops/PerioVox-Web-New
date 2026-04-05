@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { UserMinus, Mic, Globe, Stethoscope, Users, Activity, Clock, FileWarning, Sparkles, BarChart3, Check, Facebook, Instagram, Linkedin, Cookie, X, Menu } from "lucide-react";
+import { UserMinus, Mic, Globe, Stethoscope, Users, Activity, Clock, FileWarning, Sparkles, BarChart3, Check, Facebook, Instagram, Linkedin, Cookie, X, Menu, FileSpreadsheet, MessageCircle, Code } from "lucide-react";
 import { translations } from "./translations";
 
 export default function App() {
@@ -77,6 +77,7 @@ export default function App() {
           <a href="#features" onClick={(e) => scrollToSection(e, 'features')} className="hover:text-zinc-900 transition-colors">{t('nav.features')}</a>
           <a href="#how-it-works" onClick={(e) => scrollToSection(e, 'how-it-works')} className="hover:text-zinc-900 transition-colors">{t('nav.workflow')}</a>
           <a href="#benefits" onClick={(e) => scrollToSection(e, 'benefits')} className="hover:text-zinc-900 transition-colors">{t('nav.benefits')}</a>
+          <a href="#open-api" onClick={(e) => scrollToSection(e, 'open-api')} className="hover:text-zinc-900 transition-colors">{t('nav.openApi')}</a>
           <a href="#contact" onClick={(e) => scrollToSection(e, 'contact')} className="hover:text-zinc-900 transition-colors">{t('nav.contact')}</a>
         </div>
         <div className="flex items-center gap-4">
@@ -104,6 +105,7 @@ export default function App() {
             <a href="#features" onClick={(e) => { scrollToSection(e, 'features'); setIsMobileMenuOpen(false); }} className="border-b border-zinc-100 pb-4">{t('nav.features')}</a>
             <a href="#how-it-works" onClick={(e) => { scrollToSection(e, 'how-it-works'); setIsMobileMenuOpen(false); }} className="border-b border-zinc-100 pb-4">{t('nav.workflow')}</a>
             <a href="#benefits" onClick={(e) => { scrollToSection(e, 'benefits'); setIsMobileMenuOpen(false); }} className="border-b border-zinc-100 pb-4">{t('nav.benefits')}</a>
+            <a href="#open-api" onClick={(e) => { scrollToSection(e, 'open-api'); setIsMobileMenuOpen(false); }} className="border-b border-zinc-100 pb-4">{t('nav.openApi')}</a>
             <a href="#contact" onClick={(e) => { scrollToSection(e, 'contact'); setIsMobileMenuOpen(false); }} className="border-b border-zinc-100 pb-4">{t('nav.contact')}</a>
             <a href="https://app.periovox.ai" className="text-center text-white bg-[#0A0A0A] px-4 py-3 rounded-full hover:bg-zinc-800 transition-colors mt-4">
               {t('nav.login')}
@@ -213,14 +215,25 @@ export default function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-1 bg-white border border-sky-100 rounded-[2rem] p-10 shadow-sm flex flex-col justify-center"
+            className="lg:col-span-1 bg-gradient-to-br from-white to-sky-50/30 border border-sky-100 rounded-[2.5rem] p-10 md:p-12 shadow-sm hover:shadow-xl hover:shadow-sky-500/5 transition-all duration-500 flex flex-col justify-center relative overflow-hidden group"
           >
-            <h3 className="text-3xl font-medium text-sky-900 mb-6 leading-tight">
-              {t('problem.cardTitle')}
-            </h3>
-            <p className="text-zinc-500 font-light leading-relaxed">
-              {t('problem.cardDesc')}
-            </p>
+            {/* Decorative background element */}
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-sky-100/50 rounded-full blur-3xl group-hover:bg-sky-200/50 transition-colors duration-700" />
+            
+            <div className="relative z-10">
+              <div className="mb-8 inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-sky-50 text-sky-500 border border-sky-100">
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V12C14.017 12.5523 13.5693 13 13.017 13H11.017C10.4647 13 10.017 12.5523 10.017 12V9C10.017 7.34315 11.3601 6 13.017 6H19.017C20.6738 6 22.017 7.34315 22.017 9V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM3.017 21L3.017 18C3.017 16.8954 3.91243 16 5.017 16H8.017C8.56928 16 9.017 15.5523 9.017 15V9C9.017 8.44772 8.56928 8 8.017 8H4.017C3.46472 8 3.017 8.44772 3.017 9V12C3.017 12.5523 2.56928 13 2.017 13H0.017C-0.535282 13 -1.017 12.5523 -1.017 12V9C-1.017 7.34315 0.326142 6 2.017 6H8.017C9.67386 6 11.017 7.34315 11.017 9V15C11.017 18.3137 8.33071 21 5.017 21H3.017Z" />
+                </svg>
+              </div>
+              <h3 className="text-3xl md:text-4xl font-medium text-sky-900 mb-8 leading-[1.15] tracking-tight">
+                {t('problem.cardTitle')}
+              </h3>
+              <div className="w-12 h-1 bg-sky-500/20 rounded-full mb-8" />
+              <p className="text-lg text-zinc-500 font-light leading-relaxed">
+                {t('problem.cardDesc')}
+              </p>
+            </div>
           </motion.div>
           <div className="lg:col-span-2 grid sm:grid-cols-2 gap-6">
             {[
@@ -325,11 +338,11 @@ export default function App() {
             </motion.div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8">
             {[
-              { step: "0 1", title: t('approach.steps.0.title'), desc: t('approach.steps.0.desc'), icon: Mic },
-              { step: "0 2", title: t('approach.steps.1.title'), desc: t('approach.steps.1.desc'), icon: Sparkles },
-              { step: "0 3", title: t('approach.steps.2.title'), desc: t('approach.steps.2.desc'), icon: BarChart3 }
+              { title: t('approach.steps.0.title'), desc: t('approach.steps.0.desc'), icon: Mic },
+              { title: t('approach.steps.1.title'), desc: t('approach.steps.1.desc'), icon: Sparkles },
+              { title: t('approach.steps.2.title'), desc: t('approach.steps.2.desc'), icon: BarChart3 }
             ].map((item, i) => (
               <motion.div
                 key={i}
@@ -337,16 +350,32 @@ export default function App() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="bg-white border border-zinc-100 rounded-[2rem] p-10 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex flex-col"
+                className="group bg-white border border-zinc-100 rounded-[2.5rem] p-10 md:p-12 shadow-sm hover:shadow-2xl hover:shadow-sky-500/5 transition-all duration-500 relative overflow-hidden flex flex-col min-h-[420px]"
               >
-                <div className="flex justify-between items-start mb-8">
-                  <span className="text-sm font-medium text-zinc-400 tracking-widest">{item.step}</span>
-                  <div className="w-12 h-12 rounded-2xl bg-sky-50 flex items-center justify-center">
-                    <item.icon className="w-6 h-6 text-sky-500" strokeWidth={1.5} />
+                {/* Large Background Number */}
+                <div className="absolute top-6 right-8 text-[10rem] font-bold text-sky-500/[0.08] select-none pointer-events-none group-hover:text-sky-500/[0.12] transition-all duration-700 font-sans italic leading-none">
+                  {i + 1}
+                </div>
+
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className="mb-10 inline-flex items-center justify-center w-20 h-20 rounded-[2rem] bg-gradient-to-br from-sky-50 to-white text-sky-500 border border-sky-100 shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                    <item.icon className="w-10 h-10" strokeWidth={1.2} />
+                  </div>
+                  
+                  <h3 className="text-3xl font-medium text-sky-900 mb-6 leading-tight group-hover:text-sky-600 transition-colors duration-300">
+                    {item.title}
+                  </h3>
+                  
+                  <p className="text-lg text-zinc-500 font-light leading-relaxed">
+                    {item.desc}
+                  </p>
+                  
+                  {/* Step indicator dot */}
+                  <div className="mt-auto pt-10 flex items-center gap-4">
+                    <div className={`w-3 h-3 rounded-full ${i === 0 ? 'bg-sky-500' : i === 1 ? 'bg-sky-400' : 'bg-sky-300'} shadow-lg shadow-sky-500/20`} />
+                    <div className="h-px flex-1 bg-zinc-100" />
                   </div>
                 </div>
-                <h3 className="text-2xl font-medium text-sky-900 mb-4 leading-tight">{item.title}</h3>
-                <p className="text-zinc-500 font-light leading-relaxed mt-auto">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -514,8 +543,43 @@ export default function App() {
         </motion.div>
       </section>
 
+      {/* AI-Powered Change Detection Section */}
+      <section className="py-12 md:py-16 px-6 bg-sky-50/50 border-b border-sky-100">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="relative flex justify-center"
+            >
+              <div className="bg-white p-8 rounded-[2rem] shadow-xl border border-zinc-100 flex flex-col items-center text-center">
+                <Activity className="w-16 h-16 text-sky-500 mb-6" />
+                <h3 className="text-2xl font-medium text-sky-900 mb-2">Automated Analysis</h3>
+                <p className="text-zinc-500 font-light">Comparing visits in real-time</p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-6 text-sky-900">
+                {t('changeDetection.title')}
+              </h2>
+              <p className="text-xl text-zinc-500 font-light leading-relaxed">
+                {t('changeDetection.desc')}
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Language Support Section */}
-      <section className="py-12 md:py-16 px-6 bg-sky-50/50 border-y border-sky-100">
+      <section className="py-12 md:py-16 px-6 bg-white border-b border-zinc-100">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -637,6 +701,38 @@ export default function App() {
         </div>
       </section>
 
+      {/* AI-Generated Patient Reports Section */}
+      <section className="py-12 md:py-16 px-6 max-w-[85rem] mx-auto bg-sky-50/30 rounded-3xl my-12">
+        <div className="grid md:grid-cols-12 gap-12 lg:gap-20 items-center">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="md:col-span-5 lg:col-span-4"
+          >
+            <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-6 text-sky-900">
+              {t('patientReports.title')}
+            </h2>
+            <p className="text-xl text-zinc-500 font-light leading-relaxed">
+              {t('patientReports.desc')}
+            </p>
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, y: 40, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            whileHover={{ y: -8, scale: 1.02 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="md:col-span-7 lg:col-span-8 grid grid-cols-3 gap-4"
+          >
+            <img src="/QRPatient.png" alt="Patient QR Code" className="rounded-2xl border border-zinc-200 shadow-xl" referrerPolicy="no-referrer" />
+            <img src="/InfoPatient1.jpg" alt="Patient Info 1" className="rounded-2xl border border-zinc-200 shadow-xl" referrerPolicy="no-referrer" />
+            <img src="/InfoPatient2.jpg" alt="Patient Info 2" className="rounded-2xl border border-zinc-200 shadow-xl" referrerPolicy="no-referrer" />
+          </motion.div>
+        </div>
+      </section>
+
       {/* Nomenclature Section */}
       <section className="py-10 md:py-16 px-6 bg-white border-y border-zinc-100">
         <div className="max-w-4xl mx-auto text-center">
@@ -682,6 +778,87 @@ export default function App() {
         </div>
       </section>
 
+      {/* CSV Export Section */}
+      <section className="py-20 px-6 bg-[#0A0F1C] overflow-hidden relative">
+        <div className="absolute inset-0 bg-gradient-to-tr from-sky-500/10 to-transparent pointer-events-none" />
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="inline-flex items-center px-4 py-1.5 rounded-full border border-sky-500/30 text-sky-400 text-xs font-semibold tracking-widest uppercase mb-8 bg-sky-500/10">
+              {t('csvExport.tag')}
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-8 text-white leading-[1.1]">
+              {t('csvExport.title')}
+            </h2>
+            <p className="text-xl text-zinc-400 font-light leading-relaxed mb-10">
+              {t('csvExport.desc')}
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="relative"
+          >
+            <div className="relative z-10 bg-white/5 border border-white/10 rounded-[2.5rem] p-8 md:p-12 backdrop-blur-sm shadow-2xl">
+              <div className="flex items-center justify-between mb-12">
+                <div className="flex gap-3">
+                  <div className="w-3 h-3 rounded-full bg-red-500/50" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
+                  <div className="w-3 h-3 rounded-full bg-green-500/50" />
+                </div>
+                <div className="px-3 py-1 rounded-md bg-white/10 text-[10px] font-mono text-zinc-500 uppercase tracking-wider">
+                  export_data.csv
+                </div>
+              </div>
+              
+              <div className="space-y-4 font-mono text-xs md:text-sm">
+                <div className="grid grid-cols-4 gap-4 pb-4 border-b border-white/10 text-sky-400">
+                  <span>Tooth</span>
+                  <span>Site</span>
+                  <span>Depth</span>
+                  <span>BOP</span>
+                </div>
+                {[
+                  { t: "18", s: "Distal", d: "3", b: "Yes" },
+                  { t: "18", s: "Mid", d: "2", b: "No" },
+                  { t: "18", s: "Mesial", d: "3", b: "No" },
+                  { t: "17", s: "Distal", d: "4", b: "Yes" },
+                ].map((row, i) => (
+                  <motion.div 
+                    key={i}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5 + (i * 0.1) }}
+                    className="grid grid-cols-4 gap-4 text-zinc-500"
+                  >
+                    <span>{row.t}</span>
+                    <span>{row.s}</span>
+                    <span>{row.d}</span>
+                    <span className={row.b === 'Yes' ? 'text-red-400/70' : ''}>{row.b}</span>
+                  </motion.div>
+                ))}
+                <div className="pt-4 text-zinc-600 italic">... +248 rows</div>
+              </div>
+
+              <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-sky-500 rounded-3xl flex items-center justify-center shadow-2xl shadow-sky-500/40 transform rotate-12">
+                <FileSpreadsheet className="w-12 h-12 text-white" strokeWidth={1.5} />
+              </div>
+            </div>
+            
+            {/* Decorative elements */}
+            <div className="absolute -top-20 -right-20 w-64 h-64 bg-sky-500/20 blur-[100px] rounded-full pointer-events-none" />
+            <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-sky-500/10 blur-[100px] rounded-full pointer-events-none" />
+          </motion.div>
+        </div>
+      </section>
+
       {/* Core Benefits Section */}
       <section id="benefits" className="py-6 md:py-10 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8">
@@ -710,6 +887,55 @@ export default function App() {
               <p className="text-lg text-zinc-500 font-light leading-relaxed">{benefit.desc}</p>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* Built for Integration Section */}
+      <section id="open-api" className="py-12 md:py-16 px-6 bg-white border-b border-zinc-100">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="w-16 h-16 rounded-2xl bg-sky-100 flex items-center justify-center mb-8">
+                <Code className="w-8 h-8 text-sky-600" />
+              </div>
+              <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-6 text-sky-900">
+                {t('openApi.title')}
+              </h2>
+              <p className="text-xl text-zinc-500 font-light leading-relaxed">
+                {t('openApi.desc')}
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="relative flex justify-center"
+            >
+              <div className="bg-zinc-900 p-8 rounded-[2rem] shadow-2xl border border-zinc-800 w-full max-w-md">
+                <div className="flex gap-2 mb-4">
+                  <div className="w-3 h-3 rounded-full bg-red-500" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                  <div className="w-3 h-3 rounded-full bg-green-500" />
+                </div>
+                <pre className="text-sky-400 font-mono text-sm overflow-x-auto">
+                  <code>{`{
+  "status": "connected",
+  "api": "periovox-v1",
+  "features": [
+    "periodontal-analysis",
+    "charting-sync"
+  ]
+}`}</code>
+                </pre>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -744,21 +970,54 @@ export default function App() {
                 {t('contact.desc')}
               </p>
               
-              <motion.a 
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                href="mailto:info@periovox.ai" 
-                className="inline-flex items-center gap-3 px-8 py-4 bg-sky-500 text-white rounded-full text-lg font-medium shadow-md shadow-sky-500/20 hover:bg-sky-600 hover:shadow-lg hover:shadow-sky-500/30 transition-all duration-300 group"
-              >
-                <span>{t('contact.button')}</span>
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </motion.a>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <motion.a 
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  href="mailto:info@periovox.ai" 
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-sky-500 text-white rounded-full text-lg font-medium shadow-md shadow-sky-500/20 hover:bg-sky-600 hover:shadow-lg hover:shadow-sky-500/30 transition-all duration-300 group"
+                >
+                  <span>{t('contact.button')}</span>
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </motion.a>
+
+                <motion.a 
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  href="https://wa.me/34690957910"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#25D366] text-white rounded-full text-lg font-medium shadow-md shadow-green-500/20 hover:bg-[#20ba5a] hover:shadow-lg hover:shadow-green-500/30 transition-all duration-300 group"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  <span>{t('contact.whatsapp')}</span>
+                </motion.a>
+              </div>
             </div>
           </motion.div>
         </div>
       </section>
+
+      {/* Floating WhatsApp Button */}
+      <motion.a
+        initial={{ opacity: 0, scale: 0.5, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        transition={{ delay: 2 }}
+        href="https://wa.me/34690957910"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl shadow-green-500/40 hover:bg-[#20ba5a] transition-colors group"
+        title={t('contact.whatsappMsg')}
+      >
+        <MessageCircle className="w-7 h-7" />
+        <span className="absolute right-full mr-4 px-3 py-1.5 bg-white text-zinc-900 text-sm font-medium rounded-lg shadow-xl border border-zinc-100 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+          {t('contact.whatsappMsg')}
+        </span>
+      </motion.a>
 
       {/* Final CTA */}
       <section className="relative py-12 md:py-20 px-6 text-center text-white overflow-hidden">
@@ -820,6 +1079,9 @@ export default function App() {
                 </a>
                 <a href="https://www.linkedin.com/company/periovox-ai/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center text-zinc-500 hover:border-sky-500 hover:text-sky-500 transition-colors bg-white">
                   <Linkedin className="w-4 h-4" />
+                </a>
+                <a href="https://wa.me/34690957910" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center text-zinc-500 hover:border-green-500 hover:text-green-500 transition-colors bg-white">
+                  <MessageCircle className="w-4 h-4" />
                 </a>
               </div>
             </div>
