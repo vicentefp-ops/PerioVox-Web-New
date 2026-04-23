@@ -78,7 +78,7 @@ export default function App() {
           <div className="flex items-center h-full overflow-hidden -ml-6">
             <img src="/Logo Texto.png" alt="PerioVoxAI Logo" title="PerioVoxAI" className="h-[84.375%] w-auto object-contain" />
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-500">
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-600">
             <a href="#features" onClick={(e) => scrollToSection(e, 'features')} className="hover:text-zinc-900 transition-colors">{t('nav.features')}</a>
             <a href="#how-it-works" onClick={(e) => scrollToSection(e, 'how-it-works')} className="hover:text-zinc-900 transition-colors">{t('nav.workflow')}</a>
             <a href="#benefits" onClick={(e) => scrollToSection(e, 'benefits')} className="hover:text-zinc-900 transition-colors">{t('nav.benefits')}</a>
@@ -130,9 +130,11 @@ export default function App() {
             animate={{ scale: 1 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
             src="/Higienista PerioVoxAI.png"
-            alt="Clinical Environment"
+            alt="Clinical Environment - PerioVoxAI Hero"
             className="w-full h-full object-cover object-center"
             referrerPolicy="no-referrer"
+            fetchpriority="high"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-zinc-900/90 via-zinc-900/50 to-transparent" />
         </div>
@@ -192,13 +194,13 @@ export default function App() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full border border-zinc-200 text-zinc-500 text-xs font-semibold tracking-widest uppercase mb-8">
+            <div className="inline-flex items-center px-4 py-1.5 rounded-full border border-zinc-200 text-zinc-600 text-xs font-semibold tracking-widest uppercase mb-8">
               {t('problem.tag')}
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-6 text-sky-900 leading-[1.1]">
               {t('problem.title')}
             </h2>
-            <p className="text-xl text-zinc-500 font-light leading-relaxed">
+            <p className="text-xl text-zinc-600 font-light leading-relaxed">
               {t('problem.desc')}
             </p>
           </motion.div>
@@ -213,6 +215,7 @@ export default function App() {
               alt="Traditional charting" 
               className="w-full h-[300px] md:h-[400px] object-cover rounded-[2rem] shadow-lg"
               referrerPolicy="no-referrer"
+              loading="lazy"
             />
           </motion.div>
         </div>
@@ -238,7 +241,7 @@ export default function App() {
                 {t('problem.cardTitle')}
               </h3>
               <div className="w-12 h-1 bg-sky-500/20 rounded-full mb-8" />
-              <p className="text-lg text-zinc-500 font-light leading-relaxed">
+              <p className="text-lg text-zinc-600 font-light leading-relaxed">
                 {t('problem.cardDesc')}
               </p>
             </div>
@@ -262,7 +265,7 @@ export default function App() {
                   <item.icon className="w-6 h-6 text-sky-500" strokeWidth={1.5} />
                 </div>
                 <h4 className="text-xl font-medium text-sky-900 mb-3">{item.title}</h4>
-                <p className="text-zinc-500 font-light leading-relaxed">{item.desc}</p>
+                <p className="text-zinc-600 font-light leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -292,7 +295,7 @@ export default function App() {
           <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-6 text-sky-900">
             {t('voice.title')}
           </h2>
-          <p className="text-lg md:text-xl text-zinc-500 font-light leading-relaxed mb-6 max-w-2xl">
+          <p className="text-lg md:text-xl text-zinc-600 font-light leading-relaxed mb-6 max-w-2xl">
             {t('voice.desc')}
           </p>
 
@@ -308,14 +311,15 @@ export default function App() {
               transition={{ type: "spring", stiffness: 300 }}
               className="bg-zinc-50 p-8 md:p-12 rounded-3xl w-full max-w-3xl flex flex-col items-center justify-center shadow-inner mb-6"
             >
-              <motion.img 
-                animate={{ y: [0, -10, 0] }}
-                transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-                src="/Start Voice input 2.png" 
-                alt="Start Voice Input" 
-                className="w-48 md:w-64 drop-shadow-2xl"
-                referrerPolicy="no-referrer"
-              />
+            <motion.img 
+              animate={{ y: [0, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+              src="/Start Voice input 2.png" 
+              alt="Start Voice Input illustration" 
+              className="w-48 md:w-64 drop-shadow-2xl"
+              referrerPolicy="no-referrer"
+              loading="lazy"
+            />
             </motion.div>
             <p className="text-xl md:text-2xl font-medium text-sky-900 max-w-2xl">
               {t('voice.buttonText')}
@@ -340,7 +344,7 @@ export default function App() {
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-6 text-sky-900 leading-[1.1]">
                 {t('approach.title')}
               </h2>
-              <p className="text-xl text-zinc-500 font-light leading-relaxed">
+              <p className="text-xl text-zinc-600 font-light leading-relaxed">
                 {t('approach.desc')}
               </p>
             </motion.div>
@@ -374,7 +378,7 @@ export default function App() {
                     {item.title}
                   </h3>
                   
-                  <p className="text-lg text-zinc-500 font-light leading-relaxed">
+                  <p className="text-lg text-zinc-600 font-light leading-relaxed">
                     {item.desc}
                   </p>
                   
@@ -405,6 +409,7 @@ export default function App() {
               alt="Periodontal Probe 2.0" 
               className="w-full h-auto max-w-3xl mx-auto"
               referrerPolicy="no-referrer"
+              loading="lazy"
             />
           </motion.div>
 
@@ -420,10 +425,10 @@ export default function App() {
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-6 text-sky-900 leading-[1.1]">
               {t('probe.title')}
             </h2>
-            <p className="text-xl md:text-2xl text-zinc-500 font-light leading-relaxed mb-4 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-zinc-600 font-light leading-relaxed mb-4 max-w-3xl mx-auto">
               {t('probe.desc')}
             </p>
-            <p className="text-lg md:text-xl text-zinc-400 font-light leading-relaxed max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-zinc-500 font-light leading-relaxed max-w-2xl mx-auto">
               {t('probe.subdesc')}
             </p>
           </motion.div>
@@ -528,7 +533,7 @@ export default function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xl text-zinc-500 font-light max-w-2xl mx-auto"
+            className="text-xl text-zinc-600 font-light max-w-2xl mx-auto"
           >
             {t('periodontogram.desc')}
           </motion.p>
@@ -547,6 +552,7 @@ export default function App() {
             alt="Periodontogram Interface" 
             className="w-full h-auto relative z-10 border border-zinc-200 rounded-2xl"
             referrerPolicy="no-referrer"
+            loading="lazy"
           />
         </motion.div>
       </section>
@@ -565,7 +571,7 @@ export default function App() {
               <div className="bg-white p-8 rounded-[2rem] shadow-xl border border-zinc-100 flex flex-col items-center text-center">
                 <Activity className="w-16 h-16 text-sky-500 mb-6" />
                 <h3 className="text-2xl font-medium text-sky-900 mb-2">Automated Analysis</h3>
-                <p className="text-zinc-500 font-light">Comparing visits in real-time</p>
+                <p className="text-zinc-600 font-light">Comparing visits in real-time</p>
               </div>
             </motion.div>
 
@@ -734,9 +740,9 @@ export default function App() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="md:col-span-7 lg:col-span-8 grid grid-cols-3 gap-4"
           >
-            <img src="/QRPatient.png" alt="Patient QR Code" className="rounded-2xl border border-zinc-200 shadow-xl" referrerPolicy="no-referrer" />
-            <img src="/InfoPatient1.jpg" alt="Patient Info 1" className="rounded-2xl border border-zinc-200 shadow-xl" referrerPolicy="no-referrer" />
-            <img src="/InfoPatient2.jpg" alt="Patient Info 2" className="rounded-2xl border border-zinc-200 shadow-xl" referrerPolicy="no-referrer" />
+            <img src="/QRPatient.png" alt="Patient QR Code" className="rounded-2xl border border-zinc-200 shadow-xl" referrerPolicy="no-referrer" loading="lazy" />
+            <img src="/InfoPatient1.jpg" alt="Patient Info 1" className="rounded-2xl border border-zinc-200 shadow-xl" referrerPolicy="no-referrer" loading="lazy" />
+            <img src="/InfoPatient2.jpg" alt="Patient Info 2" className="rounded-2xl border border-zinc-200 shadow-xl" referrerPolicy="no-referrer" loading="lazy" />
           </motion.div>
         </div>
       </section>
@@ -775,12 +781,14 @@ export default function App() {
               alt="ADA Logo" 
               className="h-32 md:h-40 w-auto object-contain"
               referrerPolicy="no-referrer"
+              loading="lazy"
             />
             <img 
               src="/FDI.png" 
               alt="FDI Logo" 
               className="h-16 md:h-20 w-auto object-contain"
               referrerPolicy="no-referrer"
+              loading="lazy"
             />
           </motion.div>
         </div>
@@ -892,7 +900,7 @@ export default function App() {
                 <benefit.icon className="w-10 h-10 text-sky-500" strokeWidth={1.5} />
               </motion.div>
               <h3 className="text-2xl font-medium text-sky-900 mb-4">{benefit.title}</h3>
-              <p className="text-lg text-zinc-500 font-light leading-relaxed">{benefit.desc}</p>
+              <p className="text-lg text-zinc-600 font-light leading-relaxed">{benefit.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -914,7 +922,7 @@ export default function App() {
               <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-6 text-sky-900">
                 {t('openApi.title')}
               </h2>
-              <p className="text-xl text-zinc-500 font-light leading-relaxed">
+              <p className="text-xl text-zinc-600 font-light leading-relaxed">
                 {t('openApi.desc')}
               </p>
             </motion.div>
@@ -998,6 +1006,7 @@ export default function App() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#25D366] text-white rounded-full text-lg font-medium shadow-md shadow-green-500/20 hover:bg-[#20ba5a] hover:shadow-lg hover:shadow-green-500/30 transition-all duration-300 group"
+                  aria-label="Contact via WhatsApp"
                 >
                   <MessageCircle className="w-5 h-5" />
                   <span>{t('contact.whatsapp')}</span>
@@ -1020,6 +1029,7 @@ export default function App() {
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl shadow-green-500/40 hover:bg-[#20ba5a] transition-colors group"
         title={t('contact.whatsappMsg')}
+        aria-label="Floating WhatsApp Contact Button"
       >
         <MessageCircle className="w-7 h-7" />
         <span className="absolute right-full mr-4 px-3 py-1.5 bg-white text-zinc-900 text-sm font-medium rounded-lg shadow-xl border border-zinc-100 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
@@ -1076,20 +1086,20 @@ export default function App() {
                   <div className="text-[10px] tracking-widest text-zinc-400 uppercase mt-0.5">Voice-first dental AI</div>
                 </div>
               </div>
-              <p className="text-zinc-500 font-light leading-relaxed text-sm mb-8">
+              <p className="text-zinc-600 font-light leading-relaxed text-sm mb-8">
                 {t('footer.brand')}
               </p>
               <div className="flex gap-4">
-                <a href="https://www.facebook.com/periovox" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center text-zinc-500 hover:border-sky-500 hover:text-sky-500 transition-colors bg-white">
+                <a href="https://www.facebook.com/periovox" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center text-zinc-500 hover:border-sky-500 hover:text-sky-500 transition-colors bg-white" aria-label="Follow us on Facebook">
                   <Facebook className="w-4 h-4" />
                 </a>
-                <a href="https://www.instagram.com/periovox.ai" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center text-zinc-500 hover:border-sky-500 hover:text-sky-500 transition-colors bg-white">
+                <a href="https://www.instagram.com/periovox.ai" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center text-zinc-500 hover:border-sky-500 hover:text-sky-500 transition-colors bg-white" aria-label="Follow us on Instagram">
                   <Instagram className="w-4 h-4" />
                 </a>
-                <a href="https://www.linkedin.com/company/periovox-ai/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center text-zinc-500 hover:border-sky-500 hover:text-sky-500 transition-colors bg-white">
+                <a href="https://www.linkedin.com/company/periovox-ai/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center text-zinc-500 hover:border-sky-500 hover:text-sky-500 transition-colors bg-white" aria-label="Follow us on LinkedIn">
                   <Linkedin className="w-4 h-4" />
                 </a>
-                <a href="https://wa.me/34690957910" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center text-zinc-500 hover:border-green-500 hover:text-green-500 transition-colors bg-white">
+                <a href="https://wa.me/34690957910" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center text-zinc-500 hover:border-green-500 hover:text-green-500 transition-colors bg-white" aria-label="Contact us via WhatsApp">
                   <MessageCircle className="w-4 h-4" />
                 </a>
               </div>
@@ -1097,7 +1107,7 @@ export default function App() {
 
             {/* Product */}
             <div>
-              <h4 className="text-xs font-semibold tracking-[0.2em] text-zinc-400 uppercase mb-6">{t('footer.product')}</h4>
+              <h4 className="text-xs font-semibold tracking-[0.2em] text-zinc-500 uppercase mb-6">{t('footer.product')}</h4>
               <ul className="space-y-4 text-zinc-500 font-light text-sm">
                 <li><a href="#features" onClick={(e) => scrollToSection(e, 'features')} className="hover:text-sky-500 transition-colors">{t('nav.features')}</a></li>
                 <li><a href="#how-it-works" onClick={(e) => scrollToSection(e, 'how-it-works')} className="hover:text-sky-500 transition-colors">{t('nav.workflow')}</a></li>
@@ -1107,7 +1117,7 @@ export default function App() {
 
             {/* Legal */}
             <div>
-              <h4 className="text-xs font-semibold tracking-[0.2em] text-zinc-400 uppercase mb-6">{t('footer.legal')}</h4>
+              <h4 className="text-xs font-semibold tracking-[0.2em] text-zinc-500 uppercase mb-6">{t('footer.legal')}</h4>
               <ul className="space-y-4 text-zinc-500 font-light text-sm">
                 <li><a href="/terms-of-use.html" target="_blank" rel="noopener noreferrer" className="hover:text-sky-500 transition-colors">{t('footer.terms')}</a></li>
                 <li><a href="/privacy-notice.html" target="_blank" rel="noopener noreferrer" className="hover:text-sky-500 transition-colors">{t('footer.privacy')}</a></li>
@@ -1118,8 +1128,8 @@ export default function App() {
 
             {/* Disclaimer */}
             <div>
-              <h4 className="text-xs font-semibold tracking-[0.2em] text-zinc-400 uppercase mb-6">{t('footer.disclaimerTitle')}</h4>
-              <p className="text-zinc-500 font-light leading-relaxed text-sm">
+              <h4 className="text-xs font-semibold tracking-[0.2em] text-zinc-500 uppercase mb-6">{t('footer.disclaimerTitle')}</h4>
+              <p className="text-zinc-600 font-light leading-relaxed text-sm">
                 {t('footer.disclaimer')}
               </p>
             </div>
