@@ -24,6 +24,10 @@ export default function App() {
   };
 
   useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
+  useEffect(() => {
     const consent = localStorage.getItem('cookie-consent');
     if (!consent) {
       setShowCookieBanner(true);
@@ -69,39 +73,42 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#FAFAFA] text-[#0A0A0A] font-sans selection:bg-sky-100 selection:text-sky-900">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 h-20 bg-white border-b border-zinc-200">
-        <div className="flex items-center h-full overflow-hidden -ml-6">
-          <img src="/Logo Texto.png" alt="PerioVoxAI" className="h-[84.375%] w-auto object-contain" />
-        </div>
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-500">
-          <a href="#features" onClick={(e) => scrollToSection(e, 'features')} className="hover:text-zinc-900 transition-colors">{t('nav.features')}</a>
-          <a href="#how-it-works" onClick={(e) => scrollToSection(e, 'how-it-works')} className="hover:text-zinc-900 transition-colors">{t('nav.workflow')}</a>
-          <a href="#benefits" onClick={(e) => scrollToSection(e, 'benefits')} className="hover:text-zinc-900 transition-colors">{t('nav.benefits')}</a>
-          <a href="#open-api" onClick={(e) => scrollToSection(e, 'open-api')} className="hover:text-zinc-900 transition-colors">{t('nav.openApi')}</a>
-          <a href="#contact" onClick={(e) => scrollToSection(e, 'contact')} className="hover:text-zinc-900 transition-colors">{t('nav.contact')}</a>
-        </div>
-        <div className="flex items-center gap-4">
-          <button 
-            onClick={() => setLang(lang === 'en' ? 'es' : 'en')} 
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-700 transition-colors text-xs font-semibold tracking-wide"
-          >
-            <span className={lang === 'en' ? 'text-zinc-900' : 'text-zinc-400'}>EN</span>
-            <span className="text-zinc-300">/</span>
-            <span className={lang === 'es' ? 'text-zinc-900' : 'text-zinc-400'}>ES</span>
-          </button>
-          <a href="https://app.periovox.ai" className="hidden md:block text-sm font-medium text-white bg-[#0A0A0A] px-4 py-2 rounded-full hover:bg-zinc-800 transition-colors">
-            {t('nav.login')}
-          </a>
-          <button className="md:hidden p-2 text-zinc-500" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </nav>
+      <header className="fixed top-0 left-0 right-0 z-50 px-6 h-20 bg-white border-b border-zinc-200">
+        <nav className="flex items-center justify-between h-full max-w-7xl mx-auto" aria-label="Main Navigation">
+          <div className="flex items-center h-full overflow-hidden -ml-6">
+            <img src="/Logo Texto.png" alt="PerioVoxAI Logo" title="PerioVoxAI" className="h-[84.375%] w-auto object-contain" />
+          </div>
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-500">
+            <a href="#features" onClick={(e) => scrollToSection(e, 'features')} className="hover:text-zinc-900 transition-colors">{t('nav.features')}</a>
+            <a href="#how-it-works" onClick={(e) => scrollToSection(e, 'how-it-works')} className="hover:text-zinc-900 transition-colors">{t('nav.workflow')}</a>
+            <a href="#benefits" onClick={(e) => scrollToSection(e, 'benefits')} className="hover:text-zinc-900 transition-colors">{t('nav.benefits')}</a>
+            <a href="#open-api" onClick={(e) => scrollToSection(e, 'open-api')} className="hover:text-zinc-900 transition-colors">{t('nav.openApi')}</a>
+            <a href="#contact" onClick={(e) => scrollToSection(e, 'contact')} className="hover:text-zinc-900 transition-colors">{t('nav.contact')}</a>
+          </div>
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => setLang(lang === 'en' ? 'es' : 'en')} 
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-700 transition-colors text-xs font-semibold tracking-wide"
+              aria-label={lang === 'en' ? "Cambiar a Español" : "Switch to English"}
+            >
+              <span className={lang === 'en' ? 'text-zinc-900' : 'text-zinc-400'}>EN</span>
+              <span className="text-zinc-300">/</span>
+              <span className={lang === 'es' ? 'text-zinc-900' : 'text-zinc-400'}>ES</span>
+            </button>
+            <a href="https://app.periovox.ai" className="hidden md:block text-sm font-medium text-white bg-[#0A0A0A] px-4 py-2 rounded-full hover:bg-zinc-800 transition-colors">
+              {t('nav.login')}
+            </a>
+            <button className="md:hidden p-2 text-zinc-500" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} aria-label="Toggle Menu">
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </nav>
+      </header>
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-40 bg-white pt-24 px-6 md:hidden">
-          <div className="flex flex-col gap-6 text-lg font-medium text-zinc-900">
+          <nav className="flex flex-col gap-6 text-lg font-medium text-zinc-900" aria-label="Mobile Navigation">
             <a href="#features" onClick={(e) => { scrollToSection(e, 'features'); setIsMobileMenuOpen(false); }} className="border-b border-zinc-100 pb-4">{t('nav.features')}</a>
             <a href="#how-it-works" onClick={(e) => { scrollToSection(e, 'how-it-works'); setIsMobileMenuOpen(false); }} className="border-b border-zinc-100 pb-4">{t('nav.workflow')}</a>
             <a href="#benefits" onClick={(e) => { scrollToSection(e, 'benefits'); setIsMobileMenuOpen(false); }} className="border-b border-zinc-100 pb-4">{t('nav.benefits')}</a>
@@ -110,11 +117,12 @@ export default function App() {
             <a href="https://app.periovox.ai" className="text-center text-white bg-[#0A0A0A] px-4 py-3 rounded-full hover:bg-zinc-800 transition-colors mt-4">
               {t('nav.login')}
             </a>
-          </div>
+          </nav>
         </div>
       )}
 
-      {/* Hero Section */}
+      <main>
+        {/* Hero Section */}
       <section className="relative h-screen min-h-[700px] flex items-center justify-start overflow-hidden">
         <div className="absolute inset-0 z-0">
           <motion.img
@@ -1051,6 +1059,7 @@ export default function App() {
           </motion.a>
         </motion.div>
       </section>
+      </main>
       
       {/* Footer */}
       <footer className="bg-[#FAFAFA] pt-20 pb-10 px-6 border-t border-zinc-200">
