@@ -5,24 +5,273 @@
   "installCommand": "npm ci",
   "outputDirectory": "dist",
   "redirects": [
-    {"source": "/", "has": [{"type": "host", "value": "www.periovox.ai"}], "destination": "https://periovox.ai/", "permanent": true},
-    {"source": "/:path*/", "has": [{"type": "host", "value": "www.periovox.ai"}], "destination": "https://periovox.ai/:path*/", "permanent": true},
-    {"source": "/:path*", "has": [{"type": "host", "value": "www.periovox.ai"}], "destination": "https://periovox.ai/:path*", "permanent": true},
-    {"source": "/", "has": [{"type": "cookie", "key": "pv_web_language", "value": "es"}], "destination": "/es/", "permanent": false},
-    {"source": "/", "has": [{"type": "header", "key": "accept-language", "value": "^[eE][sS](?:-[A-Za-z0-9]+)*(?:[,;].*)?$"}], "missing": [{"type": "cookie", "key": "pv_web_language", "value": "en"}], "destination": "/es/", "permanent": false}
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.periovox.ai"
+        }
+      ],
+      "destination": "https://periovox.ai/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.periovox.ai"
+        }
+      ],
+      "destination": "https://periovox.ai/:path*/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.periovox.ai"
+        }
+      ],
+      "destination": "https://periovox.ai/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "cookie",
+          "key": "pv_web_language",
+          "value": "es"
+        }
+      ],
+      "destination": "/es/",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept-language",
+          "value": "^[eE][sS](?:-[A-Za-z0-9]+)*(?:[,;].*)?$"
+        }
+      ],
+      "missing": [
+        {
+          "type": "cookie",
+          "key": "pv_web_language",
+          "value": "en"
+        }
+      ],
+      "destination": "/es/",
+      "permanent": false
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/resources",
+      "destination": "/resources/",
+      "permanent": true
+    },
+    {
+      "source": "/resources/index.html",
+      "destination": "/resources/",
+      "permanent": true
+    },
+    {
+      "source": "/periodontal-chart",
+      "destination": "/periodontal-chart/",
+      "permanent": true
+    },
+    {
+      "source": "/periodontal-chart/index.html",
+      "destination": "/periodontal-chart/",
+      "permanent": true
+    },
+    {
+      "source": "/voice-periodontal-charting",
+      "destination": "/voice-periodontal-charting/",
+      "permanent": true
+    },
+    {
+      "source": "/voice-periodontal-charting/index.html",
+      "destination": "/voice-periodontal-charting/",
+      "permanent": true
+    },
+    {
+      "source": "/periodontal-chart-comparison",
+      "destination": "/periodontal-chart-comparison/",
+      "permanent": true
+    },
+    {
+      "source": "/periodontal-chart-comparison/index.html",
+      "destination": "/periodontal-chart-comparison/",
+      "permanent": true
+    },
+    {
+      "source": "/dental-software-integrations",
+      "destination": "/dental-software-integrations/",
+      "permanent": true
+    },
+    {
+      "source": "/dental-software-integrations/index.html",
+      "destination": "/dental-software-integrations/",
+      "permanent": true
+    },
+    {
+      "source": "/es",
+      "destination": "/es/",
+      "permanent": true
+    },
+    {
+      "source": "/es/index.html",
+      "destination": "/es/",
+      "permanent": true
+    },
+    {
+      "source": "/es/recursos",
+      "destination": "/es/recursos/",
+      "permanent": true
+    },
+    {
+      "source": "/es/recursos/index.html",
+      "destination": "/es/recursos/",
+      "permanent": true
+    },
+    {
+      "source": "/es/periodontograma",
+      "destination": "/es/periodontograma/",
+      "permanent": true
+    },
+    {
+      "source": "/es/periodontograma/index.html",
+      "destination": "/es/periodontograma/",
+      "permanent": true
+    },
+    {
+      "source": "/es/periodontograma-por-voz",
+      "destination": "/es/periodontograma-por-voz/",
+      "permanent": true
+    },
+    {
+      "source": "/es/periodontograma-por-voz/index.html",
+      "destination": "/es/periodontograma-por-voz/",
+      "permanent": true
+    },
+    {
+      "source": "/es/comparar-periodontogramas",
+      "destination": "/es/comparar-periodontogramas/",
+      "permanent": true
+    },
+    {
+      "source": "/es/comparar-periodontogramas/index.html",
+      "destination": "/es/comparar-periodontogramas/",
+      "permanent": true
+    },
+    {
+      "source": "/es/integracion-software-dental",
+      "destination": "/es/integracion-software-dental/",
+      "permanent": true
+    },
+    {
+      "source": "/es/integracion-software-dental/index.html",
+      "destination": "/es/integracion-software-dental/",
+      "permanent": true
+    }
   ],
   "rewrites": [
-    {"source": "/api/journal/:path*", "destination": "https://journal-backend.periovox.ai/api/journal/:path*"},
-    {"source": "/journal/", "destination": "https://journal-backend.periovox.ai/journal/"},
-    {"source": "/es/journal/", "destination": "https://journal-backend.periovox.ai/es/journal/"},
-    {"source": "/journal/:path*/", "destination": "https://journal-backend.periovox.ai/journal/:path*/"},
-    {"source": "/es/journal/:path*/", "destination": "https://journal-backend.periovox.ai/es/journal/:path*/"},
-    {"source": "/journal/:path*", "destination": "https://journal-backend.periovox.ai/journal/:path*"},
-    {"source": "/es/journal/:path*", "destination": "https://journal-backend.periovox.ai/es/journal/:path*"},
-    {"source": "/journal-media/:path*", "destination": "https://journal-backend.periovox.ai/journal-media/:path*"},
-    {"source": "/sitemap-journal.xml", "destination": "https://journal-backend.periovox.ai/sitemap-journal.xml"}
+    {
+      "source": "/api/journal/:path*",
+      "destination": "https://journal-backend.periovox.ai/api/journal/:path*"
+    },
+    {
+      "source": "/journal/",
+      "destination": "https://journal-backend.periovox.ai/journal/"
+    },
+    {
+      "source": "/es/journal/",
+      "destination": "https://journal-backend.periovox.ai/es/journal/"
+    },
+    {
+      "source": "/journal/:path*/",
+      "destination": "https://journal-backend.periovox.ai/journal/:path*/"
+    },
+    {
+      "source": "/es/journal/:path*/",
+      "destination": "https://journal-backend.periovox.ai/es/journal/:path*/"
+    },
+    {
+      "source": "/journal/:path*",
+      "destination": "https://journal-backend.periovox.ai/journal/:path*"
+    },
+    {
+      "source": "/es/journal/:path*",
+      "destination": "https://journal-backend.periovox.ai/es/journal/:path*"
+    },
+    {
+      "source": "/journal-media/:path*",
+      "destination": "https://journal-backend.periovox.ai/journal-media/:path*"
+    },
+    {
+      "source": "/sitemap-journal.xml",
+      "destination": "https://journal-backend.periovox.ai/sitemap-journal.xml"
+    }
   ],
   "headers": [
-    {"source": "/:path*", "headers": [{"key": "X-Content-Type-Options", "value": "nosniff"}, {"key": "Referrer-Policy", "value": "strict-origin-when-cross-origin"}]}
+    {
+      "source": "/:path*",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/assets/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/media/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/periodontogram-:name*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
+    }
   ]
 }

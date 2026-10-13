@@ -74,13 +74,13 @@ export default function ChartScroll({ lang }: { lang: Language }) {
           <div className="chart-story-frame-top" aria-hidden="true"><span>PERIOVOX / CLINICAL WORKSPACE</span><span>{t.arch}</span></div>
           <div className="chart-story-window">
             {reduce ? (
-              <img className="chart-story-reduced" src="/periodontogram-final.png" alt={t.alt} width="2372" height="1240" loading="lazy" />
+              <img className="chart-story-reduced" src="/periodontogram-final.webp" alt={t.alt} width="2372" height="1240" loading="lazy" decoding="async" />
             ) : (
               <motion.div className="chart-story-canvas" style={{ x: isMobile ? mobilePan : 0 }} aria-hidden="true">
-                <img className="chart-story-start" src="/periodontogram-start.png" alt="" width="2364" height="1260" loading="lazy" />
-                <motion.img className="chart-story-reveal" src="/periodontogram-final.png" alt="" width="2372" height="1240" loading="lazy" style={{ clipPath: revealClip }} />
+                <img className="chart-story-start" src="/periodontogram-start.webp" alt="" width="2364" height="1260" loading="lazy" decoding="async" />
+                <motion.img className="chart-story-reveal" src="/periodontogram-final.webp" alt="" width="2372" height="1240" loading="lazy" decoding="async" style={{ clipPath: revealClip }} />
                 <motion.div className="chart-story-scan" style={{ left: scanLeft, opacity: scanOpacity }} />
-                <motion.img className="chart-story-final" src="/periodontogram-final.png" alt="" width="2372" height="1240" loading="lazy" style={{ opacity: finalOpacity }} />
+                <motion.img className="chart-story-final" src="/periodontogram-final.webp" alt="" width="2372" height="1240" loading="lazy" decoding="async" style={{ opacity: finalOpacity }} />
               </motion.div>
             )}
           </div>

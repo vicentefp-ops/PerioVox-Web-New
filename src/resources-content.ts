@@ -1,15 +1,15 @@
 import type {Language} from './translations';
 
 export type GuideSection={id:string;title:string;paragraphs?:string[];list?:string[];table?:{headers:string[];rows:string[][]};example?:string};
-export type Guide={id:string;path:string;alternate:string;title:string;description:string;keyword:string;label:string;h1:string;summary:string;image:string;imageAlt:string;width:number;height:number;caption:string;sections:GuideSection[];faq:[string,string][];sources?:{title:string;url:string}[]};
+export type Guide={id:string;path:string;alternate:string;title:string;description:string;keyword:string;label:string;h1:string;summary:string;image:string;socialImage?:string;imageAlt:string;width:number;height:number;caption:string;sections:GuideSection[];faq:[string,string][];sources?:{title:string;url:string}[]};
 export const updated='2026-10-11';
 export const resourceCopy={
  es:{path:'/es/recursos/',alternate:'/resources/',title:'Guías de periodontogramas y registro por voz | PerioVox',description:'Aprende sobre periodontogramas digitales, registro periodontal por voz, comparativas entre visitas e integración con software dental. Guías de PerioVox.',label:'RECURSOS PARA PROFESIONALES',heading:'El registro es solo el principio.',intro:'Guías para dentistas, higienistas y equipos de desarrollo que quieren conocer el periodontograma digital y aprovechar el registro por voz.',nav:'Guías de periodontogramas',read:'Leer la guía',home:'Inicio',contents:'En esta guía',by:'Equipo PerioVox',updated:'Actualizado el 11 de octubre de 2026',related:'Sigue explorando.',sources:'Fuentes y documentación',faq:'Preguntas frecuentes',cta:'Tu próxima exploración, con PerioVox.',ctaText:'Periodontogramas por voz. Tu sonda habitual. Gratis hoy. Gratis siempre.',note:'Información para profesionales dentales. El registro y las herramientas de apoyo deben revisarse con criterio clínico; no sustituyen el diagnóstico ni las decisiones de tratamiento.'},
  en:{path:'/resources/',alternate:'/es/recursos/',title:'Periodontal Charting and Voice Charting Guides | PerioVox',description:'Explore periodontal charts, voice charting, visit comparisons and dental software integration. Practical guides for dental teams from PerioVox.',label:'RESOURCES FOR PROFESSIONALS',heading:'The chart is just the beginning.',intro:'Guides for dentists, dental hygienists and software teams exploring digital periodontal charts and voice charting workflows.',nav:'Periodontal charting guides',read:'Read the guide',home:'Home',contents:'In this guide',by:'PerioVox team',updated:'Updated October 11, 2026',related:'Keep exploring.',sources:'Sources and documentation',faq:'Frequently asked questions',cta:'Your next examination, with PerioVox.',ctaText:'Voice periodontal charting. Your everyday probe. Free today. Free forever.',note:'Information for dental professionals. Records and support tools require clinical review; they do not replace diagnosis or treatment decisions.'}
 } as const;
 
-const chartImage={image:'/periodontogram-final.png',width:2372,height:1240};
-const comparisonImage={image:'/media/comparativa-3.png',width:2336,height:1110};
+const chartImage={image:'/periodontogram-final.webp',socialImage:'/periodontogram-final.png',width:2372,height:1240};
+const comparisonImage={image:'/media/comparativa-3.webp',socialImage:'/media/comparativa-3.png',width:2336,height:1110};
 const orcaImage={image:'/media/logo-orca.png',width:252,height:120};
 
 export const guides:Record<Language,Guide[]>={

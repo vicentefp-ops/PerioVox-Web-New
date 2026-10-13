@@ -20,6 +20,11 @@ try{
   assert.equal(h1.length,1,`One H1 required: ${file}`);if(route.guide)assert.equal(text(h1[0][1]),route.guide.h1);
   assert(html.startsWith(`<!doctype html><html lang="${route.lang}">`),`Wrong document language: ${file}`);
   assert.equal(links.filter(l=>l.rel==='canonical').length,1);assert.equal(links.find(l=>l.rel==='canonical').href,expected.url);
+  if(route.kind!=='journal'){
+   const config=JSON.parse(await readFile('vercel.json','utf8'));
+   for(const source of [...(route.path==='/'?[]:[route.path.replace(/\/$/,'')]),route.path+'index.html'])assert(config.redirects.some(r=>r.source===source&&r.destination===route.path&&r.permanent===true),`Missing canonical redirect: ${source}`);
+  }
+  await access('dist'+new URL(expected.image).pathname);
   const alternates=links.filter(l=>l.rel==='alternate');assert.equal(alternates.length,3);
   const en=origin+(route.lang==='en'?route.path:route.alternate);const es=origin+(route.lang==='es'?route.path:route.alternate);
   assert.equal(alternates.find(l=>l.hreflang==='en')?.href,en);assert.equal(alternates.find(l=>l.hreflang==='es')?.href,es);assert.equal(alternates.find(l=>l.hreflang==='x-default')?.href,en);
@@ -47,7 +52,7 @@ try{
   const styles=links.filter(l=>l.rel==='stylesheet');assert(styles.length>=2,`Missing SSR styles: ${file}`);
   if(route.kind!=='home')assert(!links.some(l=>l.rel==='modulepreload'&&/\/App-/.test(l.href)),'Guides must not preload motion/video bundle');
   const words=text(html).split(/\s+/).length;if(route.guide)assert(words>=450,`Guide too short: ${file}`);
-  if(route.kind==='home'){assert(html.includes('/media/comparativa-3.png'));assert(html.includes('/media/comparativa-4.png'));assert(html.includes('/media/conversation-loop.mp4'));assert(html.includes('data-conversion="start_free"'))}
+  if(route.kind==='home'){assert(html.includes('/media/comparativa-3.webp'));assert(html.includes('/media/comparativa-4.webp'));assert(html.includes('/media/conversation-loop.mp4'));assert(html.includes('data-conversion="start_free"'))}
   results.push({path:route.path,language:route.lang,title,titleLength:title.length,descriptionLength:description.length,words,h1:text(h1[0][1]),canonical:expected.url,status:'pass'});
  }
  for(const route of siteRoutes){assert(siteRoutes.some(r=>r.path===route.alternate&&r.alternate===route.path),`Nonreciprocal translation: ${route.path}`)}

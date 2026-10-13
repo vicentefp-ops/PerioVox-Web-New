@@ -10,7 +10,7 @@ export const homeMeta={
 };
 export function metadata(route:SiteRoute){
  const data=route.kind==='home'?homeMeta[route.lang]:route.kind==='resources'?resourceCopy[route.lang]:route.kind==='journal'?journalCopy[route.lang]:route.guide!;
- return {title:data.title,description:data.description,url:ORIGIN+route.path,image:ORIGIN+(route.guide?.image??'/media/hero-poster.jpg'),imageAlt:route.guide?.imageAlt??(route.lang==='es'?'Registro periodontal por voz con PerioVox':'Voice periodontal charting with PerioVox')};
+ return {title:data.title,description:data.description,url:ORIGIN+route.path,image:ORIGIN+(route.guide?.socialImage??route.guide?.image??'/media/hero-poster.jpg'),imageAlt:route.guide?.imageAlt??(route.lang==='es'?'Registro periodontal por voz con PerioVox':'Voice periodontal charting with PerioVox')};
 }
 const escape=(value:string)=>value.replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]!));
 export function headMarkup(route:SiteRoute){
