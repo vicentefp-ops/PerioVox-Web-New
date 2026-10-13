@@ -6,6 +6,7 @@ import ChartScroll from './ChartScroll';
 import CookieConsent from './CookieConsent';
 import {homeSchema} from './seo';
 import {ResourcesTeaser,ResourceFooterLinks} from './ResourceLinks';
+import {manageVideoPlayback, type PlaybackState} from './video-playback';
 import './resources.css';
 
 const APP_URL='https://app.periovox.ai/';
@@ -41,19 +42,19 @@ function HowSteps({lang}:{lang:Language}) {
  </Reveal>)}</div>
 }
 function LoopVideo({src,poster,lang,className='',scale}:{src:string;poster:string;lang:Language;className?:string;scale?:MotionValue<number>}) {
- const ref=useRef<HTMLVideoElement>(null);const inView=useRef(false);const isHero=className==='hero-background-video';const [near,setNear]=useState(isHero);const [paused,setPaused]=useState(false);const [userStarted,setUserStarted]=useState(false);const [blocked,setBlocked]=useState(false);const [failed,setFailed]=useState(false);const reduce=useReducedMotion();const shouldPause=paused || (!!reduce && !userStarted);const showPlay=shouldPause || blocked || failed;
+ const ref=useRef<HTMLVideoElement>(null);const inView=useRef(false);const controller=useRef<ReturnType<typeof manageVideoPlayback>|null>(null);const isHero=className==='hero-background-video';const [near,setNear]=useState(isHero);const [paused,setPaused]=useState(false);const [userStarted,setUserStarted]=useState(false);const [playback,setPlayback]=useState<PlaybackState>('starting');const reduce=useReducedMotion();const shouldPause=paused || (!!reduce && !userStarted);const pauseRequested=useRef(shouldPause);pauseRequested.current=shouldPause;const showPlay=shouldPause || playback!=='playing';
  useEffect(()=>{
   const el=ref.current;if(!el)return;
-  // Set both properties before play, including after restoring a cached page.
-  el.defaultMuted=true;el.muted=true;
   const bounds=(el.parentElement ?? el).getBoundingClientRect();inView.current=bounds.bottom>-150&&bounds.top<window.innerHeight+150;setNear(inView.current);
-  const sync=()=>{el.muted=true;if(shouldPause || !inView.current || document.hidden){el.pause();return}el.play().catch(error=>{if(error.name==='NotAllowedError')setBlocked(true)})};
+  const playbackController=manageVideoPlayback(el,{canPlay:()=>!pauseRequested.current&&inView.current&&!document.hidden,onState:setPlayback});controller.current=playbackController;
+  const sync=()=>playbackController.sync();
   const observer=new IntersectionObserver(([entry])=>{inView.current=entry.isIntersecting;setNear(entry.isIntersecting);sync()},{rootMargin:'150px'});
   observer.observe(el.parentElement ?? el);
-  el.addEventListener('loadeddata',sync);el.addEventListener('canplay',sync);document.addEventListener('visibilitychange',sync);window.addEventListener('pageshow',sync);sync();
-  return()=>{observer.disconnect();el.removeEventListener('loadeddata',sync);el.removeEventListener('canplay',sync);document.removeEventListener('visibilitychange',sync);window.removeEventListener('pageshow',sync)};
- },[shouldPause,src]);
- return <><motion.video ref={ref} style={scale&&!reduce?{scale}:undefined} className={`${className}${failed?' video-error':''}`} src={src} poster={poster} preload={isHero?'metadata':'none'} muted loop playsInline autoPlay={near&&!shouldPause} aria-hidden="true" onPlaying={()=>{setBlocked(false);setFailed(false)}} onError={()=>setFailed(true)}/><button className="media-control" onClick={()=>{if(showPlay){setPaused(false);setUserStarted(true);setBlocked(false);if(failed){setFailed(false);ref.current?.load()}const el=ref.current;if(el){el.muted=true;el.play().catch(()=>setBlocked(true))}}else setPaused(true)}} aria-label={showPlay?copy[lang].play:copy[lang].pause}>{showPlay?<Play size={15}/>:<Pause size={15}/>}</button></>
+  document.addEventListener('visibilitychange',sync);window.addEventListener('pageshow',sync);
+  return()=>{observer.disconnect();playbackController.dispose();controller.current=null;document.removeEventListener('visibilitychange',sync);window.removeEventListener('pageshow',sync)};
+ },[src]);
+ useEffect(()=>{controller.current?.sync()},[shouldPause]);
+ return <><motion.video ref={ref} style={scale&&!reduce?{scale}:undefined} className={`${className}${playback==='error'?' video-error':''}`} src={src} poster={poster} preload={isHero?'auto':'none'} muted loop playsInline autoPlay={near&&!shouldPause} aria-hidden="true"/><button type="button" className="media-control" onClick={()=>{if(showPlay){pauseRequested.current=false;setPaused(false);setUserStarted(true);controller.current?.resume()}else{pauseRequested.current=true;setPaused(true);controller.current?.sync()}}} aria-label={showPlay?copy[lang].play:copy[lang].pause}>{showPlay?<Play size={15}/>:<Pause size={15}/>}</button></>
 }
 function Probe({lang}:{lang:Language}){
  const t=copy[lang];const [paused,setPaused]=useState(false);const reduce=useReducedMotion();
