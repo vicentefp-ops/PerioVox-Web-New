@@ -11,7 +11,7 @@
     "seo:check": "node scripts/check-seo.mjs && node scripts/check-analytics.mjs",
     "start": "node server/serve.mjs",
     "journal:setup": "node server/setup-journal.mjs",
-    "journal:check": "node --test server/journal.test.mjs server/journal-metadata.test.mjs server/journal-editor.test.mjs server/journal-bootstrap.test.mjs",
+    "journal:check": "node --test server/journal.test.mjs server/journal-metadata.test.mjs server/journal-editor.test.mjs server/journal-admin.test.mjs server/journal-bootstrap.test.mjs",
     "build:vercel": "npm run build && node scripts/prepare-vercel.mjs"
   },
   "dependencies": {

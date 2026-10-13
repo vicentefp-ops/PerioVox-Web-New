@@ -13,10 +13,11 @@ export default function JournalRichText({value,language,disabled,onChange,onUplo
  const editor=useEditor({
   extensions,content:value,contentType:'markdown',editable:!disabled,immediatelyRender:false,shouldRerenderOnTransaction:false,
   editorProps:{attributes:{id:'article-body',class:'editor-rich-content',role:'textbox','aria-multiline':'true','aria-labelledby':'article-body-label','aria-describedby':'article-body-help',spellcheck:'true'}},
-  onUpdate:({editor:instance})=>{const markdown=instance.getMarkdown();source.current=markdown;onChange(markdown)},
+  onUpdate:({editor:instance})=>{const markdown=instance.getMarkdown();if(markdown===source.current)return;source.current=markdown;onChange(markdown)},
  });
  useEffect(()=>{if(editor&&value!==source.current){source.current=value;editor.commands.setContent(value,{contentType:'markdown',emitUpdate:false})}},[editor,value]);
- useEffect(()=>{editor?.setEditable(!disabled)},[editor,disabled]);
+ // Locking the editor during a request changes UI state, not the article content.
+ useEffect(()=>{editor?.setEditable(!disabled,false)},[editor,disabled]);
  const state=useEditorState({editor,selector:({editor:instance})=>({
   heading:instance?.isActive('heading',{level:2})||false,subheading:instance?.isActive('heading',{level:3})||false,
   bold:instance?.isActive('bold')||false,italic:instance?.isActive('italic')||false,bulletList:instance?.isActive('bulletList')||false,
