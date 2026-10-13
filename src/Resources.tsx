@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {ArrowUpRight,Plus} from 'lucide-react';
 import {copy} from './translations';
-import {resourceCopy,type SiteRoute} from './resources-content';
+import {resourceCopy,published,type SiteRoute} from './resources-content';
 import {pageSchema} from './seo';
 import {ResourceCards,ResourceFooterLinks} from './ResourceLinks';
 import CookieConsent from './CookieConsent';
@@ -15,7 +15,7 @@ export default function Resources({route}:{route:SiteRoute}){
   <header className="site-header light resource-header"><div className="header-inner"><a className="brand" href={home} aria-label="PerioVox"><img src="/media/logo-periovox-transparent.svg" width="598" height="184" alt="PerioVox"/></a><nav className="resource-header-nav" aria-label={c.menu}><a href={home+'#how'}>{c.nav[0]}</a><a href={home+'#platform'}>{c.nav[1]}</a><a href={t.path} aria-current={!guide?'page':undefined}>{t.nav}</a><a href={lang==='es'?'/es/journal/':'/journal/'} className="journal-nav-link">Journal</a></nav><div className="header-actions"><div className="language-switch"><a href={lang==='es'?route.path:route.alternate} lang="es" hrefLang="es" aria-current={lang==='es'?'page':undefined}>ES</a><i>/</i><a href={lang==='en'?route.path:route.alternate} lang="en" hrefLang="en" aria-current={lang==='en'?'page':undefined}>EN</a></div><a className="login" data-conversion="start_free" href="https://app.periovox.ai/">{c.start}<ArrowUpRight size={15}/></a></div></div></header>
   <main id="main" className="resource-main section-wrap">
    <nav className="breadcrumbs" aria-label={lang==='es'?'Ruta de navegación':'Breadcrumb'}><ol><li><a href={home}>{t.home}</a></li><li>{guide?<a href={t.path}>{t.nav}</a>:<span aria-current="page">{t.nav}</span>}</li>{guide&&<li><span aria-current="page">{guide.h1}</span></li>}</ol></nav>
-   <header className="resource-intro"><p className="eyebrow"><span/>{guide?.label??t.label}</p><h1>{guide?.h1??t.heading}</h1><p className="resource-summary">{guide?.summary??t.intro}</p>{guide&&<div className="resource-byline"><span>{t.by}</span><time dateTime="2026-10-11">{t.updated}</time></div>}</header>
+   <header className="resource-intro"><p className="eyebrow"><span/>{guide?.label??t.label}</p><h1>{guide?.h1??t.heading}</h1><p className="resource-summary">{guide?.summary??t.intro}</p>{guide&&<div className="resource-byline"><span>{t.by}</span><time dateTime={published}>{lang==='es'?'Publicado el ':'Published '}{new Intl.DateTimeFormat(lang==='es'?'es-ES':'en-US',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(published))}</time></div>}</header>
    {guide?<article aria-label={guide.h1}>
     <figure className={`guide-visual guide-visual--${guide.id}`}><img src={guide.image} width={guide.width} height={guide.height} alt={guide.imageAlt} loading="lazy" decoding="async"/><figcaption>{guide.caption}</figcaption></figure>
     <div className="guide-layout"><aside className="guide-toc"><nav aria-label={t.contents}><span>{t.contents}</span><ol>{guide.sections.map(section=><li key={section.id}><a href={'#'+section.id}>{section.title}</a></li>)}</ol></nav></aside><div className="guide-body">
