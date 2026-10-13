@@ -5,6 +5,8 @@
   "installCommand": "npm ci",
   "outputDirectory": "dist",
   "redirects": [
+    {"source": "/", "has": [{"type": "host", "value": "www.periovox.ai"}], "destination": "https://periovox.ai/", "permanent": true},
+    {"source": "/:path*/", "has": [{"type": "host", "value": "www.periovox.ai"}], "destination": "https://periovox.ai/:path*/", "permanent": true},
     {"source": "/:path*", "has": [{"type": "host", "value": "www.periovox.ai"}], "destination": "https://periovox.ai/:path*", "permanent": true}
   ],
   "rewrites": [
