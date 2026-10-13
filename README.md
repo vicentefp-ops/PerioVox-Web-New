@@ -20,6 +20,8 @@ The public website is deployed to Vercel using `vercel.json`. The Journal API, p
 
 The origin requires Node.js 24 and a private writable data directory **outside the deployment directory**. Set `JOURNAL_DATA_DIR` on the server. Optional `JOURNAL_ORIGIN`, `JOURNAL_INTERNAL_HOSTS` and `JOURNAL_ASSET_ORIGIN` configure the reverse proxy and public asset URLs.
 
+The production-only `INDEXNOW_KEY` configuration publishes the ownership proof required by IndexNow at build time. With that variable available, run `node scripts/submit-indexnow.mjs` to notify participating search engines of the public sitemap URLs. Submission does not confirm indexing or rankings and does not replace Google Search Console.
+
 Articles, credentials, sessions, uploads and Gemini settings are private runtime data. Never commit or expose `.journal-data`, `.env` files, deployment credentials or migration keys. Back up persistent data before updating the origin. The encrypted migration bootstrap is used only for the initial transfer and never overwrites an existing database.
 
 ## Journal

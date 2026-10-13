@@ -272,6 +272,19 @@
           "value": "public, max-age=86400"
         }
       ]
+    },
+    {
+      "source": "/:indexnow([a-f0-9]{48}).txt",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
     }
   ]
 }
