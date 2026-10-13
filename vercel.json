@@ -16,7 +16,6 @@
     {"source": "/journal/:path*", "destination": "https://journal-backend.periovox.ai/journal/:path*"},
     {"source": "/es/journal/:path*", "destination": "https://journal-backend.periovox.ai/es/journal/:path*"},
     {"source": "/journal-media/:path*", "destination": "https://journal-backend.periovox.ai/journal-media/:path*"},
-    {"source": "/sitemap.xml", "destination": "https://journal-backend.periovox.ai/sitemap.xml"},
     {"source": "/sitemap-journal.xml", "destination": "https://journal-backend.periovox.ai/sitemap-journal.xml"}
   ],
   "headers": [

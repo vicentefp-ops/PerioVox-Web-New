@@ -1,0 +1,16 @@
+node_modules/
+dist/
+dist-server/
+.DS_Store
+.vercel/
+.release-private
+.deployment-backups
+.journal-data
+.env
+.env.*
+*.local
+review/
+journal-seed.enc
+CONTINUIDAD.md
+SEO_GEO_PLAN.md
+SEO_LANZAMIENTO_*.md
