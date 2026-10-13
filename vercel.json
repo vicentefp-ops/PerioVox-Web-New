@@ -7,7 +7,9 @@
   "redirects": [
     {"source": "/", "has": [{"type": "host", "value": "www.periovox.ai"}], "destination": "https://periovox.ai/", "permanent": true},
     {"source": "/:path*/", "has": [{"type": "host", "value": "www.periovox.ai"}], "destination": "https://periovox.ai/:path*/", "permanent": true},
-    {"source": "/:path*", "has": [{"type": "host", "value": "www.periovox.ai"}], "destination": "https://periovox.ai/:path*", "permanent": true}
+    {"source": "/:path*", "has": [{"type": "host", "value": "www.periovox.ai"}], "destination": "https://periovox.ai/:path*", "permanent": true},
+    {"source": "/", "has": [{"type": "cookie", "key": "pv_web_language", "value": "es"}], "destination": "/es/", "permanent": false},
+    {"source": "/", "has": [{"type": "header", "key": "accept-language", "value": "^[eE][sS](?:-[A-Za-z0-9]+)*(?:[,;].*)?$"}], "missing": [{"type": "cookie", "key": "pv_web_language", "value": "en"}], "destination": "/es/", "permanent": false}
   ],
   "rewrites": [
     {"source": "/api/journal/:path*", "destination": "https://journal-backend.periovox.ai/api/journal/:path*"},

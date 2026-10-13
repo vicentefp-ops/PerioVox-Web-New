@@ -12,6 +12,8 @@ npm start
 
 The complete local site and Journal run at http://127.0.0.1:3201. Use `npm run dev` for the development server on port 3200.
 
+At the production homepage, Spanish as the browser's primary language redirects to `/es/`; other languages use English at `/`. An explicit ES/EN selection is remembered. Language-specific URLs remain directly accessible for visitors and search engines.
+
 ## Deployment
 
 The public website is deployed to Vercel using `vercel.json`. The Journal API, public articles, editorial interface, uploaded images and dynamic sitemap are served through a persistent Node.js origin. Keep the origin deployment and Vercel routes configured together.
