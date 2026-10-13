@@ -1,290 +1,84 @@
-export const translations = {
-  en: {
-    nav: {
-      features: "Features",
-      workflow: "Workflow",
-      benefits: "Benefits",
-      openApi: "Open API",
-      contact: "Contact",
-      login: "Log in",
-    },
-    hero: {
-      title1: "Periodontal charting.",
-      title2: "Just by speaking.",
-      subtitle: "PerioVoxAI turns natural speech into complete periodontal charts, reports, and clinical comparisons — instantly.",
-      cta: "Start now — It's free",
-      footer: "No assistant. No hardware. Runs in your browser.",
-    },
-    problem: {
-      tag: "The old way is broken",
-      title: "Traditional periodontal charting still feels like a workaround.",
-      desc: "It often relies on a second person, interrupts the exam, and can be tied to expensive hardware systems. That friction is exactly why full charting gets avoided.",
-      cardTitle: "Every extra handoff makes full periodontal charting less likely to happen at the right moment.",
-      cardDesc: "The problem is not the clinical importance. The problem is the workflow burden. PerioVoxAI removes the dependency chain that makes the process feel slower than it should.",
-      features: [
-        { title: "Assistant dependency", desc: "Traditional perio charting often assumes a second person is available to capture each value." },
-        { title: "Interrupted workflow", desc: "Calling, repeating, confirming, and correcting measurements breaks the rhythm of the exam." },
-        { title: "Time consuming", desc: "Manual data entry adds minutes to every patient visit, reducing overall clinical efficiency." },
-        { title: "Incomplete data", desc: "Due to friction, practitioners often only record pathological pockets, losing baseline data." }
-      ]
-    },
-    voice: {
-      tag: "Voice-First",
-      title: "Press. Speak. Done.",
-      desc: "A frictionless experience designed for the clinical reality. Tap the button and dictate naturally while examining the patient.",
-      buttonText: "This is the button that reinvents periodontal charting. Powered by AI."
-    },
-    approach: {
-      tag: "The PerioVoxAI Approach",
-      title: "A radically simpler path from speech to structured chart.",
-      desc: "The workflow feels obvious the first time you see it. Speak the measurements, let AI structure the data, and watch the chart complete itself.",
-      steps: [
-        { title: "Speak periodontal measurements", desc: "Dictate pocket depths, recession values, bleeding, mobility, furcation, and notes as part of the normal exam." },
-        { title: "AI interprets and structures the data", desc: "PerioVoxAI maps spoken sequences, applies context, understands numbering preferences, and keeps the workflow coherent in real time." },
-        { title: "The periodontal chart is generated automatically", desc: "The chart updates instantly and is ready for documentation, reporting, and longitudinal review." }
-      ]
-    },
-    probe: {
-      tag: "Zero Hardware",
-      title: "Periodontal Probe 2.0",
-      desc: "Your everyday periodontal probe, like never before.",
-      subdesc: "PerioVoxAI requires absolutely no additional hardware. 0% Investment."
-    },
-    natural: {
-      tag: "Why voice changes periodontal charting forever",
-      title: "A natural conversation instead of a rigid command system.",
-      desc: "PerioVoxAI is designed to understand the way dentists actually speak while probing. You do not have to memorize a robotic syntax or stop the exam to operate software.",
-      list: [
-        "Speak naturally while you probe.",
-        "Make conversational corrections at any moment.",
-        "Update previous teeth without restarting the flow.",
-        "Work closer to clinical thinking than to data entry."
-      ],
-      conclusion: "The goal is simple: probe normally, speak naturally, and let the system handle the structure.",
-      examples: {
-        title: "Natural interaction examples",
-        desc: "Create a complete periodontal chart on your own. No assistant. No hardware. Just speak.",
-        quotes: [
-          "“Thirty-six: three, two, three. Bleeding distal.”",
-          "“Actually, add bleeding on the mesial of thirty-five.”",
-          "“Mobility grade one on eleven. Furcation on twenty-six.”"
-        ]
-      }
-    },
-    periodontogram: {
-      title: "Complete charting. Zero friction.",
-      desc: "A professional-grade periodontogram, populated instantly by your voice."
-    },
-    changeDetection: {
-      title: "AI-Powered Change Detection",
-      desc: "PerioVox uses AI to compare periodontal charts across multiple visits, automatically identifying and highlighting meaningful changes in a clear and structured way. Track progression, detect improvement, and better understand how your patients evolve over time."
-    },
-    language: {
-      title: "Global reach, local comfort.",
-      desc: "PerioVoxAI speaks your language. The interface is available in English and Spanish, while our advanced AI dictation engine supports over 40 languages worldwide.",
-      interface: "Interface",
-      dictation: "Dictation support",
-      langs: ['English', 'Spanish', 'French', 'German', 'Italian', 'Portuguese', '+35 more']
-    },
-    langDiagram: {
-      title: "Lang diagram. Easier than ever.",
-      desc: "Never been so simple to generate. Key data is automatically pre-filled from your periodontal chart, requiring only minimal clicks to complete."
-    },
-    idra: {
-      title: "IDRA, simple and visual.",
-      desc: "Complex indices like IDRA now take just a few clicks. Highly visual, incredibly intuitive, and built directly from your existing clinical data."
-    },
-    patientReports: {
-      title: "AI-Generated Patient Reports",
-      desc: "Provide patients with instant access to their periodontal health summary via QR code, improving understanding and supporting treatment adherence."
-    },
-    openApi: {
-      title: "Built for Integration",
-      desc: "PerioVox provides a flexible API that enables seamless integration with external platforms, allowing clinics, software providers, and partners to incorporate AI-powered periodontal analysis into their workflows. We are open to collaborations with clinics, institutions, and industry partners."
-    },
-    nomenclature: {
-      title: "Standardized. Your way.",
-      desc: "Switch seamlessly between ADA and FDI nomenclature systems."
-    },
-    csvExport: {
-      tag: "Research & Audits",
-      title: "Export to .csv. Go beyond clinical use.",
-      desc: "Beyond daily clinical use, PerioVox helps professionals who want to go further by allowing periodontogram exports in .csv format for audits, case reviews, and research workflows."
-    },
-    benefits: {
-      list: [
-        { title: "No assistant needed", desc: "Regain independence in your charting workflow." },
-        { title: "No hardware required", desc: "Use the microphone you already have." },
-        { title: "Works in browser", desc: "Zero installation. Always up to date." },
-        { title: "Clinical workflow", desc: "Designed by dentists, for dentists." }
-      ]
-    },
-    contact: {
-      title: "We're here to help",
-      desc: "Have suggestions, need assistance, or want to collaborate? Reach out to our team directly.",
-      button: "info@periovox.ai",
-      whatsapp: "WhatsApp",
-      whatsappMsg: "Chat with us"
-    },
-    cta: {
-      title: "Start using PerioVoxAI for free",
-      button: "Create free account"
-    },
-    footer: {
-      brand: "Voice-first periodontal charting for modern dental teams.",
-      product: "Product",
-      legal: "Legal",
-      terms: "Terms of Use",
-      privacy: "Privacy Notice",
-      cookiePolicy: "Cookie Policy",
-      cookieSettings: "Cookie Settings",
-      disclaimerTitle: "Professional Use Disclaimer",
-      disclaimer: "PerioVoxAI is an informational support tool only and does not replace professional judgment, diagnosis, treatment planning, or medical/dental decision-making.",
-      rights: "PerioVoxAI. All rights reserved."
-    }
-  },
-  es: {
-    nav: {
-      features: "Características",
-      workflow: "Flujo de trabajo",
-      benefits: "Beneficios",
-      openApi: "Open API",
-      contact: "Contacto",
-      login: "Iniciar sesión",
-    },
-    hero: {
-      title1: "Periodontograma.",
-      title2: "Solo hablando.",
-      subtitle: "PerioVoxAI convierte el habla natural en periodontogramas completos, informes y comparativas clínicas, al instante.",
-      cta: "Empieza ahora — Es gratis",
-      footer: "Sin asistente. Sin hardware. Funciona en tu navegador.",
-    },
-    problem: {
-      tag: "La forma antigua está obsoleta",
-      title: "El periodontograma tradicional sigue pareciendo un apaño.",
-      desc: "A menudo depende de una segunda persona, interrumpe el examen y puede estar atado a sistemas de hardware costosos. Esa fricción es exactamente la razón por la que se evita el periodontograma completo.",
-      cardTitle: "Cada paso adicional hace que el periodontograma completo sea menos probable que ocurra en el momento adecuado.",
-      cardDesc: "El problema no es la importancia clínica. El problema es la carga de trabajo. PerioVoxAI elimina la cadena de dependencia que hace que el proceso se sienta más lento de lo que debería.",
-      features: [
-        { title: "Dependencia de asistente", desc: "El periodontograma tradicional a menudo asume que hay una segunda persona disponible para capturar cada valor." },
-        { title: "Flujo de trabajo interrumpido", desc: "Llamar, repetir, confirmar y corregir medidas rompe el ritmo del examen." },
-        { title: "Consume mucho tiempo", desc: "La entrada manual de datos añade minutos a cada visita del paciente, reduciendo la eficiencia clínica general." },
-        { title: "Datos incompletos", desc: "Debido a la fricción, los profesionales a menudo solo registran bolsas patológicas, perdiendo datos de referencia." }
-      ]
-    },
-    voice: {
-      tag: "Voz primero",
-      title: "Presiona. Habla. Listo.",
-      desc: "Una experiencia sin fricción diseñada para la realidad clínica. Toca el botón y dicta de forma natural mientras examinas al paciente.",
-      buttonText: "Este es el botón que reinventa el periodontograma. Impulsado por IA."
-    },
-    approach: {
-      tag: "El enfoque PerioVoxAI",
-      title: "Un camino radicalmente más simple del habla al gráfico estructurado.",
-      desc: "El flujo de trabajo parece obvio la primera vez que lo ves. Di las medidas, deja que la IA estructure los datos y observa cómo se completa el gráfico.",
-      steps: [
-        { title: "Di las medidas periodontales", desc: "Dicta profundidades de bolsa, valores de recesión, sangrado, movilidad, furcación y notas como parte del examen normal." },
-        { title: "La IA interpreta y estructura los datos", desc: "PerioVoxAI mapea secuencias habladas, aplica contexto, entiende las preferencias de numeración y mantiene el flujo de trabajo coherente en tiempo real." },
-        { title: "El periodontograma se genera automáticamente", desc: "El gráfico se actualiza al instante y está listo para la documentación, informes y revisión longitudinal." }
-      ]
-    },
-    probe: {
-      tag: "Cero Hardware",
-      title: "Sonda Periodontal 2.0",
-      desc: "Tu sonda periodontal de siempre, como nunca antes.",
-      subdesc: "PerioVoxAI no requiere absolutamente ningún hardware adicional. 0% Inversión."
-    },
-    natural: {
-      tag: "Por qué la voz cambia el periodontograma para siempre",
-      title: "Una conversación natural en lugar de un sistema de comandos rígido.",
-      desc: "PerioVoxAI está diseñado para entender la forma en que los dentistas realmente hablan mientras sondan. No tienes que memorizar una sintaxis robótica ni detener el examen para operar el software.",
-      list: [
-        "Habla naturalmente mientras sondas.",
-        "Haz correcciones conversacionales en cualquier momento.",
-        "Actualiza dientes anteriores sin reiniciar el flujo.",
-        "Trabaja más cerca del pensamiento clínico que de la entrada de datos."
-      ],
-      conclusion: "El objetivo es simple: sonda normalmente, habla naturalmente y deja que el sistema maneje la estructura.",
-      examples: {
-        title: "Ejemplos de interacción natural",
-        desc: "Crea un periodontograma completo por tu cuenta. Sin asistente. Sin hardware. Solo habla.",
-        quotes: [
-          "“Treinta y seis: tres, dos, tres. Sangrado distal.”",
-          "“En realidad, añade sangrado en la mesial del treinta y cinco.”",
-          "“Movilidad grado uno en el once. Furcación en el veintiséis.”"
-        ]
-      }
-    },
-    periodontogram: {
-      title: "Periodontograma completo. Cero fricción.",
-      desc: "Un periodontograma de nivel profesional, poblado al instante por tu voz."
-    },
-    changeDetection: {
-      title: "Detección de cambios impulsada por IA",
-      desc: "PerioVox utiliza IA para comparar periodontogramas a lo largo de múltiples visitas, identificando y resaltando automáticamente cambios significativos de forma clara y estructurada. Realiza un seguimiento de la progresión, detecta mejoras y comprende mejor cómo evolucionan tus pacientes con el tiempo."
-    },
-    language: {
-      title: "Alcance global, comodidad local.",
-      desc: "PerioVoxAI habla tu idioma. La interfaz está disponible en inglés y español, mientras que nuestro avanzado motor de dictado por IA admite más de 40 idiomas en todo el mundo.",
-      interface: "Interfaz",
-      dictation: "Soporte de dictado",
-      langs: ['Inglés', 'Español', 'Francés', 'Alemán', 'Italiano', 'Portugués', '+35 más']
-    },
-    langDiagram: {
-      title: "Diagrama de Lang. Más fácil que nunca.",
-      desc: "Nunca ha sido tan sencillo de generar. Los datos clave se rellenan automáticamente desde tu periodontograma, requiriendo solo clics mínimos para completar."
-    },
-    idra: {
-      title: "IDRA, simple y visual.",
-      desc: "Índices complejos como IDRA ahora toman solo unos pocos clics. Altamente visual, increíblemente intuitivo y construido directamente a partir de tus datos clínicos existentes."
-    },
-    patientReports: {
-      title: "Informes de pacientes generados por IA",
-      desc: "Proporciona a los pacientes acceso instantáneo a su resumen de salud periodontal mediante código QR, mejorando la comprensión y apoyando la adherencia al tratamiento."
-    },
-    openApi: {
-      title: "Diseñado para la integración",
-      desc: "PerioVox proporciona una API flexible que permite una integración perfecta con plataformas externas, permitiendo a clínicas, proveedores de software y socios incorporar el análisis periodontal impulsado por IA en sus flujos de trabajo. Estamos abiertos a colaboraciones con clínicas, instituciones y socios de la industria."
-    },
-    nomenclature: {
-      title: "Estandarizado. A tu manera.",
-      desc: "Cambia sin problemas entre los sistemas de nomenclatura ADA y FDI."
-    },
-    csvExport: {
-      tag: "Investigación y Auditorías",
-      title: "Exportación a .csv. Ve más allá del uso clínico.",
-      desc: "Más allá del uso clínico diario, PerioVox ayuda a los profesionales que quieren ir más allá al permitir exportaciones de periodontogramas en formato .csv para auditorías, revisiones de casos y flujos de trabajo de investigación."
-    },
-    benefits: {
-      list: [
-        { title: "No necesitas asistente", desc: "Recupera la independencia en tu flujo de trabajo de periodontograma." },
-        { title: "No requiere hardware", desc: "Usa el micrófono que ya tienes." },
-        { title: "Funciona en el navegador", desc: "Cero instalación. Siempre actualizado." },
-        { title: "Flujo clínico", desc: "Diseñado por dentistas, para dentistas." }
-      ]
-    },
-    contact: {
-      title: "Estamos aquí para ayudar",
-      desc: "¿Tienes sugerencias, necesitas asistencia o quieres colaborar? Contacta directamente con nuestro equipo.",
-      button: "info@periovox.ai",
-      whatsapp: "WhatsApp",
-      whatsappMsg: "Chatea con nosotros"
-    },
-    cta: {
-      title: "Empieza a usar PerioVoxAI gratis",
-      button: "Crear cuenta gratis"
-    },
-    footer: {
-      brand: "Periodontograma por voz para equipos dentales modernos.",
-      product: "Producto",
-      legal: "Legal",
-      terms: "Términos de uso",
-      privacy: "Aviso de privacidad",
-      cookiePolicy: "Política de cookies",
-      cookieSettings: "Configuración de cookies",
-      disclaimerTitle: "Descargo de responsabilidad de uso profesional",
-      disclaimer: "PerioVoxAI es solo una herramienta de apoyo informativo y no reemplaza el juicio profesional, diagnóstico, planificación de tratamiento o toma de decisiones médicas/dentales.",
-      rights: "PerioVoxAI. Todos los derechos reservados."
-    }
-  }
-};
+export type Language = 'es' | 'en';
+export const copy = {
+ es: {
+  nav:['Cómo funciona','La plataforma','EMS & GBT','Integraciones'], start:'Empezar gratis', login:'Entrar', menu:'Menú',
+  heroLabel:'PERIODONTOGRAMA POR VOZ GRATIS', hero:['Dale voz','a tu sonda.'], forever:'Gratis hoy. Gratis siempre.',
+  heroText:'Explora y dicta. La inteligencia artificial de PerioVox organiza tu periodontograma, te ayuda a comparar visitas y genera informes para tus pacientes.', discover:'Descubre PerioVox',
+  noHardware:'Sin hardware adicional', browser:'Directamente en tu navegador', professionals:'Para profesionales dentales',
+  introLabel:'EL GESTO MÁS NATURAL', introTitle:['Tú haces el sondaje.','Tu voz hace el resto.'],
+  introText:'PerioVox es un software gratuito de periodontogramas por voz para dentistas, higienistas y periodoncistas. Explora con tu sonda habitual y dicta las medidas: la IA organiza el registro periodontal digital. Sin depender de otra persona para anotar ni interrumpir la exploración para escribir.',
+  steps:[['01','Sonda','Tu sonda habitual. Tu forma de explorar.'],['02','Dicta','Activa el micrófono. Dicta medidas, hallazgos y correcciones, con naturalidad.'],['03','Revisa','Una referencia completa para futuras visitas. Los datos organizados y el criterio clínico, siempre tuyo.']],
+  voiceLabel:'LENGUAJE NATURAL',voiceTitle:'Habla como trabajas.', voiceText:'Profundidades de sondaje, margen gingival, sangrado, supuración, placa, movilidad, furcaciones y notas clínicas. La IA interpreta el contexto y organiza tus registros en tiempo real.',
+  examples:['«Dieciocho: cuatro, tres, tres.»','«Añade sangrado en distal del diecisiete.»','«Corrige el vestibular del dieciséis: cuatro, cuatro, seis.»'],
+  voiceNote:'Puedes corregir un dato o volver a un diente anterior sin reiniciar el registro.',
+  probeLabel:'SONDA PERIODONTAL 2.0',probeTitle:['La de siempre.','Como nunca.'],probeText:'Tu sonda periodontal habitual, con una nueva forma de registrar. PerioVox no requiere absolutamente ningún hardware adicional.',probeFoot:'0% hardware investment. 100% your probe.',
+  globalLabel:'TU VOZ NO TIENE FRONTERAS',globalTitle:['97 idiomas.','Una misma idea.'],globalText:'Dicta en tu idioma. PerioVox utiliza Gemini Live para entenderte y estructurar tus registros.',interface:'Interfaz disponible en español, inglés y francés.',
+  platformLabel:'INTELIGENCIA ARTIFICIAL PARA TU CLÍNICA',platformTitle:'IA para registrar, comparar y explicar.', platformText:'La IA interpreta tu dictado y estructura los datos, destaca cambios entre visitas y genera informes comprensibles para tus pacientes. Herramientas conectadas en una plataforma gratuita.',
+  tools:[
+   {id:'evolution',name:'Evolución',title:'Cada visita cuenta.',text:'Compara periodontogramas de distintas visitas. La IA identifica y destaca cambios relevantes para ayudarte a revisar la evolución de tu paciente.',detail:'Comparativas entre visitas · Revisión longitudinal',image:'/periodontogram-final.png',alt:'Periodontograma real de PerioVox para la revisión de registros clínicos'},
+   {id:'comparisons',name:'Comparativas',title:'Los cambios, a la vista.',text:'Compara visitas y revisa cómo cambian la profundidad de sondaje, el sangrado y la placa. Consulta las diferencias por pieza y la evolución de los registros a lo largo del tiempo.',detail:'Resumen de indicadores · Cambios por pieza · Evolución entre visitas',image:'/media/comparativa-3.png',alt:'Comparativa real de PerioVox con profundidad media, sangrado, placa y cambios de sondaje por pieza'},
+   {id:'lang',name:'Lang',title:'El riesgo, a la vista.',text:'Genera el diagrama de Lang a partir de los datos de tu periodontograma. La información disponible se precarga para que completes la evaluación con pocos clics.',detail:'Diagrama de Lang · Datos clínicos conectados',image:'/media/lang.png',alt:'Diagrama de Lang en PerioVox'},
+   {id:'idra',name:'IDRA',title:'También alrededor del implante.',text:'Trabaja con el índice IDRA en un formato visual e intuitivo, conectado con los datos clínicos disponibles para completar la evaluación del riesgo.',detail:'Evaluación del riesgo implantario · Índice IDRA',image:'/media/idra.png',alt:'Índice IDRA en PerioVox'},
+   {id:'reports',name:'Informes & QR',title:'La información, con tu paciente.',text:'Genera informes para pacientes con ayuda de IA. Un código QR les permite acceder a un resumen de su salud periodontal y consultar la información después de la visita.',detail:'Informe para el paciente · Acceso mediante QR',image:'/media/report-1-en.png',alt:'Ejemplo de informe periodontal para pacientes de PerioVox'}
+  ],
+  comparisonCaptions:['Resumen y cambios por pieza','Evolución entre visitas'],comparisonTrendAlt:'Gráfica real de PerioVox con la evolución de la profundidad media de sondaje entre visitas',comparisonEnlarge:'Ampliar imagen',
+  standardsLabel:'TU NOMENCLATURA',standardsTitle:'ADA o FDI. Tú eliges.',standardsText:'Cambia entre los sistemas de numeración ADA y FDI y trabaja con la nomenclatura que utilizas en tu clínica.',
+  exportLabel:'AUDITORÍA E INVESTIGACIÓN',exportTitle:['Tus datos pueden','llegar más lejos.'],exportText:'Exporta tus periodontogramas en formato CSV para revisar casos, realizar auditorías y trabajar en proyectos de investigación.',exportNote:'Registros estructurados. Datos que puedes llevarte.',
+  patientLabel:'EXPLICAR TAMBIÉN ES CUIDAR',patientTitle:['Del registro','a la conversación.'],patientText:'Los datos de la exploración, delante de los dos. Una referencia visual para explicar, preguntar y resolver dudas.',patientLink:'Descubre los informes para pacientes',
+  emsLabel:'UNA CONFIANZA QUE NOS IMPULSA',emsTitle:'EMS ha confiado en PerioVox.',emsText:'PerioVox incorpora opciones de trabajo basadas en el protocolo Guided Biofilm Therapy de EMS. Una conexión entre registro periodontal y cuidado preventivo.',markets:'Protocolo GBT de EMS, disponible en determinados mercados.',gbtLink:'Conoce Guided Biofilm Therapy',
+  integrationLabel:'PARA EMPRESAS DE SOFTWARE DENTAL',integrationTitle:['Tu software.','Nuestra voz.'],integrationText:'PerioVox está preparado para integrarse con otros programas de gestión clínica. Incorpora el registro periodontal por voz como plugin y llévalo al entorno que tus usuarios ya conocen.',integrationCta:'Hablemos de integración',orcaLabel:'UNA COLABORACIÓN QUE NOS CONECTA',orcaTitle:'Orca × PerioVox',orca:'Ya colaboramos con Orca, el software de gestión clínica basado en inteligencia artificial, que ha apostado por incorporar PerioVox como plugin en su plataforma.',orcaLink:'Conoce Orca',
+  faqLabel:'RESPUESTAS CLARAS',faqTitle:'Antes de empezar.',faq:[
+   ['¿Qué es PerioVox?','PerioVox es una plataforma de registro periodontal por voz con inteligencia artificial para profesionales dentales. Convierte las medidas dictadas durante la exploración en un periodontograma digital estructurado.'],
+   ['¿Es gratis? ¿Y lo seguirá siendo?','Sí. PerioVox es gratuito y seguirá siéndolo. Puedes crear tu cuenta y usar la plataforma sin comprar hardware adicional.'],
+   ['¿Necesito una sonda especial, un asistente o instalar algo?','No necesitas una sonda especial ni una segunda persona que anote las medidas. Utiliza tu sonda habitual y el micrófono de un dispositivo compatible. PerioVox funciona directamente en el navegador.'],
+   ['¿Qué puedo registrar con la voz?','Puedes dictar profundidades de sondaje, margen gingival y recesión, sangrado, supuración, placa, movilidad, furcaciones y notas clínicas. También puedes indicar correcciones y volver a dientes anteriores. Revisa siempre que el registro refleje tu exploración.'],
+   ['¿En qué idiomas puedo utilizarlo?','El dictado por voz entiende 97 idiomas. La interfaz de la aplicación está disponible en español, inglés y francés. La web está disponible en español e inglés.'],
+   ['¿Puedo comparar visitas y generar informes?','Sí. PerioVox permite comparar periodontogramas de distintas visitas, revisar cambios, trabajar con los diagramas Lang e IDRA, generar informes para pacientes con acceso por QR y exportar registros en CSV.'],
+   ['¿Dónde está disponible el protocolo GBT de EMS?','Las opciones basadas en el protocolo Guided Biofilm Therapy de EMS están disponibles en determinados mercados. La disponibilidad depende del país. El profesional decide y valida el protocolo adecuado para cada caso.'],
+   ['¿Puede incorporarse a un software de gestión de clínicas?','Sí. PerioVox está preparado para integrarse con otros programas de gestión clínica como plugin. Ya existe una colaboración con Orca, un software de gestión clínica basado en inteligencia artificial, que ha acordado incorporar PerioVox a su plataforma. Escríbenos a info@periovox.ai para hablar de tu integración.']
+  ],
+  finalLabel:'LA PRÓXIMA EXPLORACIÓN PUEDE SER DIFERENTE',finalTitle:['Tu sonda ya está lista.','Tu voz también.'],finalText:'El registro periodontal por voz, al alcance de todos.',
+  contact:'Hablemos',contactText:'¿Una duda, una idea o una propuesta? Estamos aquí.',whatsapp:'Contactar por WhatsApp',footerLine:'Diseñado por dentistas. Para profesionales de todo el mundo.',
+  terms:'Condiciones de uso',privacy:'Privacidad',cookies:'Política de cookies',cookieSettings:'Configurar cookies',
+  disclaimer:'PerioVox es una herramienta de apoyo informativo para profesionales. No sustituye el juicio clínico, el diagnóstico ni las decisiones de tratamiento.',
+  play:'Reproducir vídeo',pause:'Pausar vídeo', probePause:'Pausar animación de la sonda',probePlay:'Reanudar animación de la sonda',
+  cookie:{title:'Tu privacidad, a tu manera.',text:'Utilizamos almacenamiento necesario para recordar tus preferencias. Solo activamos la analítica si lo autorizas.',accept:'Aceptar todas',reject:'Rechazar opcionales',manage:'Configurar',save:'Guardar preferencias',close:'Cerrar preferencias',categories:['Necesarias','Preferencias','Analítica','Publicidad'],descriptions:['Recuerdan tu elección de consentimiento. Siempre activas.','Permiten recordar ajustes opcionales de la experiencia.','Nos ayudan a comprender el uso de la web. Google Analytics solo se activa con tu permiso.','Permiten medición publicitaria cuando exista. No hay servicios publicitarios activos en esta web.']}
+ },
+ en: {
+  nav:['How it works','The platform','EMS & GBT','Integrations'],start:'Start free',login:'Log in',menu:'Menu',
+  heroLabel:'FREE VOICE PERIODONTAL CHARTING',hero:['Give your','probe a voice.'],forever:'Free today. Free forever.',heroText:'Probe and speak. PerioVox’s artificial intelligence structures your periodontal chart, helps you compare visits and generates reports for your patients.',discover:'Discover PerioVox',
+  noHardware:'No extra hardware',browser:'Right in your browser',professionals:'For dental professionals',
+  introLabel:'THE MOST NATURAL GESTURE',introTitle:['You do the probing.','Your voice does the rest.'],introText:'PerioVox is free voice periodontal charting software for dentists, dental hygienists and periodontists. Examine with your everyday probe and dictate measurements: AI organizes the digital periodontal record. Without relying on another person to record each value or stopping the exam to type.',
+  steps:[['01','Probe','Your everyday probe. Your way of examining.'],['02','Speak','Turn on the microphone. Dictate measurements, findings and corrections, naturally.'],['03','Review','A complete baseline for future visits. Structured data, with clinical judgment staying with you.']],
+  voiceLabel:'NATURAL LANGUAGE',voiceTitle:'Speak the way you work.',voiceText:'Probing depths, gingival margin, bleeding, suppuration, plaque, mobility, furcation and clinical notes. AI interprets the context and structures your records in real time.',examples:['“Eighteen: four, three, three.”','“Add bleeding on the distal of seventeen.”','“Correct the buccal of sixteen: four, four, six.”'],voiceNote:'Correct a value or return to a previous tooth without restarting the chart.',
+  probeLabel:'PERIODONTAL PROBE 2.0',probeTitle:['Your everyday probe.','Like never before.'],probeText:'Your usual periodontal probe, with a new way to chart. PerioVox requires absolutely no additional hardware.',probeFoot:'0% hardware investment. 100% your probe.',
+  globalLabel:'YOUR VOICE KNOWS NO BORDERS',globalTitle:['97 languages.','One simple idea.'],globalText:'Dictate in your language. PerioVox uses Gemini Live to understand you and structure your records.',interface:'App interface available in Spanish, English and French.',
+  platformLabel:'ARTIFICIAL INTELLIGENCE FOR YOUR PRACTICE',platformTitle:'AI to chart, compare and explain.',platformText:'AI interprets your dictation and structures the data, highlights changes between visits and generates clear reports for your patients. Connected tools in one free platform.',
+  tools:[
+   {id:'evolution',name:'Progress',title:'Every visit matters.',text:'Compare periodontal charts across visits. AI identifies and highlights relevant changes to help you review your patient’s progress.',detail:'Visit comparisons · Longitudinal review',image:'/periodontogram-final.png',alt:'Real PerioVox periodontal chart for reviewing clinical records'},
+   {id:'comparisons',name:'Comparisons',title:'See what has changed.',text:'Compare visits and review changes in probing depth, bleeding and plaque. Explore differences for each tooth and follow recorded measurements over time.',detail:'Clinical indicators · Changes by tooth · Progress across visits',image:'/media/comparativa-3.png',alt:'Real PerioVox comparison screen in English with mean probing depth, bleeding, plaque and changes by tooth'},
+   {id:'lang',name:'Lang',title:'Risk, at a glance.',text:'Create the Lang diagram using your periodontal chart data. Available information is pre-filled so you can complete the assessment in a few clicks.',detail:'Lang diagram · Connected clinical data',image:'/media/lang.png',alt:'Lang diagram in PerioVox'},
+   {id:'idra',name:'IDRA',title:'Around the implant, too.',text:'Work with the IDRA index in a visual, intuitive format, connected to the available clinical data to complete the risk assessment.',detail:'Implant risk assessment · IDRA index',image:'/media/idra.png',alt:'IDRA index in PerioVox'},
+   {id:'reports',name:'Reports & QR',title:'Information that stays with them.',text:'Generate patient reports with AI support. A QR code gives patients access to a summary of their periodontal health to review after the visit.',detail:'Patient report · QR access',image:'/media/report-1-en.png',alt:'Example of a PerioVox periodontal health report for patients'}
+  ],
+  comparisonCaptions:['Overview and changes by tooth','Progress across visits'],comparisonTrendAlt:'Real PerioVox graph in English showing mean probing depth across visits',comparisonEnlarge:'Enlarge image',
+  standardsLabel:'YOUR NUMBERING SYSTEM',standardsTitle:'ADA or FDI. Your choice.',standardsText:'Switch between ADA and FDI tooth numbering and work with the system you use in your practice.',
+  exportLabel:'AUDITS & RESEARCH',exportTitle:['Your data can','go further.'],exportText:'Export periodontal charts as CSV to review cases, conduct audits and work on research projects.',exportNote:'Structured records. Data you can take with you.',
+  patientLabel:'EXPLAINING IS PART OF CARING',patientTitle:['From the chart','to the conversation.'],patientText:'The findings, in front of you both. A visual reference to explain, ask questions and talk things through.',patientLink:'Explore patient reports',
+  emsLabel:'TRUST THAT MOVES US FORWARD',emsTitle:'EMS has placed its trust in PerioVox.',emsText:'PerioVox includes workflow options based on the EMS Guided Biofilm Therapy protocol. Connecting periodontal records with preventive care.',markets:'EMS GBT protocol, available in selected markets.',gbtLink:'Explore Guided Biofilm Therapy',
+  integrationLabel:'FOR DENTAL SOFTWARE COMPANIES',integrationTitle:['Your software.','Our voice.'],integrationText:'PerioVox is ready to integrate with other practice management software. Add voice periodontal charting as a plugin and bring it into the environment your users already know.',integrationCta:'Let’s talk integration',orcaLabel:'A COLLABORATION THAT CONNECTS US',orcaTitle:'Orca × PerioVox',orca:'We already collaborate with Orca, the AI-based practice management software, which has agreed to incorporate PerioVox as a plugin in its platform.',orcaLink:'Explore Orca',
+  faqLabel:'CLEAR ANSWERS',faqTitle:'Before you begin.',faq:[
+   ['What is PerioVox?','PerioVox is an AI voice periodontal charting platform for dental professionals. It turns measurements dictated during the exam into a structured digital periodontal chart.'],
+   ['Is it free? Will it stay free?','Yes. PerioVox is free and always will be. Create your account and use the platform without buying additional hardware.'],
+   ['Do I need a special probe, an assistant or an installation?','You do not need a special probe or a second person to record your measurements. Use your everyday probe and a compatible device microphone. PerioVox runs right in your browser.'],
+   ['What can I record by voice?','Dictate probing depths, gingival margin and recession, bleeding, suppuration, plaque, mobility, furcation and clinical notes. You can also make corrections and return to previous teeth. Always review that the record reflects your examination.'],
+   ['Which languages does PerioVox support?','Voice dictation understands 97 languages. The app interface is available in Spanish, English and French. The website is available in Spanish and English.'],
+   ['Can I compare visits and generate reports?','Yes. Compare periodontal charts across visits, review changes, work with Lang and IDRA diagrams, generate patient reports with QR access and export records as CSV.'],
+   ['Where is the EMS GBT protocol available?','Workflow options based on the EMS Guided Biofilm Therapy protocol are available in selected markets. Availability depends on the country. The clinician chooses and validates the appropriate protocol for each case.'],
+   ['Can it be included in dental practice software?','Yes. PerioVox is ready to integrate with other practice management software as a plugin. We already collaborate with Orca, an AI-based practice management platform, which has agreed to incorporate PerioVox. Contact info@periovox.ai to discuss your integration.']
+  ],
+  finalLabel:'YOUR NEXT EXAM CAN FEEL DIFFERENT',finalTitle:['Your probe is ready.','So is your voice.'],finalText:'Voice periodontal charting, within everyone’s reach.',
+  contact:'Let’s talk',contactText:'A question, an idea or a proposal? We’re here.',whatsapp:'Contact us on WhatsApp',footerLine:'Designed by dentists. For dental professionals everywhere.',terms:'Terms of use',privacy:'Privacy',cookies:'Cookie policy',cookieSettings:'Cookie settings',disclaimer:'PerioVox is an informational support tool for professionals. It does not replace clinical judgment, diagnosis or treatment decisions.',play:'Play video',pause:'Pause video',probePause:'Pause probe animation',probePlay:'Resume probe animation',
+  cookie:{title:'Your privacy, your choice.',text:'We use necessary storage to remember your preferences. Analytics only starts if you allow it.',accept:'Accept all',reject:'Reject optional',manage:'Settings',save:'Save preferences',close:'Close preferences',categories:['Necessary','Preferences','Analytics','Advertising'],descriptions:['Remember your consent choice. Always active.','Remember optional experience settings.','Help us understand website usage. Google Analytics only starts with your permission.','Allow advertising measurement when applicable. No advertising services are active on this website.']}
+ }
+} as const;

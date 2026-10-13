@@ -1,0 +1,44 @@
+# PerioVox
+
+> Free AI voice periodontal charting software for dental professionals. Free today. Free forever.
+
+PerioVox converts measurements dictated by a dental professional into a structured periodontal chart. It works in a web browser with an everyday periodontal probe and a compatible microphone, without additional hardware or a second person recording the measurements.
+
+Voice dictation understands 97 languages. The application interface is available in Spanish, English and French. The website is available in Spanish and English.
+
+Features include periodontal charts, visit comparisons, Lang diagrams, IDRA, patient reports with QR access, ADA and FDI tooth numbering, and CSV exports for audits and research.
+
+EMS has placed its trust in PerioVox. Workflow options based on the EMS Guided Biofilm Therapy protocol are available in selected markets; availability varies by country.
+
+PerioVox is ready to integrate with other practice management software as a plugin. An established collaboration with Orca, an AI-based practice management platform, includes an agreement to incorporate PerioVox as a plugin. This does not imply that an integration is already live. Learn about Orca at https://orca.clinic/.
+
+PerioVox is an informational support tool. Clinicians retain responsibility for reviewing records, diagnosis and treatment decisions.
+
+## Product and educational pages
+
+The product details above describe PerioVox. Protocol availability and third-party integration availability must be checked separately. These pages are written for dental professionals; records and support tools require professional review.
+
+- [English website](https://periovox.ai/)
+- [Web en español](https://periovox.ai/es/)
+- [Periodontal charting guides](https://periovox.ai/resources/)
+- [Guías de periodontogramas](https://periovox.ai/es/recursos/)
+- [What is a periodontal chart?](https://periovox.ai/periodontal-chart/)
+- [Qué es un periodontograma](https://periovox.ai/es/periodontograma/)
+- [How voice periodontal charting works](https://periovox.ai/voice-periodontal-charting/)
+- [Cómo hacer un periodontograma por voz](https://periovox.ai/es/periodontograma-por-voz/)
+- [Compare periodontal charts](https://periovox.ai/periodontal-chart-comparison/)
+- [Comparar periodontogramas](https://periovox.ai/es/comparar-periodontogramas/)
+- [Dental software integrations](https://periovox.ai/dental-software-integrations/)
+- [Integración con software dental](https://periovox.ai/es/integracion-software-dental/)
+- [Start using PerioVox](https://app.periovox.ai/)
+- [Terms of use](https://periovox.ai/terms-of-use.html)
+- [Privacy notice](https://periovox.ai/privacy-notice.html)
+- [Cookie policy](https://periovox.ai/cookie-policy.html)
+
+## Contact
+info@periovox.ai
+
+## Journal
+
+- [PerioVox Journal](https://periovox.ai/journal/)
+- [PerioVox Journal en español](https://periovox.ai/es/journal/)

@@ -1,0 +1,11 @@
+import {renderToString} from 'react-dom/server';
+import App from './App';
+import Resources from './Resources';
+import Journal from './Journal';
+import {siteRoutes,type SiteRoute} from './resources-content';
+export {siteRoutes,updated} from './resources-content';
+export {headMarkup,metadata} from './seo';
+import {copy,type Language} from './translations';
+export const render=(lang:Language)=>renderToString(<App lang={lang}/>);
+export const renderRoute=(route:SiteRoute)=>renderToString(route.kind==='home'?<App lang={route.lang}/>:route.kind==='journal'?<Journal lang={route.lang} posts={[]}/>:<Resources route={route}/>);
+export const faq=(lang:Language)=>copy[lang].faq;

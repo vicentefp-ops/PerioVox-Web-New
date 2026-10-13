@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://periovox.ai/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://periovox.ai/privacy-notice.html</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  <url>
-    <loc>https://periovox.ai/terms-of-use.html</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  <url>
-    <loc>https://periovox.ai/cookie-policy.html</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<url><loc>https://periovox.ai/</loc><lastmod>2026-10-11</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://periovox.ai/"/><xhtml:link rel="alternate" hreflang="es" href="https://periovox.ai/es/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://periovox.ai/"/></url>
+<url><loc>https://periovox.ai/journal/</loc><lastmod>2026-10-11</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://periovox.ai/journal/"/><xhtml:link rel="alternate" hreflang="es" href="https://periovox.ai/es/journal/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://periovox.ai/journal/"/></url>
+<url><loc>https://periovox.ai/resources/</loc><lastmod>2026-10-11</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://periovox.ai/resources/"/><xhtml:link rel="alternate" hreflang="es" href="https://periovox.ai/es/recursos/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://periovox.ai/resources/"/></url>
+<url><loc>https://periovox.ai/periodontal-chart/</loc><lastmod>2026-10-11</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://periovox.ai/periodontal-chart/"/><xhtml:link rel="alternate" hreflang="es" href="https://periovox.ai/es/periodontograma/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://periovox.ai/periodontal-chart/"/></url>
+<url><loc>https://periovox.ai/voice-periodontal-charting/</loc><lastmod>2026-10-11</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://periovox.ai/voice-periodontal-charting/"/><xhtml:link rel="alternate" hreflang="es" href="https://periovox.ai/es/periodontograma-por-voz/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://periovox.ai/voice-periodontal-charting/"/></url>
+<url><loc>https://periovox.ai/periodontal-chart-comparison/</loc><lastmod>2026-10-11</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://periovox.ai/periodontal-chart-comparison/"/><xhtml:link rel="alternate" hreflang="es" href="https://periovox.ai/es/comparar-periodontogramas/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://periovox.ai/periodontal-chart-comparison/"/></url>
+<url><loc>https://periovox.ai/dental-software-integrations/</loc><lastmod>2026-10-11</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://periovox.ai/dental-software-integrations/"/><xhtml:link rel="alternate" hreflang="es" href="https://periovox.ai/es/integracion-software-dental/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://periovox.ai/dental-software-integrations/"/></url>
+<url><loc>https://periovox.ai/es/</loc><lastmod>2026-10-11</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://periovox.ai/"/><xhtml:link rel="alternate" hreflang="es" href="https://periovox.ai/es/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://periovox.ai/"/></url>
+<url><loc>https://periovox.ai/es/journal/</loc><lastmod>2026-10-11</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://periovox.ai/journal/"/><xhtml:link rel="alternate" hreflang="es" href="https://periovox.ai/es/journal/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://periovox.ai/journal/"/></url>
+<url><loc>https://periovox.ai/es/recursos/</loc><lastmod>2026-10-11</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://periovox.ai/resources/"/><xhtml:link rel="alternate" hreflang="es" href="https://periovox.ai/es/recursos/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://periovox.ai/resources/"/></url>
+<url><loc>https://periovox.ai/es/periodontograma/</loc><lastmod>2026-10-11</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://periovox.ai/periodontal-chart/"/><xhtml:link rel="alternate" hreflang="es" href="https://periovox.ai/es/periodontograma/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://periovox.ai/periodontal-chart/"/></url>
+<url><loc>https://periovox.ai/es/periodontograma-por-voz/</loc><lastmod>2026-10-11</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://periovox.ai/voice-periodontal-charting/"/><xhtml:link rel="alternate" hreflang="es" href="https://periovox.ai/es/periodontograma-por-voz/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://periovox.ai/voice-periodontal-charting/"/></url>
+<url><loc>https://periovox.ai/es/comparar-periodontogramas/</loc><lastmod>2026-10-11</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://periovox.ai/periodontal-chart-comparison/"/><xhtml:link rel="alternate" hreflang="es" href="https://periovox.ai/es/comparar-periodontogramas/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://periovox.ai/periodontal-chart-comparison/"/></url>
+<url><loc>https://periovox.ai/es/integracion-software-dental/</loc><lastmod>2026-10-11</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://periovox.ai/dental-software-integrations/"/><xhtml:link rel="alternate" hreflang="es" href="https://periovox.ai/es/integracion-software-dental/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://periovox.ai/dental-software-integrations/"/></url>
 </urlset>

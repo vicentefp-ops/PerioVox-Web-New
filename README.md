@@ -1,20 +1,36 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# PerioVox Web
 
-# Run and deploy your AI Studio app
+Bilingual Spanish and English website for PerioVox: free voice periodontal charting for dental professionals. Built with React, Vite and Node.js 24.
 
-This contains everything you need to run your app locally.
+## Development
 
-View your app in AI Studio: https://ai.studio/apps/30a7d0f0-ff23-45ec-a253-811abff1173a
+```sh
+npm ci
+npm run build
+npm start
+```
 
-## Run Locally
+The complete local site and Journal run at http://127.0.0.1:3201. Use `npm run dev` for the development server on port 3200.
 
-**Prerequisites:**  Node.js
+## Deployment
 
+The public website is deployed to Vercel using `vercel.json`. The Journal API, public articles, editorial interface, uploaded images and dynamic sitemap are served through a persistent Node.js origin. Keep the origin deployment and Vercel routes configured together.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+The origin requires Node.js 24 and a private writable data directory **outside the deployment directory**. Set `JOURNAL_DATA_DIR` on the server. Optional `JOURNAL_ORIGIN`, `JOURNAL_INTERNAL_HOSTS` and `JOURNAL_ASSET_ORIGIN` configure the reverse proxy and public asset URLs.
+
+Articles, credentials, sessions, uploads and Gemini settings are private runtime data. Never commit or expose `.journal-data`, `.env` files, deployment credentials or migration keys. Back up persistent data before updating the origin. The encrypted migration bootstrap is used only for the initial transfer and never overwrites an existing database.
+
+## Journal
+
+The editorial interface is `/journal/admin/`. Public articles are available at `/es/journal/` and `/journal/`. Editors use title, subtitle and a visual text editor. Gemini can translate Spanish articles into English and generate missing SEO and cover-image descriptions. Generated text remains editable; existing manual values are preserved.
+
+## Verification
+
+```sh
+npm run lint
+npm run build
+npm run seo:check
+npm run journal:check
+```
+
+The checks cover static HTML, metadata, language links, sitemap, links and assets, consent-aware analytics, authentication, publication snapshots, concurrent edits, translation, rich text and safe migration. Local checks do not demonstrate indexing, traffic or real-user performance.

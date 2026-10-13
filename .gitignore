@@ -1,7 +1,20 @@
 node_modules/
 dist/
+.DS_Store
+*.local
+
+# Private editorial data and server-only secrets
+.journal-data/
+dist-server/
 .env
 .env.*
 !.env.example
-.DS_Store
-npm-debug.log*
+
+.vercel/
+.release-private/
+.deployment-backups/
+review/
+journal-seed.enc
+CONTINUIDAD.md
+SEO_GEO_PLAN.md
+SEO_LANZAMIENTO_*.md

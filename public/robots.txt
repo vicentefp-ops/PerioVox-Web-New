@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://periovox.ai/sitemap.xml

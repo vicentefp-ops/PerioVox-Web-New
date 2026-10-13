@@ -1,0 +1,21 @@
+import {ORIGIN,homeSchema,headMarkup} from './seo';
+import {journalCopy,journalPath,postPath,type JournalProps} from './journal-model';
+const escape=(s:string)=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
+export function journalSchema({lang,posts,post}:JournalProps){
+ const t=journalCopy[lang],text=post?.[lang],url=ORIGIN+(post?postPath(post,lang):journalPath(lang));
+ const graph:Record<string,unknown>[]=(homeSchema(lang)['@graph'] as Record<string,unknown>[]).slice(0,3);
+ graph.push({'@type':'BreadcrumbList','@id':url+'#breadcrumbs',itemListElement:[{name:t.home,item:ORIGIN+(lang==='es'?'/es/':'/')},{name:'Journal',item:ORIGIN+journalPath(lang)},...(text?[{name:text.title,item:url}]:[])].map((item,i)=>({'@type':'ListItem',position:i+1,...item}))});
+ graph.push({'@type':post?'WebPage':'CollectionPage','@id':url+'#webpage',url,name:text?.seoTitle||text?.title||t.title,description:text?.seoDescription||text?.summary||t.description,inLanguage:lang,isPartOf:{'@id':ORIGIN+'/#website'},breadcrumb:{'@id':url+'#breadcrumbs'},...(post?{mainEntity:{'@id':url+'#article'}}:{})});
+ if(post&&text)graph.push({'@type':'BlogPosting','@id':url+'#article',headline:text.title,description:text.summary,inLanguage:lang,mainEntityOfPage:{'@id':url+'#webpage'},author:post.author==='Equipo PerioVox'?{'@id':ORIGIN+'/#brand'}:{'@type':'Person',name:post.author},publisher:{'@id':ORIGIN+'/#brand'},datePublished:post.publishedAt,dateModified:post.modifiedAt,isAccessibleForFree:true,image:[ORIGIN+(post.cover||'/media/hero-poster.jpg')],...(post.reviewer?{reviewedBy:{'@type':'Person',name:post.reviewer}}:{})});
+ else graph.push({'@type':'ItemList','@id':url+'#articles',itemListElement:posts.map((p,i)=>({'@type':'ListItem',position:i+1,name:p[lang]!.title,url:ORIGIN+postPath(p,lang)}))});
+ return {'@context':'https://schema.org','@graph':graph};
+}
+export function journalHead(props:JournalProps){
+ const {lang,post,admin}=props;const route={kind:'journal' as const,lang,path:journalPath(lang),alternate:journalPath(lang==='es'?'en':'es')};
+ if(!post&&!admin)return headMarkup(route);
+ if(admin)return '<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><meta name="robots" content="noindex,nofollow"/><title>Editor de Journal | PerioVox</title><link rel="icon" href="/favicon.png"/><link rel="preload" href="/fonts/montserrat-600.woff2" as="font" type="font/woff2" crossorigin/>';
+ const text=post![lang]!,title=text.seoTitle||(text.title.length>45?text.title.slice(0,42).trimEnd()+'…':text.title)+' | PerioVox Journal',description=text.seoDescription||text.summary.slice(0,160),url=ORIGIN+postPath(post!,lang),image=ORIGIN+(post!.cover||'/media/hero-poster.jpg');
+ const alternates=(['es','en'] as const).filter(l=>post![l]).map(l=>`<link rel="alternate" hreflang="${l}" href="${ORIGIN+postPath(post!,l)}"/>`).join('');
+ return `<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><title>${escape(title)}</title><meta name="description" content="${escape(description)}"/><meta name="robots" content="index,follow,max-image-preview:large"/><link rel="canonical" href="${url}"/>${alternates}<link rel="alternate" hreflang="x-default" href="${ORIGIN+postPath(post!,post!.en?'en':'es')}"/><link rel="icon" href="/favicon.png"/><link rel="preload" href="/fonts/montserrat-600.woff2" as="font" type="font/woff2" crossorigin/>
+<meta property="og:type" content="article"/><meta property="og:site_name" content="PerioVox"/><meta property="og:locale" content="${lang==='es'?'es_ES':'en_US'}"/><meta property="og:url" content="${url}"/><meta property="og:title" content="${escape(title)}"/><meta property="og:description" content="${escape(description)}"/><meta property="og:image" content="${image}"/><meta property="og:image:alt" content="${escape(text.coverAlt)}"/><meta property="article:published_time" content="${post!.publishedAt}"/><meta property="article:modified_time" content="${post!.modifiedAt}"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="${escape(title)}"/><meta name="twitter:description" content="${escape(description)}"/><meta name="twitter:image" content="${image}"/>`;
+}
