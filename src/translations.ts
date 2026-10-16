@@ -11,7 +11,7 @@ export const copy = {
   voiceLabel:'LENGUAJE NATURAL',voiceTitle:'Habla como trabajas.', voiceText:'Profundidades de sondaje, margen gingival, sangrado, supuración, placa, movilidad, furcaciones y notas clínicas. La IA interpreta el contexto y organiza tus registros en tiempo real.',
   examples:['«Dieciocho: cuatro, tres, tres.»','«Añade sangrado en distal del diecisiete.»','«Corrige el vestibular del dieciséis: cuatro, cuatro, seis.»'],
   voiceNote:'Puedes corregir un dato o volver a un diente anterior sin reiniciar el registro.',
-  probeLabel:'SONDA PERIODONTAL 2.0',probeTitle:['La de siempre.','Como nunca.'],probeText:'Tu sonda periodontal habitual, con una nueva forma de registrar. PerioVox no requiere absolutamente ningún hardware adicional.',probeFoot:'0% hardware investment. 100% your probe.',
+  probeLabel:'SONDA PERIODONTAL 2.0',probeTitle:['La de siempre.','Como nunca.'],probeText:'Tu sonda periodontal habitual, con una nueva forma de registrar. PerioVox no requiere absolutamente ningún hardware adicional.',probeFoot:'0% inversión en hardware. 100% tu sonda.',
   globalLabel:'TU VOZ NO TIENE FRONTERAS',globalTitle:['97 idiomas.','Una misma idea.'],globalText:'Dicta en tu idioma. PerioVox utiliza Gemini Live para entenderte y estructurar tus registros.',interface:'Interfaz disponible en español, inglés y francés.',
   platformLabel:'INTELIGENCIA ARTIFICIAL PARA TU CLÍNICA',platformTitle:'IA para registrar, comparar y explicar.', platformText:'La IA interpreta tu dictado y estructura los datos, destaca cambios entre visitas y genera informes comprensibles para tus pacientes. Herramientas conectadas en una plataforma gratuita.',
   tools:[
