@@ -3,7 +3,7 @@ import App from './App';
 import Resources from './Resources';
 import Journal from './Journal';
 import {siteRoutes,type SiteRoute} from './resources-content';
-export {siteRoutes,updated} from './resources-content';
+export {siteRoutes,updated,routeUpdated} from './resources-content';
 export {headMarkup,metadata} from './seo';
 import {copy,type Language} from './translations';
 export const render=(lang:Language)=>renderToString(<App lang={lang}/>);

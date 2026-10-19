@@ -2,7 +2,7 @@ import {createServer} from 'vite';
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 const server=await createServer({server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
 try{
- const {renderRoute,siteRoutes,headMarkup,updated}=await server.ssrLoadModule('/src/entry-server.tsx');
+ const {renderRoute,siteRoutes,headMarkup,routeUpdated}=await server.ssrLoadModule('/src/entry-server.tsx');
  const template=await readFile('dist/index.html','utf8');
  const assets=[...template.matchAll(/<script\b[^>]*type="module"[^>]*><\/script>|<link\b[^>]*rel="(?:stylesheet|modulepreload)"[^>]*>/g)].map(match=>match[0]).join('\n');
  if(!assets.includes('type="module"')||!assets.includes('rel="stylesheet"'))throw new Error('Build entry assets missing');
@@ -15,7 +15,7 @@ try{
   console.log(`Prerendered ${route.path}: ${markup.length} characters`);
  }
  const origin='https://periovox.ai';
- const sitemap=`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${siteRoutes.map(route=>{const en=origin+(route.lang==='en'?route.path:route.alternate);const es=origin+(route.lang==='es'?route.path:route.alternate);return `<url><loc>${origin+route.path}</loc><lastmod>${updated}</lastmod><xhtml:link rel="alternate" hreflang="en" href="${en}"/><xhtml:link rel="alternate" hreflang="es" href="${es}"/><xhtml:link rel="alternate" hreflang="x-default" href="${en}"/></url>`}).join('\n')}\n</urlset>\n`;
+ const sitemap=`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${siteRoutes.map(route=>{const en=origin+(route.lang==='en'?route.path:route.alternate);const es=origin+(route.lang==='es'?route.path:route.alternate);return `<url><loc>${origin+route.path}</loc><lastmod>${routeUpdated(route)}</lastmod><xhtml:link rel="alternate" hreflang="en" href="${en}"/><xhtml:link rel="alternate" hreflang="es" href="${es}"/><xhtml:link rel="alternate" hreflang="x-default" href="${en}"/></url>`}).join('\n')}\n</urlset>\n`;
  await writeFile('dist/sitemap.xml',sitemap);
  await writeFile('public/sitemap.xml',sitemap);
 }finally{await server.close()}

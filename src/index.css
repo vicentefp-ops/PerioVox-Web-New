@@ -125,3 +125,6 @@ html[lang="en"] .hero h1{font-size:clamp(54px,5.5vw,96px)}
 .qr-frame>.qr-image{position:absolute;max-width:none;width:calc(100% * 890 / 768);height:auto;left:calc(-100% * 62 / 768);top:calc(-100% * 36 / 1248);filter:none}
 .qr-frame::after{content:'';position:absolute;inset:0;border:1px solid #c9d9e6;border-radius:inherit;pointer-events:none}
 @media(max-width:650px){.report-images{gap:16px}}
+
+/* Contextual path from the voice demonstration to the practical guide. */
+.voice-copy>.text-link{margin-top:24px;font-size:12px;line-height:1.7;max-width:100%}
