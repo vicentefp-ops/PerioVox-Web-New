@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtemp,rm,stat,readFile} from 'node:fs/promises';
 import path from 'node:path';
+import {tmpdir} from 'node:os';
 import {Readable} from 'node:stream';
 import {createJournalHandler} from './journal-http.mjs';
 import {sourceHash,digest} from './journal-store.mjs';
@@ -10,7 +11,7 @@ const root=path.resolve('.');
 const text={title:'Explorar y registrar',summary:'Un ejemplo ficticio para comprobar el flujo editorial.',body:'## Registro por voz\n\nEste es un artículo ficticio para verificar el Journal. **Cada registro se revisa.**\n\nConsulta [PerioVox](https://periovox.ai/).',slug:'explorar-y-registrar',seoTitle:'Registro por voz | PerioVox',seoDescription:'Un ejemplo ficticio del registro periodontal por voz.',coverAlt:''};
 const en={...text,title:'Examine and record',summary:'A fictional example to check the editorial workflow.',body:'## Voice charting\n\nThis is a fictional article for the Journal test. **Every record is reviewed.**\n\nSee [PerioVox](https://periovox.ai/).',slug:'examine-and-record',seoTitle:'Voice charting | PerioVox',seoDescription:'A fictional example of voice periodontal charting.'};
 test('Journal authentication, persistence, publication and isolation',async t=>{
- const directory=await mkdtemp('/private/tmp/periovox-journal-test-');let calls=0,translationGate=null,failed=false;
+ const directory=await mkdtemp(path.join(tmpdir(),'periovox-journal-test-'));let calls=0,translationGate=null,failed=false;
  const service=createJournalHandler({root,dataDir:directory,renderPage:async props=>'<!doctype html>'+JSON.stringify(props),translate:async()=>{calls++;if(translationGate)await translationGate;if(failed)throw Object.assign(Error('Translation provider unavailable'),{status:502});return en}});
  t.after(async()=>{service.store.close();await rm(directory,{recursive:true,force:true})});
  await service.store.createUser('editor@example.test','Fictional-password-for-tests-only!');

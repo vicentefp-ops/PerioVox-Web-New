@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtemp,rm,mkdir,writeFile,symlink} from 'node:fs/promises';
 import path from 'node:path';
+import {tmpdir} from 'node:os';
 import {Readable} from 'node:stream';
 import {createJournalHandler} from './journal-http.mjs';
 import {sourceHash} from './journal-store.mjs';
@@ -35,7 +36,7 @@ test('metadata adapter sends the actual image and validates only requested field
 });
 
 test('cover reader only loads permitted local image bytes',async t=>{
- const directory=await mkdtemp('/private/tmp/periovox-metadata-image-');t.after(()=>rm(directory,{recursive:true,force:true}));
+ const directory=await mkdtemp(path.join(tmpdir(),'periovox-metadata-image-'));t.after(()=>rm(directory,{recursive:true,force:true}));
  const root=path.join(directory,'site'),dataDir=path.join(directory,'data');
  await mkdir(path.join(root,'public/media'),{recursive:true});await mkdir(path.join(dataDir,'uploads'),{recursive:true});
  await writeFile(path.join(root,'public/media','cover.png'),png);
@@ -52,7 +53,7 @@ test('cover reader only loads permitted local image bytes',async t=>{
 });
 
 async function fixture(t,{ready=true,generateMetadata,translate}={}){
- const directory=await mkdtemp('/private/tmp/periovox-metadata-http-');
+ const directory=await mkdtemp(path.join(tmpdir(),'periovox-metadata-http-'));
  const service=createJournalHandler({root:path.resolve('.'),dataDir:directory,renderPage:async()=>'<html/>',generateMetadata:generateMetadata||(async(_text,{fields})=>Object.fromEntries(fields.map(field=>[field,generated[field]]))),translate:translate||(async()=>({...en,...generated}))});
  t.after(async()=>{service.store.close();await rm(directory,{recursive:true,force:true})});
  if(ready)await writeFile(path.join(directory,'gemini.key'),'fictional-test-key-with-no-access');
