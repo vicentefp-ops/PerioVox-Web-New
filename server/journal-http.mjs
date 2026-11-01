@@ -22,7 +22,7 @@ async function bodyBuffer(req,limit=500_000){let size=0;const chunks=[];for awai
 async function jsonBody(req){if(!req.headers['content-type']?.startsWith('application/json'))throw error('Formato de solicitud no válido.',415);try{const data=JSON.parse((await bodyBuffer(req)).toString('utf8'));if(!data||typeof data!=='object'||Array.isArray(data))throw error('Contenido no válido.');return data}catch(e){if(e.status)throw e;throw error('Contenido no válido.')}}
 function json(res,status,data){res.statusCode=status;res.setHeader('Content-Type','application/json; charset=utf-8');res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('X-Robots-Tag','noindex, nofollow');res.end(JSON.stringify(data))}
 function html(res,status,markup,privatePage=false){res.statusCode=status;res.setHeader('Content-Type','text/html; charset=utf-8');res.setHeader('Cache-Control',privatePage?'no-store':'no-cache');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Referrer-Policy','strict-origin-when-cross-origin');res.setHeader('X-Frame-Options','DENY');if(privatePage)res.setHeader('X-Robots-Tag','noindex, nofollow');res.end(markup)}
-export function createJournalHandler({root,dataDir=process.env.JOURNAL_DATA_DIR||path.join(root,'.journal-data'),renderPage,translate=translateArticle,generateMetadata=generateArticleMetadata}){
+export function createJournalHandler({root,dataDir=process.env.JOURNAL_DATA_DIR||path.join(root,'.journal-data'),renderPage,translate=translateArticle,generateMetadata=generateArticleMetadata,now=()=>Date.now()}){
  const store=openStore(dataDir);const uploads=path.join(dataDir,'uploads');mkdirSync(uploads,{recursive:true,mode:0o700});
  const keyFile=path.join(dataDir,'gemini.key');const modelFile=path.join(dataDir,'gemini-model.txt');
  const apiKey=()=>process.env.GEMINI_API_KEY||(existsSync(keyFile)?readFileSync(keyFile,'utf8').trim():'');
@@ -60,6 +60,7 @@ export function createJournalHandler({root,dataDir=process.env.JOURNAL_DATA_DIR|
   try{
    const host=(req.headers.host??'').toLowerCase();const hostname=host.replace(/:\d+$/,'');const allowed=['localhost','127.0.0.1','[::1]','periovox.ai','www.periovox.ai',...internalHosts,...(process.env.JOURNAL_ORIGIN?[new URL(process.env.JOURNAL_ORIGIN).hostname]:[])];
    if(!allowed.includes(hostname))throw error('Dominio no autorizado.',400);
+   store.publishDue(now());
    if(isApi){
     const token=req.headers.cookie?.split(';').map(s=>s.trim()).find(s=>s.startsWith('pv_journal='))?.slice(11);
     const session=store.session(token);
@@ -94,18 +95,20 @@ export function createJournalHandler({root,dataDir=process.env.JOURNAL_DATA_DIR|
     }
     if(pathname===PREFIX+'/articles'&&req.method==='GET'){json(res,200,{articles:store.list()});return true}
     if(pathname===PREFIX+'/articles'&&req.method==='POST'){const body=await jsonBody(req);const draft=normalize(body);json(res,201,{article:store.save(draft)});return true}
-    const match=pathname.match(/^\/api\/journal\/articles\/([a-f0-9-]+)(?:\/(translate|publish|unpublish|metadata))?$/);
+    const match=pathname.match(/^\/api\/journal\/articles\/([a-f0-9-]+)(?:\/(translate|publish|unpublish|metadata|schedule|cancel-schedule))?$/);
     if(match){const [,id,action]=match;let article=store.get(id);if(!article)throw error('Artículo no encontrado.',404);
      if(!action&&req.method==='GET'){json(res,200,{article});return true}
      if(!action&&req.method==='PUT'){const body=await jsonBody(req);json(res,200,{article:store.save(normalize(body,article),body.revision)});return true}
      if(req.method==='POST'&&action){const body=await jsonBody(req);if(body.revision!==article.revision)throw error('El borrador ha cambiado. Recárgalo antes de continuar.',409);
       if(action==='metadata'){json(res,200,await completeMetadata(article,body.language??'es',body.scope??'all'));return true}
       if(action==='translate'){validateComplete(article.es);({article}=await completeMetadata(article,'es','all',true));article=await english(article);({article}=await completeMetadata(article,'en','all',true));json(res,200,{article});return true}
-      if(action==='publish'){
+      if(action==='publish'||action==='schedule'){
+       let publishAt;if(action==='schedule'){if(typeof body.publishAt!=='string'||!/^\d{4}-\d{2}-\d{2}T.*(?:Z|[+-]\d{2}:\d{2})$/.test(body.publishAt)||!Number.isFinite(Date.parse(body.publishAt))||Date.parse(body.publishAt)<=now())throw error('Elige una fecha y hora futura con zona horaria.');publishAt=new Date(body.publishAt).toISOString()}
        validateComplete(article.es);({article}=await completeMetadata(article,'es','all',true));if(article.cover&&!article.es.coverAlt)throw error('Añade una descripción a la imagen de portada antes de publicar.');if(body.bilingual!==false){article=await english(article);({article}=await completeMetadata(article,'en','all',true))}
-       const now=new Date().toISOString();const snapshot={es:article.es,...(body.bilingual!==false?{en:article.en}:{}),author:article.author,reviewer:article.reviewer,category:article.category,cover:article.cover,publishedAt:article.published?.publishedAt??now,modifiedAt:now};
-       json(res,200,{article:store.publish(id,article.revision,snapshot)});return true;
+       const publicationTime=publishAt||new Date(now()).toISOString();const snapshot={es:article.es,...(body.bilingual!==false?{en:article.en}:{}),author:article.author,reviewer:article.reviewer,category:article.category,cover:article.cover,publishedAt:article.published?.publishedAt??publicationTime,modifiedAt:publicationTime};
+       json(res,200,{article:action==='schedule'?store.schedule(id,article.revision,snapshot,publishAt,now()):store.publish(id,article.revision,snapshot)});return true;
       }
+      if(action==='cancel-schedule'){json(res,200,{article:store.cancelSchedule(id,article.revision)});return true}
       if(action==='unpublish'){json(res,200,{article:store.unpublish(id)});return true}
      }
     }
@@ -131,5 +134,5 @@ export function createJournalHandler({root,dataDir=process.env.JOURNAL_DATA_DIR|
    html(res,200,req.method==='HEAD'?'':await renderPage(props),admin);return true;
   }catch(e){if(res.headersSent){res.end();return true}if(isApi)json(res,e.status??500,{error:e.status?e.message:'No se ha podido completar la operación. El borrador anterior se conserva.'});else{const fallback=existsSync(path.join(root,'dist/404.html'))?readFileSync(path.join(root,'dist/404.html'),'utf8'):'<!doctype html><html><head><meta name="robots" content="noindex"/></head><body><h1>Página no disponible</h1></body></html>';html(res,e.status??503,fallback)}return true}
  };
- return {handler,store,state};
+ return {handler,store,state,publishDue:()=>store.publishDue(now())};
 }

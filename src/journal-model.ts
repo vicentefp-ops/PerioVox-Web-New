@@ -2,7 +2,8 @@ import type {Language} from './translations';
 // The existing summary field stores the editorial subtitle, preserving saved drafts and API compatibility.
 export type JournalText={title:string;summary:string;body:string;slug:string;seoTitle:string;seoDescription:string;coverAlt:string};
 export type JournalPost={id:string;es:JournalText;en?:JournalText;author:string;reviewer?:string;category:string;cover:string;publishedAt:string;modifiedAt:string};
-export type JournalDraft={id?:string;revision?:number;es:JournalText;en?:JournalText|null;author:string;reviewer:string;category:string;cover:string;translationSourceHash?:string|null;translationBy?:string|null;published?:JournalPost|null;updated?:string};
+export type JournalSchedule={publishAt:string;status:'pending'|'failed';error?:string|null};
+export type JournalDraft={schedule?:JournalSchedule|null;id?:string;revision?:number;es:JournalText;en?:JournalText|null;author:string;reviewer:string;category:string;cover:string;translationSourceHash?:string|null;translationBy?:string|null;published?:JournalPost|null;updated?:string};
 export type JournalProps={lang:Language;posts:JournalPost[];post?:JournalPost|null;admin?:boolean};
 export const journalPath=(lang:Language)=>lang==='es'?'/es/journal/':'/journal/';
 export const postPath=(post:JournalPost,lang:Language)=>journalPath(lang)+post[lang]!.slug+'/';

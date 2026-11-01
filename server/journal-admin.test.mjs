@@ -29,6 +29,8 @@ test('updating ES + EN preserves confirmation and saves the next edit',async t=>
   if(url.endsWith('/session'))return Response.json({authenticated:true,email:'editor@example.test',csrf:'fictional-csrf',translationReady:true});
   if(url.endsWith('/articles'))return Response.json({articles:[structuredClone(article)]});
   if(options.method==='PUT'){assert.equal(body.revision,article.revision);article={...body,revision:article.revision+1};return Response.json({article:structuredClone(article)})}
+  if(url.endsWith('/schedule')){assert.equal(body.bilingual,true);assert.equal(body.publishAt,'2026-11-02T11:00:00.000Z');article={...article,revision:article.revision+1,schedule:{status:'pending',publishAt:body.publishAt}};return Response.json({article:structuredClone(article)})}
+  if(url.endsWith('/cancel-schedule')){article={...article,revision:article.revision+1,schedule:null};return Response.json({article:structuredClone(article)})}
   if(url.endsWith('/publish')){
    assert.equal(body.revision,article.revision);assert.equal(body.bilingual,true);
    await new Promise(resolve=>{publishing=resolve});
@@ -64,4 +66,16 @@ test('updating ES + EN preserves confirmation and saves the next edit',async t=>
  assert.match(document.querySelector('[role="alert"]')?.textContent||'',/Proveedor de traducción no disponible/);
  assert.equal(publish().disabled,false,'A failed update must allow retry');
  assert.equal(article.published.es.title,'Título corregido','Failure preserves the last publication');
+ const mode=document.querySelector('[aria-label="Cuándo publicar"]');
+ assert.match(mode.textContent,/Publicación inmediata/);
+ await act(()=>{Object.getOwnPropertyDescriptor(window.HTMLSelectElement.prototype,'value').set.call(mode,'schedule');mode.dispatchEvent(new window.Event('change',{bubbles:true}))});
+ const date=document.querySelector('[aria-label="Fecha y hora de publicación"]');
+ await act(()=>{Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set.call(date,'2026-11-02T12:00');date.dispatchEvent(new window.Event('input',{bubbles:true}))});
+ await click(publish());
+ assert.equal(requests.filter(r=>r.url.endsWith('/schedule')).length,1);
+ assert.match(document.querySelector('.editor-schedule-status').textContent,/2 de noviembre de 2026/);
+ const cancel=[...document.querySelectorAll('button')].find(b=>b.textContent==='Cancelar programación');await click(cancel);
+ assert.equal(document.querySelector('.editor-schedule-status'),null);
+ assert.equal(mode.value,'now');
+
 });

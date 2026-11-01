@@ -10,10 +10,14 @@ if(!existsSync(path.join(dist,'index.html')))throw new Error('Run npm run build 
 await initializeJournalStorage({directory:process.env.JOURNAL_DATA_DIR||path.join(root,'.journal-data'),seedPath:path.join(root,'journal-seed.enc'),key:process.env.JOURNAL_BOOTSTRAP_KEY});
 const {renderJournalDocument}=await import(pathToFileURL(path.join(root,'dist-server/journal-entry.js')).href);
 const service=createJournalHandler({root,renderPage:props=>renderJournalDocument(props,root)});
+// Durable jobs are recovered on startup, then checked on the origin every 15 seconds.
+function publishScheduled(){try{service.publishDue()}catch(error){console.error('Journal scheduler check failed:',error.code||'storage-error')}}
+publishScheduled();
+const scheduleTimer=setInterval(publishScheduled,15_000);scheduleTimer.unref();
 const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.gif':'image/gif','.mp4':'video/mp4','.woff2':'font/woff2','.ttf':'font/ttf','.xml':'application/xml; charset=utf-8','.txt':'text/plain; charset=utf-8','.pdf':'application/pdf'};
 const server=createServer(async(req,res)=>{
  try{
-  if(req.url==='/healthz'&&req.method==='GET'){res.writeHead(200,{'Content-Type':'application/json','Cache-Control':'no-store','X-Robots-Tag':'noindex'});res.end(JSON.stringify({ok:true,journal:true}));return}
+  if(req.url==='/healthz'&&req.method==='GET'){publishScheduled();res.writeHead(200,{'Content-Type':'application/json','Cache-Control':'no-store','X-Robots-Tag':'noindex'});res.end(JSON.stringify({ok:true,journal:true,scheduling:true}));return}
   if(process.env.JOURNAL_INTERNAL_HOSTS&&req.url==='/robots.txt'){res.writeHead(200,{'Content-Type':'text/plain','Cache-Control':'no-cache'});res.end('User-agent: *\nDisallow: /\nAllow: /assets/\nAllow: /fonts/\nAllow: /media/\n');return}
   if(await service.handler(req,res))return;
   if(!['GET','HEAD'].includes(req.method)){res.writeHead(405,{Allow:'GET, HEAD'});res.end();return}
@@ -29,4 +33,4 @@ const server=createServer(async(req,res)=>{
  }catch{if(!res.headersSent){res.writeHead(500,{'Content-Type':'text/plain; charset=utf-8'});res.end('Unable to serve this page.')}else res.destroy()}
 });
 const port=Number(process.env.PORT||3201),host=process.env.HOST||'127.0.0.1';server.listen(port,host,()=>console.log(`PerioVox Web + Journal ready at http://${host}:${port}`));
-function close(){server.close(()=>{service.store.close();process.exit(0)})}process.on('SIGINT',close);process.on('SIGTERM',close);
+function close(){clearInterval(scheduleTimer);server.close(()=>{service.store.close();process.exit(0)})}process.on('SIGINT',close);process.on('SIGTERM',close);

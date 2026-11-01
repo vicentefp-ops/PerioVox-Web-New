@@ -38,3 +38,9 @@ npm run journal:check
 ```
 
 The checks cover static HTML, metadata, language links, sitemap, links and assets, consent-aware analytics, authentication, publication snapshots, concurrent edits, translation, rich text and safe migration. Local checks do not demonstrate indexing, traffic or real-user performance.
+
+## Scheduled publication
+
+The editor offers immediate publication or a scheduled date/time in Europe/Madrid. Scheduling prepares and validates the Spanish/English content and metadata first, then persists a publication snapshot and UTC timestamp in SQLite. No AI/network call is required at the due time. The persistent origin checks due jobs every 15 seconds, on startup and on Journal requests; a hosting cron should request `/healthz` every minute so an idle/restarted origin is awakened without depending on an editor browser or computer. Publication is atomic and idempotent across workers. If the origin is unavailable, due jobs recover on its next successful check.
+
+Scheduled content is private until due. Published articles remain live while a future update is pending. Saving edits cancels the old schedule so an outdated snapshot cannot publish; editors must schedule the updated version again. Cancellation and withdrawal remove pending jobs. Conflicting slugs and stale revisions are rejected. A private database backup is created before the first scheduling migration; the existing tables/data are preserved.
