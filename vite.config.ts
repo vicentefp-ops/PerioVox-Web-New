@@ -4,7 +4,7 @@ import {defineConfig} from 'vite';
 import path from 'node:path';
 import {existsSync,readFileSync} from 'node:fs';
 import {findRoute} from './src/resources-content';
-export default defineConfig({plugins:[react(),journalPlugin(path.resolve()),{
+export default defineConfig({base:process.env.JOURNAL_ASSET_ORIGIN ? new URL(process.env.JOURNAL_ASSET_ORIGIN).origin+'/' : '/',plugins:[react(),journalPlugin(path.resolve()),{
  name:'static-preview-404',configurePreviewServer(server){server.middlewares.use((req,res,next)=>{
   const pathname=new URL(req.url??'/','http://localhost').pathname;
   if(!['GET','HEAD'].includes(req.method??'GET')||findRoute(pathname))return next();
