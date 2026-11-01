@@ -11,7 +11,8 @@ export function renderJournalDocument(props:JournalProps,root:string){
  const seen=new Set<string>();
  const collect=(key:string)=>{if(seen.has(key))return;seen.add(key);const entry=manifest[key];if(!entry)throw new Error('Journal bundle missing: '+key);entry.css?.forEach((file:string)=>styles.add(file));if(entry.file.endsWith('.js'))scripts.add(entry.file);entry.imports?.forEach(collect)};
  const template=readFileSync(path.join(root,'dist/index.html'),'utf8');
- const main=template.match(/<script\b(?=[^>]*type="module")[^>]*src="\/([^"]+)"/)?.[1];
+ const mainSrc=template.match(/<script\b(?=[^>]*type="module")[^>]*src="([^"]+)"/)?.[1];
+ const main=mainSrc?new URL(mainSrc,assetOrigin||'https://periovox.ai').pathname.slice(1):undefined;
  if(!main)throw new Error('Journal entry script missing');
  const mainKey=Object.keys(manifest).find(key=>manifest[key].file===main);if(!mainKey)throw new Error('Journal entry manifest missing');
  collect(mainKey);collect(props.admin?'src/JournalAdmin.tsx':'src/Journal.tsx');
