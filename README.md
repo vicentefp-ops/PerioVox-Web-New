@@ -37,7 +37,7 @@ npm run seo:check
 npm run journal:check
 ```
 
-The checks cover static HTML, metadata, language links, sitemap, links and assets, consent-aware analytics, authentication, publication snapshots, concurrent edits, translation, rich text and safe migration. Local checks do not demonstrate indexing, traffic or real-user performance.
+The checks cover static HTML, metadata, language links, sitemap, links and assets, dynamic Journal SEO (fictional Spanish-only and bilingual articles, manual metadata, collection entity links, and private editor noindex), consent-aware analytics, authentication, publication snapshots, concurrent edits, translation, rich text and safe migration. Local checks do not demonstrate indexing, traffic or real-user performance.
 
 ## Scheduled publication
 

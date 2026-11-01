@@ -6,6 +6,7 @@ const server=await createServer({server:{middlewareMode:true,hmr:false,ws:false}
 const decode=s=>s.replace(/&amp;/g,'&').replace(/&#x27;|&#39;/g,"'").replace(/&quot;/g,'"').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
 const text=s=>decode(s.replace(/<script\b[\s\S]*?<\/script>/g,'').replace(/<style\b[\s\S]*?<\/style>/g,'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim());
 function attrs(tag){return Object.fromEntries([...tag.matchAll(/([\w:-]+)="([^"]*)"/g)].map(m=>[m[1],decode(m[2])]))}
+await import('./check-journal-seo.mjs');
 const results=[];
 try{
  const {siteRoutes,metadata}=await server.ssrLoadModule('/src/entry-server.tsx');
