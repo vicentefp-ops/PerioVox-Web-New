@@ -88,7 +88,7 @@ export function openStore(directory){
    }
    return published;
   })},
-  unpublish(id){return transaction(()=>{db.prepare('DELETE FROM schedules WHERE article_id=?').run(id);db.prepare('UPDATE articles SET published=NULL,revision=revision+1 WHERE id=?').run(id);return this.get(id)})},
+  unpublish(id,expectedRevision){return transaction(()=>{if(expectedRevision!==undefined&&this.get(id)?.revision!==expectedRevision)throw Object.assign(new Error('El artículo ha cambiado. Recárgalo antes de retirar.'),{status:409});db.prepare('DELETE FROM schedules WHERE article_id=?').run(id);db.prepare('UPDATE articles SET published=NULL,revision=revision+1 WHERE id=?').run(id);return this.get(id)})},
   published(lang){return this.list().filter(a=>a.published?.[lang]).map(a=>({id:a.id,...a.published,language:lang})).sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt))},
   resolve(lang,slug){const row=db.prepare('SELECT article_id FROM slugs WHERE language=? AND slug=?').get(lang,slug);const article=row?this.get(row.article_id):null;return article?.published?.[lang]?{id:article.id,...article.published,language:lang}:null}
  };

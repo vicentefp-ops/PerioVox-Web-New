@@ -5,14 +5,14 @@ import JournalRichText from './JournalRichText';
 import {blankDraft,blankText,type JournalDraft,type JournalText} from './journal-model';
 import './journal.css';
 import {madridInput,madridToUTC,scheduleLabel} from './journal-schedule';
-type Session={authenticated:boolean;email?:string;csrf?:string;translationReady?:boolean;model?:string};
+type Session={authenticated:boolean;email?:string;csrf?:string;translationReady?:boolean;model?:string;uploadMode?:'chunks'};
 export default function JournalAdmin(){
  const [session,setSession]=useState<Session|null>(null),[loading,setLoading]=useState(true),[email,setEmail]=useState('info@periovox.ai'),[password,setPassword]=useState('');
  const [articles,setArticles]=useState<JournalDraft[]>([]),[draft,setDraft]=useState<JournalDraft>(blankDraft),[language,setLanguage]=useState<'es'|'en'>('es'),[dirty,setDirty]=useState(false),[busy,setBusy]=useState(''),[error,setError]=useState(''),[notice,setNotice]=useState('');
  const [publicationMode,setPublicationMode]=useState<'now'|'schedule'>('now'),[publicationDate,setPublicationDate]=useState('');
  const [preview,setPreview]=useState(false),[settings,setSettings]=useState(false),[apiKey,setApiKey]=useState(''),[model,setModel]=useState('gemini-3.8-flash');const [settingsError,setSettingsError]=useState(''),[settingsNotice,setSettingsNotice]=useState('');const previewRef=useRef<HTMLDivElement>(null);
- async function request(endpoint:string,method='GET',body?:unknown,raw=false){
-  const response=await fetch('/api/journal'+endpoint,{method,credentials:'same-origin',headers:{...(body!==undefined&&!raw?{'Content-Type':'application/json'}:{}),...(session?.csrf?{'X-Journal-CSRF':session.csrf}:{})},body:body===undefined?undefined:raw?body as BodyInit:JSON.stringify(body)});
+ async function request(endpoint:string,method='GET',body?:unknown,raw=false,extraHeaders:Record<string,string>={}){
+  const response=await fetch('/api/journal'+endpoint,{method,credentials:'same-origin',headers:{...(body!==undefined&&!raw?{'Content-Type':'application/json'}:{}),...(session?.csrf?{'X-Journal-CSRF':session.csrf}:{}),...extraHeaders},body:body===undefined?undefined:raw?body as BodyInit:JSON.stringify(body)});
   const result=await response.json();if(!response.ok){if(response.status===401&&endpoint!=='/login')setSession(null);throw new Error(result.error||'No se ha podido completar la operación.')}return result;
  }
  async function refresh(){const result=await request('/articles');setArticles(result.articles)}
@@ -33,7 +33,17 @@ export default function JournalAdmin(){
  async function completeMetadata(scope:'seo'|'image'){
   let savedId:string|undefined;setBusy('metadata:'+scope);setError('');setNotice('');try{const article=await save();savedId=article.id;const result=await request('/articles/'+article.id+'/metadata','POST',{revision:article.revision,language,scope});setDraft(result.article);await refresh();setNotice(result.filledFields.length?(scope==='image'?'Descripción de la portada generada. Puedes revisarla y editarla.':'Título y descripción para buscadores preparados. Puedes revisarlos y editarlos.'):'Los campos ya están completos. Se conservan tus textos.')}catch(e){await recoverSavedDraft(savedId);setError((e as Error).message)}finally{setBusy('')}
  }
- async function upload(file:File|undefined,inline=false){if(!file)return;setBusy('upload');setError('');try{if(file.size>8*1024*1024)throw new Error('La imagen debe pesar menos de 8 MB.');const result=await request('/uploads','POST',file,true);if(!inline)common('cover',result.url);return result.url as string}catch(e){setError((e as Error).message)}finally{setBusy('')}}
+ async function upload(file:File|undefined,inline=false){if(!file)return;setBusy('upload');setError('');try{if(file.size>8*1024*1024)throw new Error('La imagen debe pesar menos de 8 MB.');let result;
+   if(session?.uploadMode==='chunks'){
+    const upload=await request('/uploads/begin','POST',{size:file.size});
+    if(!Number.isInteger(upload.chunkBytes)||upload.chunkBytes<1||upload.chunkBytes>2*1024*1024)throw new Error('La configuración de subida no es válida.');
+    const receipts:string[]=[];
+    for(let offset=0,index=0;offset<file.size;offset+=upload.chunkBytes,index++){
+     const part=await request('/uploads/chunk?index='+index,'POST',file.slice(offset,offset+upload.chunkBytes),true,{'X-Journal-Upload':upload.ticket});
+     receipts.push(part.receipt);
+    }
+    result=await request('/uploads/complete','POST',{ticket:upload.ticket,receipts});
+   }else result=await request('/uploads','POST',file,true);if(!inline)common('cover',result.url);return result.url as string}catch(e){setError((e as Error).message)}finally{setBusy('')}}
  async function saveSettings(event:FormEvent){event.preventDefault();setBusy('settings');setError('');setNotice('');setSettingsError('');setSettingsNotice('');try{const result=await request('/settings/gemini','POST',{apiKey,model});setSession(s=>({...s!,...result}));setApiKey('');setSettingsNotice(result.translationReady?'Clave de Gemini guardada en el servidor. Ya puedes traducir y generar las descripciones y los campos SEO.':'Modelo guardado. Añade una clave para activar las funciones de IA.')}catch(e){setSettingsError((e as Error).message)}finally{setBusy('')}}
  async function logout(){if(dirty&&!window.confirm('Tienes cambios sin guardar. ¿Quieres cerrar sesión?'))return;setBusy('logout');try{await request('/logout','POST',{});setSession(null);setArticles([]);setDraft(blankDraft());setDirty(false)}catch(e){setError((e as Error).message)}finally{setBusy('')}}
  const text=draft[language]||blankText();const canTranslate=!!session?.translationReady;

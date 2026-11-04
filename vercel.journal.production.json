@@ -1,0 +1,308 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "npm run build:vercel-journal",
+  "installCommand": "npm ci",
+  "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.periovox.ai"
+        }
+      ],
+      "destination": "https://periovox.ai/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.periovox.ai"
+        }
+      ],
+      "destination": "https://periovox.ai/:path*/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.periovox.ai"
+        }
+      ],
+      "destination": "https://periovox.ai/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "cookie",
+          "key": "pv_web_language",
+          "value": "es"
+        }
+      ],
+      "destination": "/es/",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept-language",
+          "value": "^[eE][sS](?:-[A-Za-z0-9]+)*(?:[,;].*)?$"
+        }
+      ],
+      "missing": [
+        {
+          "type": "cookie",
+          "key": "pv_web_language",
+          "value": "en"
+        }
+      ],
+      "destination": "/es/",
+      "permanent": false
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/resources",
+      "destination": "/resources/",
+      "permanent": true
+    },
+    {
+      "source": "/resources/index.html",
+      "destination": "/resources/",
+      "permanent": true
+    },
+    {
+      "source": "/periodontal-chart",
+      "destination": "/periodontal-chart/",
+      "permanent": true
+    },
+    {
+      "source": "/periodontal-chart/index.html",
+      "destination": "/periodontal-chart/",
+      "permanent": true
+    },
+    {
+      "source": "/voice-periodontal-charting",
+      "destination": "/voice-periodontal-charting/",
+      "permanent": true
+    },
+    {
+      "source": "/voice-periodontal-charting/index.html",
+      "destination": "/voice-periodontal-charting/",
+      "permanent": true
+    },
+    {
+      "source": "/periodontal-chart-comparison",
+      "destination": "/periodontal-chart-comparison/",
+      "permanent": true
+    },
+    {
+      "source": "/periodontal-chart-comparison/index.html",
+      "destination": "/periodontal-chart-comparison/",
+      "permanent": true
+    },
+    {
+      "source": "/dental-software-integrations",
+      "destination": "/dental-software-integrations/",
+      "permanent": true
+    },
+    {
+      "source": "/dental-software-integrations/index.html",
+      "destination": "/dental-software-integrations/",
+      "permanent": true
+    },
+    {
+      "source": "/es",
+      "destination": "/es/",
+      "permanent": true
+    },
+    {
+      "source": "/es/index.html",
+      "destination": "/es/",
+      "permanent": true
+    },
+    {
+      "source": "/es/recursos",
+      "destination": "/es/recursos/",
+      "permanent": true
+    },
+    {
+      "source": "/es/recursos/index.html",
+      "destination": "/es/recursos/",
+      "permanent": true
+    },
+    {
+      "source": "/es/periodontograma",
+      "destination": "/es/periodontograma/",
+      "permanent": true
+    },
+    {
+      "source": "/es/periodontograma/index.html",
+      "destination": "/es/periodontograma/",
+      "permanent": true
+    },
+    {
+      "source": "/es/periodontograma-por-voz",
+      "destination": "/es/periodontograma-por-voz/",
+      "permanent": true
+    },
+    {
+      "source": "/es/periodontograma-por-voz/index.html",
+      "destination": "/es/periodontograma-por-voz/",
+      "permanent": true
+    },
+    {
+      "source": "/es/comparar-periodontogramas",
+      "destination": "/es/comparar-periodontogramas/",
+      "permanent": true
+    },
+    {
+      "source": "/es/comparar-periodontogramas/index.html",
+      "destination": "/es/comparar-periodontogramas/",
+      "permanent": true
+    },
+    {
+      "source": "/es/integracion-software-dental",
+      "destination": "/es/integracion-software-dental/",
+      "permanent": true
+    },
+    {
+      "source": "/es/integracion-software-dental/index.html",
+      "destination": "/es/integracion-software-dental/",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/journal/:path*",
+      "destination": "/api/journal"
+    },
+    {
+      "source": "/journal/",
+      "destination": "/api/journal"
+    },
+    {
+      "source": "/es/journal/",
+      "destination": "/api/journal"
+    },
+    {
+      "source": "/journal/:path*/",
+      "destination": "/api/journal"
+    },
+    {
+      "source": "/es/journal/:path*/",
+      "destination": "/api/journal"
+    },
+    {
+      "source": "/journal/:path*",
+      "destination": "/api/journal"
+    },
+    {
+      "source": "/es/journal/:path*",
+      "destination": "/api/journal"
+    },
+    {
+      "source": "/journal-media/:path*",
+      "destination": "/api/journal"
+    },
+    {
+      "source": "/sitemap-journal.xml",
+      "destination": "/api/journal"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://www.googletagmanager.com; media-src 'self'; object-src 'none'; base-uri 'self'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/assets/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/media/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/periodontogram-:name*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/:indexnow([a-f0-9]{48}).txt",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    }
+  ],
+  "functions": {
+    "api/journal.mjs": {
+      "includeFiles": "{dist/**,dist/.vite/**,dist-server/**,public/media/**}",
+      "maxDuration": 300
+    }
+  }
+}

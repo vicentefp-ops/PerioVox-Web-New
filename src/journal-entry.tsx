@@ -5,8 +5,8 @@ import Journal from './Journal';
 import JournalAdmin from './JournalAdmin';
 import {journalHead} from './journal-seo';
 import type {JournalProps} from './journal-model';
-export function renderJournalDocument(props:JournalProps,root:string){
- const assetOrigin=process.env.JOURNAL_ASSET_ORIGIN?new URL(process.env.JOURNAL_ASSET_ORIGIN).origin:'';
+export function renderJournalDocument(props:JournalProps,root:string,assetOriginOverride?:string){
+ const assetOrigin=assetOriginOverride??(process.env.JOURNAL_ASSET_ORIGIN?new URL(process.env.JOURNAL_ASSET_ORIGIN).origin:'');
  const manifest=JSON.parse(readFileSync(path.join(root,'dist/.vite/manifest.json'),'utf8'));const styles=new Set<string>(),scripts=new Set<string>();
  const seen=new Set<string>();
  const collect=(key:string)=>{if(seen.has(key))return;seen.add(key);const entry=manifest[key];if(!entry)throw new Error('Journal bundle missing: '+key);entry.css?.forEach((file:string)=>styles.add(file));if(entry.file.endsWith('.js'))scripts.add(entry.file);entry.imports?.forEach(collect)};
