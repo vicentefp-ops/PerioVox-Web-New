@@ -26,3 +26,6 @@ jobs:
       - run: npm run build
       - run: npm run journal:check
       - run: mkdir -p review && npm run seo:check
+      - run: npm run journal:vercel:check
+      - run: node --test scripts/journal-migration.test.mjs scripts/journal-import-postgres.test.mjs
+      - run: npm run build:vercel-journal

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
-import {readFile,access,writeFile} from 'node:fs/promises';
+import {readFile,access,writeFile,mkdir} from 'node:fs/promises';
 import {createServer} from 'vite';
+await mkdir('review',{recursive:true});
 const origin='https://periovox.ai';
 const server=await createServer({server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
 const decode=s=>s.replace(/&amp;/g,'&').replace(/&#x27;|&#39;/g,"'").replace(/&quot;/g,'"').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
