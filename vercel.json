@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "buildCommand": "npm run build:vercel",
+  "buildCommand": "npm run build:vercel-journal && node scripts/journal-live-preview-check.mjs",
   "installCommand": "npm ci",
   "outputDirectory": "dist",
   "redirects": [
@@ -188,39 +188,39 @@
   "rewrites": [
     {
       "source": "/api/journal/:path*",
-      "destination": "https://journal-backend.periovox.ai/api/journal/:path*"
+      "destination": "/api/journal"
     },
     {
       "source": "/journal/",
-      "destination": "https://journal-backend.periovox.ai/journal/"
+      "destination": "/api/journal"
     },
     {
       "source": "/es/journal/",
-      "destination": "https://journal-backend.periovox.ai/es/journal/"
+      "destination": "/api/journal"
     },
     {
       "source": "/journal/:path*/",
-      "destination": "https://journal-backend.periovox.ai/journal/:path*/"
+      "destination": "/api/journal"
     },
     {
       "source": "/es/journal/:path*/",
-      "destination": "https://journal-backend.periovox.ai/es/journal/:path*/"
+      "destination": "/api/journal"
     },
     {
       "source": "/journal/:path*",
-      "destination": "https://journal-backend.periovox.ai/journal/:path*"
+      "destination": "/api/journal"
     },
     {
       "source": "/es/journal/:path*",
-      "destination": "https://journal-backend.periovox.ai/es/journal/:path*"
+      "destination": "/api/journal"
     },
     {
       "source": "/journal-media/:path*",
-      "destination": "https://journal-backend.periovox.ai/journal-media/:path*"
+      "destination": "/api/journal"
     },
     {
       "source": "/sitemap-journal.xml",
-      "destination": "https://journal-backend.periovox.ai/sitemap-journal.xml"
+      "destination": "/api/journal"
     }
   ],
   "headers": [
@@ -237,7 +237,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' https://journal-backend.periovox.ai https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://journal-backend.periovox.ai; img-src 'self' data: https://journal-backend.periovox.ai https://www.google-analytics.com https://www.googletagmanager.com; font-src 'self' data: https://journal-backend.periovox.ai; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://www.googletagmanager.com; media-src 'self' https://journal-backend.periovox.ai; object-src 'none'; base-uri 'self'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://www.googletagmanager.com; media-src 'self'; object-src 'none'; base-uri 'self'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests"
         },
         {
           "key": "X-Frame-Options",
@@ -297,6 +297,21 @@
           "value": "public, max-age=3600"
         }
       ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     }
-  ]
+  ],
+  "functions": {
+    "api/journal.mjs": {
+      "includeFiles": "{dist/**,dist/.vite/**,dist-server/**,public/media/**}",
+      "maxDuration": 300
+    }
+  }
 }

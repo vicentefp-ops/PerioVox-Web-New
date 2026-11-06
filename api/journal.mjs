@@ -1,3 +1,4 @@
+import {createHash} from 'node:crypto';
 import {journalRuntimeConfig,authorizedCron} from '../server/journal-runtime-config.mjs';
 import {createJournalHandler} from '../server/journal-http.mjs';
 import {openPostgresStore} from '../server/journal-postgres-store.mjs';
@@ -10,7 +11,7 @@ export const config={supportsResponseStreaming:true};
 // Never run a persistent loop or migrate a database during a function invocation.
 let initialization;
 async function initialize(){
- const config=journalRuntimeConfig();
+ const config=journalRuntimeConfig({...process.env,JOURNAL_PREVIEW_BLOB_TOKEN:process.env.JOURNAL_PREVIEW_BLOB_READ_WRITE_TOKEN});
  const root=process.cwd();
  const media=await createBlobMedia({token:config.blobToken,expectedEnvironment:config.environment});
  const {renderJournalDocument}=await import('../dist-server/journal-entry.js');
@@ -23,7 +24,7 @@ async function initialize(){
  return {config,service,media};
 }
 export default async function handler(req,res){
- if(process.env.JOURNAL_BACKEND!=='vercel'){res.statusCode=404;res.end();return}
+ if(process.env.VERCEL_ENV!=='preview'||process.env.VERCEL_GIT_COMMIT_REF!=='preview/journal-runtime-20261107'||createHash('sha256').update([process.env.JOURNAL_PREVIEW_NEON_PROJECT_ID,process.env.JOURNAL_PREVIEW_BLOB_STORE_ID].join(':')).digest('hex')!=='75d711cf9c1a47d478a633f436a3a87186afcc9dca1f31d1318263b902fbdf4d'||process.env.JOURNAL_BACKEND!=='vercel'){res.statusCode=404;res.end();return}
  try{
   initialization??=initialize().catch(error=>{initialization=undefined;throw error});
   const {config,service,media}=await initialization;
