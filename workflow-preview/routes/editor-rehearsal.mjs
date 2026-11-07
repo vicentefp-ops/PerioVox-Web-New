@@ -14,13 +14,18 @@ export default defineEventHandler(async ({req})=>{
  const scope=previewIdentity(),url=new URL(req.url);
  if(!scope||url.host!==scope.host)return new Response(null,{status:404});
  if(req.method!=='GET'&&req.method!=='POST')return new Response(null,{status:405});
- if(req.method==='POST'&&req.headers.get('origin')!==url.origin)return new Response(null,{status:403});
+ const canonical='https://'+scope.host;
+ if(req.method==='POST'&&req.headers.get('origin')!==canonical&&
+    !(!req.headers.get('origin')&&req.headers.get('sec-fetch-site')==='same-origin')){
+  console.info('JOURNAL_EDITOR_REHEARSAL_REJECTED',{hasOrigin:req.headers.has('origin'),sameSite:req.headers.get('sec-fetch-site')==='same-origin'});
+  return new Response('Origen de prueba no válido.',{status:403});
+ }
  let store,automated;
  try{
   store=await previewStore();
   if(req.method==='GET'){
    const saved=await store.getSetting(marker);
-   if(!saved)return page('<p>Usa únicamente artículos ficticios.</p><form method="post"><button>Probar programación del editor</button></form>');
+   if(!saved)return page('<p>Usa únicamente artículos ficticios.</p><form method="post" action="/editor-rehearsal"><button>Probar programación del editor</button></form>');
    const state=JSON.parse(saved);
    const posts=await Promise.all((state.articles??[]).map(async entry=>{
     const row=await store.get(entry.id);
@@ -37,7 +42,7 @@ export default defineEventHandler(async ({req})=>{
   const {service}=await initialize();
   const prefix='/api/journal';
   async function call(path,method,body,extra={}){
-   const headers={host:scope.host,origin:url.origin,'content-type':'application/json',
+   const headers={host:scope.host,origin:canonical,'content-type':'application/json',
     cookie:'pv_journal='+automated.token,'x-journal-csrf':automated.csrf,...extra};
    const source=Object.assign(Readable.from(body?[Buffer.from(JSON.stringify(body))]:[]),
     {url:prefix+path,method,headers,socket:{remoteAddress:'127.0.0.1'}});
