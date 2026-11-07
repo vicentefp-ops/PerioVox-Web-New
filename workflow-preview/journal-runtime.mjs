@@ -1,6 +1,6 @@
 import {start} from 'workflow/api';
 import {publishJournal} from '../workflows/publish-journal.mjs';
-import {previewIdentity,previewStore} from '../workflow-preview/storage.mjs';
+import {previewIdentity,previewStore} from './storage.mjs';
 import {journalRuntimeConfig,authorizedCron} from '../server/journal-runtime-config.mjs';
 import {createJournalHandler} from '../server/journal-http.mjs';
 import {createBlobMedia} from '../server/journal-blob-media.mjs';

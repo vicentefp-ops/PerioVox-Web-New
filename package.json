@@ -15,7 +15,7 @@
     "build:vercel": "npm run build && node scripts/prepare-vercel.mjs",
     "build:vercel-journal": "npm run build:vercel && node scripts/check-vercel-journal-build.mjs",
     "journal:vercel:check": "node --test server/journal-postgres*.test.mjs server/journal-blob*.test.mjs server/journal-vercel.test.mjs",
-    "build:workflow-preview": "npm run build:vercel-journal && nitro build && node scripts/assemble-journal-workflow-preview.mjs"
+    "build:workflow-preview": "npm run build:vercel && nitro build && node scripts/assemble-journal-workflow-preview.mjs"
   },
   "dependencies": {
     "@tiptap/core": "^3.31.4",

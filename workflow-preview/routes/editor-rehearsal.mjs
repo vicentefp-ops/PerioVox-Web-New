@@ -1,7 +1,7 @@
 import {createHash} from 'node:crypto';
 import {Readable} from 'node:stream';
 import {defineEventHandler} from 'nitro/h3';
-import {initialize} from '../../api/journal.mjs';
+import {initialize} from '../journal-runtime.mjs';
 import {previewIdentity,previewStore} from '../storage.mjs';
 
 const marker='editor-workflow-rehearsal-v2';

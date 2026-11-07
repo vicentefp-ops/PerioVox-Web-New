@@ -14,12 +14,9 @@ for(const file of ['dist/index.html','dist/.vite/manifest.json','dist/404.html']
 for(const route of ['journal','es/journal','.vite']){
  await rm(join(output,'static',route),{recursive:true,force:true});
 }
-// The generic Vercel router doesn't resolve Nitro's catch-all .func alias
-// under /api reliably. Send the original URL to the actual server function.
-const configFile=join(output,'config.json');
-const config=JSON.parse(await readFile(configFile,'utf8'));
-for(const route of config.routes){
- if(route.dest==='/api/journal/[...]')route.dest='/__server';
+await writeFile(join(output,'static','robots.txt'),'User-agent: *\nDisallow: /\n');
+const config=JSON.parse(await readFile(join(output,'config.json'),'utf8'));
+if(!config.routes.some(route=>route.dest==='/api/journal/session')){
+ throw new Error('Missing exact editor session route');
 }
-await writeFile(configFile,JSON.stringify(config,null,2)+'\n');
 console.log('Journal Workflow Preview function, private SSR assets and dynamic paths verified.');
