@@ -4,7 +4,7 @@ import {defineEventHandler} from 'nitro/h3';
 import {initialize} from '../../api/journal.mjs';
 import {previewIdentity,previewStore} from '../storage.mjs';
 
-const marker='editor-workflow-rehearsal-v1';
+const marker='editor-workflow-rehearsal-v2';
 const editor='journal-preview-smoke@example.invalid';
 const iso=ms=>new Date(ms).toISOString();
 const quote=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -62,7 +62,7 @@ export default defineEventHandler(async ({req})=>{
   expect(await call('/articles','POST',{}, {origin:'https://example.invalid'}),403,'origin');
   expect(await call('/articles','POST',{}, {'x-journal-csrf':'wrong'}),403,'csrf');
   for(const spec of [{name:'direct',delays:[95]},{name:'modified',delays:[55,120]},
-    {name:'cancelled',delays:[75],cancel:true},{name:'redeploy',delays:[300]}]){
+    {name:'cancelled',delays:[75],cancel:true},{name:'redeploy',delays:[420]}]){
    const slug='workflow-editor-'+spec.name+'-'+fingerprint;
    const draft={es:fields('Ensayo ficticio '+spec.name,slug),en:fields('Fictional rehearsal '+spec.name,slug+'-en')};
    let {article}=expect(await call('/articles','POST',draft),201,'create');
