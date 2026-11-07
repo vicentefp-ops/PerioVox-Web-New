@@ -121,3 +121,29 @@ test('PostgreSQL savepoint rolls back partial language writes when due publicati
  assert.equal((await store.get(a.id)).published,null);
  assert.equal((await pool.query('SELECT * FROM slugs WHERE article_id=$1',[a.id])).rows.length,0);
 });
+
+test('durable alarms reject stale generations, cancel safely and publish once under duplicate delivery',async t=>{
+ const {store}=await fixture(t);
+ const alarms=[];
+ const arm=alarm=>{alarms.push(alarm);return 'fictional-run-'+alarms.length};
+ const scheduledAt=new Date(2000).toISOString();
+ let a=await store.save(draft('workflow'));
+ await assert.rejects(store.schedule(a.id,a.revision,snapshot(a),scheduledAt,1000,()=>''),/acknowledgement/);
+ assert.equal((await store.get(a.id)).schedule,null);
+ a=await store.schedule(a.id,a.revision,snapshot(a),scheduledAt,1000,arm);
+ a=await store.schedule(a.id,a.revision,snapshot(a),scheduledAt,1000,arm);
+ assert.deepEqual(await store.publishDue(2000,alarms[0]),[]);
+ assert.deepEqual(await store.publishDue(1999,alarms[1]),[]);
+ assert.equal((await store.get(a.id)).published,null);
+ await store.setSetting('workflow-pause-publication','yes');
+ assert.deepEqual(await store.publishDue(2000,alarms[1]),[]);
+ assert.deepEqual(await store.publishDue(2000),[]);
+ await store.setSetting('workflow-pause-publication','no');
+ assert.deepEqual((await Promise.all([store.publishDue(2000,alarms[1]),store.publishDue(2000,alarms[1])])).flat(),[a.id]);
+ assert.equal((await store.get(a.id)).revision,a.revision+1);
+ let b=await store.save(draft('cancel-workflow'));
+ b=await store.schedule(b.id,b.revision,snapshot(b),scheduledAt,1000,arm);
+ await store.cancelSchedule(b.id,b.revision);
+ assert.deepEqual(await store.publishDue(2000,alarms[2]),[]);
+ assert.equal((await store.get(b.id)).published,null);
+});

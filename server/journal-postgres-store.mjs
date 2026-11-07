@@ -145,12 +145,20 @@ export async function openPostgresStore({pool, connectionString, expectedEnviron
   async publish(id,expectedRevision,snapshot) {return transaction(async client => {
    await checkRevision(client,id,expectedRevision); await writePublication(client,id,snapshot); return get(id,client);
   });},
-  async schedule(id,expectedRevision,snapshot,publishAt,now=Date.now()) {return transaction(async client => {
+  async schedule(id,expectedRevision,snapshot,publishAt,now=Date.now(),arm) {return transaction(async client => {
    const date=Date.parse(publishAt);
    if (!Number.isFinite(date)||date<=now) throw Object.assign(new Error('Elige una fecha y hora futura.'),{status:400});
    await checkRevision(client,id,expectedRevision); await checkSlugs(client,id,snapshot);
+   const scheduledAt=new Date(date).toISOString();
+   if(arm){
+    const alarm={id,generation:randomUUID(),scheduledAt,revision:expectedRevision+1};
+    const runId=await arm(alarm);
+    if(typeof runId!=='string'||!runId)throw new Error('Missing durable Workflow acknowledgement');
+    await client.query('INSERT INTO journal_settings VALUES($1,$2) ON CONFLICT(name) DO UPDATE SET value=EXCLUDED.value',
+     ['workflow-alarm:'+id,JSON.stringify({...alarm,runId})]);
+   }
    await client.query(`INSERT INTO schedules(article_id,publish_at,snapshot,status,error) VALUES($1,$2,$3,'pending',NULL)
-    ON CONFLICT(article_id) DO UPDATE SET publish_at=EXCLUDED.publish_at,snapshot=EXCLUDED.snapshot,status='pending',error=NULL`,[id,new Date(date).toISOString(),JSON.stringify(snapshot)]);
+    ON CONFLICT(article_id) DO UPDATE SET publish_at=EXCLUDED.publish_at,snapshot=EXCLUDED.snapshot,status='pending',error=NULL`,[id,scheduledAt,JSON.stringify(snapshot)]);
    await client.query('UPDATE articles SET revision=revision+1 WHERE id=$1',[id]); return get(id,client);
   });},
   async cancelSchedule(id,expectedRevision) {return transaction(async client => {
@@ -158,9 +166,19 @@ export async function openPostgresStore({pool, connectionString, expectedEnviron
    await client.query('DELETE FROM schedules WHERE article_id=$1',[id]);
    await client.query('UPDATE articles SET revision=revision+1 WHERE id=$1',[id]); return get(id,client);
   });},
-  async publishDue(now=Date.now()) {return transaction(async client => {
+  async publishDue(now=Date.now(),alarm) {return transaction(async client => {
    const published=[];
-   const due=(await client.query("SELECT * FROM schedules WHERE status='pending' AND publish_at<=$1 ORDER BY publish_at,article_id",[new Date(now).toISOString()])).rows;
+   const paused=(await client.query("SELECT value FROM journal_settings WHERE name='workflow-pause-publication'")).rows[0];
+   if(paused?.value==='yes')return published;
+   if(alarm){
+    const current=(await client.query('SELECT value FROM journal_settings WHERE name=$1',['workflow-alarm:'+alarm.id])).rows[0];
+    if(!current||JSON.parse(current.value).generation!==alarm.generation)return published;
+   }
+   const deadline=new Date(now).toISOString();
+   const due=alarm
+    ? (await client.query("SELECT s.* FROM schedules s JOIN articles a ON a.id=s.article_id WHERE s.status='pending' AND s.publish_at<=$1 AND s.article_id=$2 AND s.publish_at=$3 AND a.revision=$4",
+       [deadline,alarm.id,alarm.scheduledAt,alarm.revision])).rows
+    : (await client.query("SELECT * FROM schedules WHERE status='pending' AND publish_at<=$1 ORDER BY publish_at,article_id",[deadline])).rows;
    // Mark malformed due snapshots before slug checks so one corrupt due job
    // cannot poison otherwise valid jobs simply because its UUID sorts later.
    const valid=[];
