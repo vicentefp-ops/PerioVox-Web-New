@@ -24,7 +24,7 @@ async function bodyBuffer(req,limit=500_000){let size=0;const chunks=[];for awai
 async function jsonBody(req){if(!req.headers['content-type']?.startsWith('application/json'))throw error('Formato de solicitud no válido.',415);try{const data=JSON.parse((await bodyBuffer(req)).toString('utf8'));if(!data||typeof data!=='object'||Array.isArray(data))throw error('Contenido no válido.');return data}catch(e){if(e.status)throw e;throw error('Contenido no válido.')}}
 function json(res,status,data){res.statusCode=status;res.setHeader('Content-Type','application/json; charset=utf-8');res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('X-Robots-Tag','noindex, nofollow');res.end(JSON.stringify(data))}
 function html(res,status,markup,privatePage=false){res.statusCode=status;res.setHeader('Content-Type','text/html; charset=utf-8');res.setHeader('Cache-Control',privatePage?'no-store':'no-cache');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Referrer-Policy','strict-origin-when-cross-origin');res.setHeader('X-Frame-Options','DENY');if(privatePage)res.setHeader('X-Robots-Tag','noindex, nofollow');res.end(markup)}
-export function createJournalHandler({root,dataDir=process.env.JOURNAL_DATA_DIR||path.join(root,'.journal-data'),renderPage,translate=translateArticle,generateMetadata=generateArticleMetadata,now=()=>Date.now(),store:providedStore,media,settings,preview=false,origin,allowedHosts,clientIp=req=>req.socket.remoteAddress??'unknown'}){
+export function createJournalHandler({root,dataDir=process.env.JOURNAL_DATA_DIR||path.join(root,'.journal-data'),renderPage,translate=translateArticle,generateMetadata=generateArticleMetadata,now=()=>Date.now(),store:providedStore,media,settings,preview=false,armSchedule,recoverDue=true,origin,allowedHosts,clientIp=req=>req.socket.remoteAddress??'unknown'}){
  const store=providedStore??openStore(dataDir);const uploads=path.join(dataDir,'uploads');if(!media)mkdirSync(uploads,{recursive:true,mode:0o700});
  const keyFile=path.join(dataDir,'gemini.key');const modelFile=path.join(dataDir,'gemini-model.txt');
  const apiKey=async()=>settings?await settings.apiKey():process.env.GEMINI_API_KEY||(existsSync(keyFile)?readFileSync(keyFile,'utf8').trim():'');
@@ -63,7 +63,7 @@ export function createJournalHandler({root,dataDir=process.env.JOURNAL_DATA_DIR|
   try{
    const host=(req.headers.host??'').toLowerCase();const hostname=host.replace(/:\d+$/,'');const allowed=allowedHosts??['localhost','127.0.0.1','[::1]','periovox.ai','www.periovox.ai',...internalHosts,...(process.env.JOURNAL_ORIGIN?[new URL(process.env.JOURNAL_ORIGIN).hostname]:[])];
    if(!allowed.includes(hostname))throw error('Dominio no autorizado.',400);
-   await store.publishDue(now());
+   if(recoverDue)await store.publishDue(now());
    if(isApi){
     const token=req.headers.cookie?.split(';').map(s=>s.trim()).find(s=>s.startsWith('pv_journal='))?.slice(11);
     const session=await store.session(token);
@@ -114,7 +114,7 @@ export function createJournalHandler({root,dataDir=process.env.JOURNAL_DATA_DIR|
        let publishAt;if(action==='schedule'){if(typeof body.publishAt!=='string'||!/^\d{4}-\d{2}-\d{2}T.*(?:Z|[+-]\d{2}:\d{2})$/.test(body.publishAt)||!Number.isFinite(Date.parse(body.publishAt))||Date.parse(body.publishAt)<=now())throw error('Elige una fecha y hora futura con zona horaria.');publishAt=new Date(body.publishAt).toISOString()}
        validateComplete(article.es);({article}=await completeMetadata(article,'es','all',true));if(article.cover&&!article.es.coverAlt)throw error('Añade una descripción a la imagen de portada antes de publicar.');if(body.bilingual!==false){article=await english(article);({article}=await completeMetadata(article,'en','all',true))}
        const publicationTime=publishAt||new Date(now()).toISOString();const snapshot={es:article.es,...(body.bilingual!==false?{en:article.en}:{}),author:article.author,reviewer:article.reviewer,category:article.category,cover:article.cover,publishedAt:article.published?.publishedAt??publicationTime,modifiedAt:publicationTime};
-       json(res,200,{article:action==='schedule'?await store.schedule(id,article.revision,snapshot,publishAt,now()):await store.publish(id,article.revision,snapshot)});return true;
+       json(res,200,{article:action==='schedule'?await store.schedule(id,article.revision,snapshot,publishAt,now(),armSchedule):await store.publish(id,article.revision,snapshot)});return true;
       }
       if(action==='cancel-schedule'){json(res,200,{article:await store.cancelSchedule(id,article.revision)});return true}
       if(action==='unpublish'){json(res,200,{article:await store.unpublish(id,article.revision)});return true}
