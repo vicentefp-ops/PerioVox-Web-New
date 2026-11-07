@@ -31,8 +31,11 @@ test('encrypted settings preserve editor functionality without leaking stored pl
  await assert.rejects(createEncryptedSettings(store,{env:{}}).save('another','gemini-test'),{status:409});
  assert.equal(await settings.apiKey(),'fake-gemini-key-for-test');
 });
-test('default routing stays Hostinger and alternate configs contain no unapproved cron',async()=>{
- const original=JSON.parse(await readFile('vercel.json'));assert.ok(original.rewrites.every(r=>r.destination.startsWith('https://journal-backend.periovox.ai/')));assert.equal(original.crons,undefined);
+test('workflow Preview and alternate configs contain no unapproved cron',async()=>{
+ const original=JSON.parse(await readFile('vercel.json'));
+ assert.equal(original.buildCommand,'npm run build:workflow-preview');
+ assert.equal(original.crons,undefined);
+ assert.equal(original.rewrites,undefined);
  for(const name of ['preview','production']){const config=JSON.parse(await readFile(`vercel.journal.${name}.json`));assert.ok(config.rewrites.every(r=>r.destination==='/api/journal'));assert.equal(config.crons,undefined);assert.ok(!JSON.stringify(config).includes('journal-backend.periovox.ai'));assert.ok(config.functions['api/journal.mjs'].includeFiles.includes('dist/.vite'));assert.equal(config.headers.some(r=>r.headers.some(h=>h.key==='X-Robots-Tag'&&h.value==='noindex, nofollow')),name==='preview')}
 });
 test('async PostgreSQL HTTP contract preserves private drafts, auth, CSRF, uploads, publication, SEO and previews',async t=>{
@@ -75,7 +78,7 @@ test('native cron accepts only canonical or verified deployment hostname and exa
 });
 test('Vercel entry is inert without explicit backend opt-in',async()=>{
  const previous=process.env.JOURNAL_BACKEND;delete process.env.JOURNAL_BACKEND;
- try{const {default:handler,config}=await import('../api/journal.mjs');assert.equal(config.supportsResponseStreaming,true);let ended=false;const response={end(){ended=true}};await handler({url:'/api/journal/session',headers:{}},response);assert.equal(response.statusCode,404);assert.equal(ended,true)}finally{if(previous===undefined)delete process.env.JOURNAL_BACKEND;else process.env.JOURNAL_BACKEND=previous}
+ try{const {default:handler,config}=await import('../workflow-preview/journal-runtime.mjs');assert.equal(config.supportsResponseStreaming,true);let ended=false;const response={end(){ended=true}};await handler({url:'/api/journal/session',headers:{}},response);assert.equal(response.statusCode,404);assert.equal(ended,true)}finally{if(previous===undefined)delete process.env.JOURNAL_BACKEND;else process.env.JOURNAL_BACKEND=previous}
 });
 test('storage setup CLI refuses absent acknowledgement without opening storage',async()=>{
  const {spawnSync}=await import('node:child_process');const result=spawnSync(process.execPath,['scripts/journal-storage-setup.mjs'],{encoding:'utf8',env:{PATH:process.env.PATH,JOURNAL_DATABASE_URL:'postgres://do-not-connect.invalid/db',BLOB_READ_WRITE_TOKEN:'fake-secret-not-for-output',JOURNAL_ENVIRONMENT_ID:'preview:test'}});
