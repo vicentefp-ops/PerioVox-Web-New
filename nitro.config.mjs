@@ -7,5 +7,5 @@ export default defineConfig({
   preset: 'vercel',
   renderer: false,
   noPublicDir: true,
-  routeRules: {'/**': {headers: {'x-robots-tag': 'noindex, nofollow', 'cache-control': 'no-store'}}},
+  routeRules: {'/**': {headers: {'x-robots-tag': 'noindex, nofollow', 'cache-control': 'no-store', 'x-periovox-workflow-check': 'redeploy'}}},
 });
