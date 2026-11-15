@@ -1,5 +1,7 @@
 import {createServer} from 'vite';
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {gitLastmod,readLastmodManifest,writeLastmodManifest,routeSources} from './content-lastmod.mjs';
+import {journalArticleLines} from './llms-journal.mjs';
 const server=await createServer({server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
 try{
  const {renderRoute,siteRoutes,headMarkup,routeUpdated}=await server.ssrLoadModule('/src/entry-server.tsx');
@@ -15,7 +17,22 @@ try{
   console.log(`Prerendered ${route.path}: ${markup.length} characters`);
  }
  const origin='https://periovox.ai';
- const sitemap=`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${siteRoutes.map(route=>{const en=origin+(route.lang==='en'?route.path:route.alternate);const es=origin+(route.lang==='es'?route.path:route.alternate);return `<url><loc>${origin+route.path}</loc><lastmod>${routeUpdated(route)}</lastmod><xhtml:link rel="alternate" hreflang="en" href="${en}"/><xhtml:link rel="alternate" hreflang="es" href="${es}"/><xhtml:link rel="alternate" hreflang="x-default" href="${en}"/></url>`}).join('\n')}\n</urlset>\n`;
+ const dates=readLastmodManifest();
+ const lastmod=(loc,files,fallback)=>{const git=gitLastmod(files);const date=git??dates[loc]??fallback;if(git||!dates[loc])dates[loc]=date;return date};
+ const legal=[['/terms-of-use.html','public/terms-of-use.html'],['/privacy-notice.html','public/privacy-notice.html'],['/cookie-policy.html','public/cookie-policy.html']];
+ const pageUrls=siteRoutes.map(route=>{const en=origin+(route.lang==='en'?route.path:route.alternate);const es=origin+(route.lang==='es'?route.path:route.alternate);const date=lastmod(route.path,routeSources[route.kind],routeUpdated(route));return `<url><loc>${origin+route.path}</loc><lastmod>${date}</lastmod><xhtml:link rel="alternate" hreflang="en" href="${en}"/><xhtml:link rel="alternate" hreflang="es" href="${es}"/><xhtml:link rel="alternate" hreflang="x-default" href="${en}"/></url>`});
+ const legalUrls=legal.map(([loc,file])=>`<url><loc>${origin+loc}</loc><lastmod>${lastmod(loc,[file],'2026-03-07')}</lastmod></url>`);
+ const sitemap=`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${[...pageUrls,...legalUrls].join('\n')}\n</urlset>\n`;
  await writeFile('dist/sitemap.xml',sitemap);
  await writeFile('public/sitemap.xml',sitemap);
+ writeLastmodManifest(dates);
+ const llms=await readFile('public/llms.txt','utf8');
+ const marker='## Journal articles\n';
+ const markerAt=llms.indexOf(marker);
+ if(markerAt<0)throw new Error('public/llms.txt is missing the Journal articles section');
+ const articles=await journalArticleLines();
+ const nextLlms=llms.slice(0,markerAt)+marker+'\n'+articles.lines.join('\n')+'\n';
+ await writeFile('dist/llms.txt',nextLlms);
+ await writeFile('public/llms.txt',nextLlms);
+ console.log(`llms.txt journal articles: ${articles.lines.length} from ${articles.source}`);
 }finally{await server.close()}

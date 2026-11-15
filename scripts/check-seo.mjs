@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {readFile,access,writeFile} from 'node:fs/promises';
+import {readFile,access,writeFile,stat} from 'node:fs/promises';
 import {createServer} from 'vite';
 const origin='https://periovox.ai';
 const server=await createServer({server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
@@ -32,6 +32,12 @@ try{
   assert(!metas.find(m=>m.name==='robots').content.includes('noindex'));
   const scripts=[...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];assert.equal(scripts.length,1);const schema=JSON.parse(scripts[0][1]);const nodes=schema['@graph'];
   const software=nodes.find(n=>[].concat(n['@type']).includes('SoftwareApplication'));assert.equal(software.offers.price,0);assert.equal(software.isAccessibleForFree,true);assert.deepEqual(software.inLanguage,['es','en','fr']);assert(!software.aggregateRating&&!software.review,'Do not fabricate reviews');
+  const org=nodes.find(n=>n['@type']==='Organization'&&String(n['@id']).endsWith('#brand'));
+  assert.equal(org.name,'PerioVox');assert.equal(org.legalName,'Novik Nexus S.L.');assert.equal(org.parentOrganization.name,'Novik Nexus S.L.');assert.equal(org.parentOrganization.url,'https://noviknexus.com');
+  assert.equal(org.founder.name,'Vicente Ferrer Pérez');assert.equal(org.founder.honorificPrefix,'Prof. Dr.');assert.equal(org.founder.jobTitle,route.lang==='es'?'Odontólogo':'Dentist');assert.equal(org.founder.worksFor.name,'Clínica Ferrer');assert.equal(org.founder.worksFor.url,'https://clinicaferrer.com');
+  assert.deepEqual(org.sameAs,['https://facebook.com/periovox','https://www.instagram.com/periovox.ai','https://www.linkedin.com/company/periovox-ai/']);
+  assert(!html.includes('PerioVoxAI')&&!html.includes('PerioVox 2.0'),`Old brand in ${file}`);
+  assert(!html.includes('hero-poster.png')&&!html.includes('periodontogram-final.png')&&!html.includes('report-1-en.png'),`Unoptimized image reference: ${file}`);
   const faq=nodes.find(n=>n['@type']==='FAQPage');if(faq)for(const q of faq.mainEntity){assert(text(html).includes(q.name),`FAQ question absent: ${file}`);assert(text(html).includes(q.acceptedAnswer.text),`FAQ answer absent: ${file}`)}
   if(route.guide){assert(nodes.some(n=>n['@type']==='Article'));assert(nodes.some(n=>n['@type']==='BreadcrumbList'))}
   const anchors=[...html.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>/g)].map(m=>decode(m[1]));const targets=[];
@@ -57,9 +63,26 @@ try{
  }
  for(const route of siteRoutes){assert(siteRoutes.some(r=>r.path===route.alternate&&r.alternate===route.path),`Nonreciprocal translation: ${route.path}`)}
  const seen=new Set();function crawl(path){if(seen.has(path))return;seen.add(path);for(const target of linked.get(path)??[])crawl(target)}crawl('/');assert.equal(seen.size,siteRoutes.length,'Orphan pages');
- const sitemap=await readFile('dist/sitemap.xml','utf8');const urls=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);assert.deepEqual(new Set(urls),new Set(siteRoutes.map(r=>origin+r.path)));
+ const legal=['/terms-of-use.html','/privacy-notice.html','/cookie-policy.html'];
+ const sitemap=await readFile('dist/sitemap.xml','utf8');const urls=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);assert.deepEqual(new Set(urls),new Set([...siteRoutes.map(r=>origin+r.path),...legal.map(path=>origin+path)]));
+ for(const date of sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)){assert(/^\d{4}-\d{2}-\d{2}$/.test(date[1]),date[1]);assert(date[1]<=new Date().toISOString().slice(0,10),date[1])}
+ for(const path of legal){const html=await readFile('dist'+path,'utf8');const h1=[...html.matchAll(/<h1\b/g)];assert.equal(h1.length,1,path);assert(html.includes(`<link rel="canonical" href="${origin}${path}">`),path);assert(html.includes('name="description"'),path);assert(!html.includes('PerioVoxAI'),path);assert(html.includes('Novik Nexus S.L.'),path);assert(html.includes('class="legal-title"'),path);assert(sitemap.includes(`<loc>${origin}${path}</loc>`))}
  const robots=await readFile('dist/robots.txt','utf8');assert(robots.includes('Allow: /'));assert(robots.includes('Sitemap: '+origin+'/sitemap.xml'));
  const llms=await readFile('dist/llms.txt','utf8');for(const route of siteRoutes)assert(llms.includes(origin+route.path));
+ assert(llms.includes('https://noviknexus.com'));assert(llms.includes('Novik Nexus S.L.'));assert(llms.includes('## Journal articles'));
+ assert([...llms.matchAll(/https:\/\/periovox\.ai\/(?:es\/)?journal\/[a-z0-9-]+\//g)].length>=8,'Journal articles missing from llms.txt');
+ const config=JSON.parse(await readFile('vercel.json','utf8'));
+ assert(!JSON.stringify(config.redirects).includes('accept-language'),'Accept-Language must not redirect the homepage');
+ assert(config.redirects.some(rule=>rule.source==='/'&&rule.destination==='/es/'&&rule.has?.some(item=>item.type==='cookie'&&item.key==='pv_web_language')),'An explicit Spanish choice still opens /es/');
+ const noindex=config.headers.filter(rule=>rule.headers.some(header=>header.key.toLowerCase()==='x-robots-tag'&&/noindex/i.test(header.value)));
+ const broad=noindex.filter(rule=>rule.source==='/(.*)'||rule.source==='/:path*');
+ assert.equal(broad.length,1,'Exactly one host-scoped noindex rule');
+ assert.deepEqual(broad[0].has,[{type:'host',value:{neq:'periovox.ai'}}]);
+ const previewNoindex=host=>broad[0].has.every(item=>item.type==='host'&&item.value?.neq!==undefined&&host!==item.value.neq);
+ assert.equal(previewNoindex('periovox.ai'),false,'Production host must stay indexable');
+ for(const host of ['www.periovox.ai','perio-vox-web-new.vercel.app','perio-vox-web-new-git-seo.vercel.app','preview.example.com'])assert.equal(previewNoindex(host),true,host);
+ assert((await stat('dist/favicon.png')).size<8192,'favicon.png is still too large');
+ for(const file of ['/favicon.ico','/favicon-32.png','/favicon-48.png','/apple-touch-icon.png','/media/og-home.jpg','/media/og-periodontal-chart.jpg'])await access('dist'+file);
  const missing=await readFile('dist/404.html','utf8');assert(missing.includes('noindex,follow'));
  await writeFile('review/seo-validation.json',JSON.stringify({checkedAt:new Date().toISOString(),pages:results,reachablePages:seen.size,checks:['unique metadata','one H1','static content','canonical URLs','reciprocal hreflang','valid JSON-LD and truthful free offer','visible FAQ consistency','internal links and anchors','no orphan pages','asset files and dimensions','SSR styles','guide bundle separation','sitemap coverage','robots.txt','supplementary llms.txt','404 noindex'],browserVisualVerification:'not performed: browser control previously blocked'},null,2)+'\n');
  console.log(`SEO checks passed: ${results.length} pages, ${seen.size} reachable, no broken internal links or assets.`);
