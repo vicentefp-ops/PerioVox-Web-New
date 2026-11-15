@@ -38,7 +38,24 @@ The product details above describe PerioVox. Protocol availability and third-par
 ## Contact
 info@periovox.ai
 
+## Company
+
+PerioVox is a product of Novik Nexus S.L.
+
+- [Novik Nexus S.L.](https://noviknexus.com)
+
 ## Journal
 
 - [PerioVox Journal](https://periovox.ai/journal/)
 - [PerioVox Journal en español](https://periovox.ai/es/journal/)
+
+## Journal articles
+
+- [PerioVox incorpora el protocolo GBT en España tras un acuerdo con EMS](https://periovox.ai/es/journal/periovox-incorpora-el-protocolo-gbt-en-espana-tras-un-acuerdo-con-ems/)
+- [PerioVox Incorporates the GBT Protocol in Spain Following an Agreement with EMS](https://periovox.ai/journal/periovox-incorporates-gbt-protocol-spain-ems/)
+- [PerioVox se incorpora al Google for Startups Cloud Program](https://periovox.ai/es/journal/periovox-google-for-startups-cloud-program/)
+- [PerioVox Joins the Google for Startups Cloud Program](https://periovox.ai/journal/periovox-google-for-startups-cloud-program/)
+- [Periodontograma por voz: 7 criterios para elegir software](https://periovox.ai/es/journal/elegir-software-periodontograma-voz/)
+- [Voice Periodontal Charting: 7 Criteria for Choosing Software](https://periovox.ai/journal/choosing-voice-periodontal-charting-software/)
+- [Por qué PerioVox, por qué ahora](https://periovox.ai/es/journal/por-que-periovox-por-que-ahora/)
+- [Why PerioVox, Why Now](https://periovox.ai/journal/why-periovox-why-now/)

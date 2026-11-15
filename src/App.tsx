@@ -84,15 +84,27 @@ function Platform({lang}:{lang:Language}){
  </section>
 }
 export default function App({lang}:{lang:Language}){
- const t=copy[lang];const [menu,setMenu]=useState(false);const [scrolled,setScrolled]=useState(false);const [cookieSettings,setCookieSettings]=useState(false);const [example,setExample]=useState(0);const reduce=useReducedMotion();
+ const t=copy[lang];const [menu,setMenu]=useState(false);const [scrolled,setScrolled]=useState(false);const [cookieSettings,setCookieSettings]=useState(false);const [example,setExample]=useState(0);const [suggestEs,setSuggestEs]=useState(false);const reduce=useReducedMotion();
  const heroRef=useRef<HTMLElement>(null);const {scrollYProgress}=useScroll({target:heroRef,offset:['start start','end start']});const heroY=useTransform(scrollYProgress,[0,1],[0,90]);const heroScale=useTransform(scrollYProgress,[0,1],[1,1.08]);
  useEffect(()=>{document.documentElement.lang=lang;const update=()=>setScrolled(window.scrollY>window.innerHeight*.65);update();window.addEventListener('scroll',update,{passive:true});return()=>window.removeEventListener('scroll',update)},[lang]);
+ useEffect(()=>{
+  if(lang!=='en')return;
+  const cookie=(name:string)=>document.cookie.split('; ').find(row=>row.startsWith(name+'='))?.slice(name.length+1);
+  if(cookie('pv_web_language')==='en'||cookie('pv_lang_suggest')==='0')return;
+  const primary=navigator.languages?.[0]||navigator.language||'';
+  if(/^es(?:-|$)/i.test(primary))setSuggestEs(true);
+ },[lang]);
+ function dismissLanguageSuggest(){
+  document.cookie=`pv_lang_suggest=0; Path=/; Max-Age=15552000; SameSite=Lax${location.protocol==='https:'?'; Secure':''}`;
+  setSuggestEs(false);
+ }
  useEffect(()=>{if(!menu)return;const key=(e:KeyboardEvent)=>{if(e.key==='Escape')setMenu(false)};window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key)},[menu]);
  const schema=homeSchema(lang);
  return <div id="top">
   <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schema)}}/>
+  {suggestEs&&<div className="lang-suggest" role="region" aria-label="Idioma"><p>¿Prefieres esta página en español?</p><a href="/es/" hrefLang="es" lang="es">Ver en español</a><button type="button" onClick={dismissLanguageSuggest} aria-label="Cerrar"><X size={16}/></button></div>}
   <a className="skip-link" href="#main">{lang==='es'?'Saltar al contenido':'Skip to content'}</a>
-  <header className={`site-header ${scrolled?'light':''} ${menu?'menu-open':''}`}><div className="header-inner"><Brand transparent/><nav className="desktop-nav" aria-label={lang==='es'?'Navegación principal':'Main navigation'}>{t.nav.map((item,i)=><a key={item} href={`#${anchors[i]}`}>{item}</a>)}<a href={lang==='es'?'/es/journal/':'/journal/'} className="journal-nav-link">Journal</a></nav><div className="header-actions"><div className="language-switch"><a href="/es/" lang="es" hrefLang="es" aria-current={lang==='es'?'page':undefined}>ES</a><i>/</i><a href="/" lang="en" hrefLang="en" aria-current={lang==='en'?'page':undefined}>EN</a></div><a className="login" href={APP_URL}>{t.login}<ArrowUpRight size={15}/></a><button className="menu-button" aria-label={t.menu} aria-expanded={menu} aria-controls="mobile-nav" onClick={()=>setMenu(!menu)}>{menu?<X/>:<Menu/>}</button></div></div>
+  <header className={`site-header ${scrolled?'light':''} ${menu?'menu-open':''} ${suggestEs?'lang-offset':''}`}><div className="header-inner"><Brand transparent/><nav className="desktop-nav" aria-label={lang==='es'?'Navegación principal':'Main navigation'}>{t.nav.map((item,i)=><a key={item} href={`#${anchors[i]}`}>{item}</a>)}<a href={lang==='es'?'/es/journal/':'/journal/'} className="journal-nav-link">Journal</a></nav><div className="header-actions"><div className="language-switch"><a href="/es/" lang="es" hrefLang="es" aria-current={lang==='es'?'page':undefined}>ES</a><i>/</i><a href="/" lang="en" hrefLang="en" aria-current={lang==='en'?'page':undefined}>EN</a></div><a className="login" href={APP_URL}>{t.login}<ArrowUpRight size={15}/></a><button className="menu-button" aria-label={t.menu} aria-expanded={menu} aria-controls="mobile-nav" onClick={()=>setMenu(!menu)}>{menu?<X/>:<Menu/>}</button></div></div>
    {menu&&<nav id="mobile-nav" className="mobile-nav" aria-label={t.menu}>{t.nav.map((item,i)=><a href={`#${anchors[i]}`} key={item} onClick={()=>setMenu(false)}>{item}<ArrowUpRight/></a>)}<a href={lang==='es'?'/es/journal/':'/journal/'} onClick={()=>setMenu(false)}>Journal<ArrowUpRight/></a><CTA>{t.start}</CTA></nav>}
   </header>
   <main id="main">

@@ -12,7 +12,7 @@ npm start
 
 The complete local site and Journal run at http://127.0.0.1:3201. Use `npm run dev` for the development server on port 3200.
 
-At the production homepage, Spanish as the browser's primary language redirects to `/es/`; other languages use English at `/`. An explicit ES/EN selection is remembered. Language-specific URLs remain directly accessible for visitors and search engines.
+The production homepage at `/` always serves English. A browser whose primary language is Spanish can follow a dismissible link to `/es/`; that hint never navigates by itself. An explicit ES selection is remembered, and a later visit to `/` then opens `/es/`. Language-specific URLs remain directly accessible for visitors and search engines.
 
 ## Deployment
 

@@ -76,6 +76,14 @@ html[lang="en"] .hero h1{font-size:clamp(54px,5.5vw,96px)}
 .patient-shade{z-index:2;pointer-events:none}
 .patient-copy{z-index:3}
 @media(max-width:650px){.patient>.patient-poster{height:65%;object-position:75% center}}
+/* Suggestion only. Spanish-primary browsers can open /es/ themselves; nothing navigates for them. */
+.lang-suggest{position:fixed;z-index:40;top:0;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:16px;min-height:44px;padding:8px 48px;background:#03254ff2;color:#fff;font-size:12px;line-height:1.4}
+.lang-suggest p{font-size:12px;line-height:1.4;color:#fff}
+.lang-suggest a{color:#8edbff;font-weight:600;border-bottom:1px solid currentColor;white-space:nowrap}
+.lang-suggest button{position:absolute;right:10px;display:grid;place-items:center;width:36px;height:36px;border:0;background:transparent;color:#fff}
+.site-header.lang-offset{top:44px}
+.lang-suggest+.skip-link:focus{top:52px}
+
 /* Balance the longer AI headline without crowding the platform introduction. */
 .platform .section-intro h2{font-size:clamp(36px,4.3vw,64px);text-wrap:balance}
 /* Original comparison screens, kept at full width for clinical detail. */

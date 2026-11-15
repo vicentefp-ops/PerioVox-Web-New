@@ -51,25 +51,6 @@
       "permanent": false
     },
     {
-      "source": "/",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept-language",
-          "value": "^[eE][sS](?:-[A-Za-z0-9]+)*(?:[,;].*)?$"
-        }
-      ],
-      "missing": [
-        {
-          "type": "cookie",
-          "key": "pv_web_language",
-          "value": "en"
-        }
-      ],
-      "destination": "/es/",
-      "permanent": false
-    },
-    {
       "source": "/index.html",
       "destination": "/",
       "permanent": true
@@ -250,6 +231,23 @@
       ]
     },
     {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": {
+            "neq": "periovox.ai"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    },
+    {
       "source": "/assets/:path*",
       "headers": [
         {
@@ -272,7 +270,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=86400"
+          "value": "public, max-age=1209600, stale-while-revalidate=2592000"
         }
       ]
     },
@@ -281,7 +279,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=86400"
+          "value": "public, max-age=1209600, stale-while-revalidate=2592000"
         }
       ]
     },
