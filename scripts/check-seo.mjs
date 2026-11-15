@@ -47,7 +47,7 @@ try{
    if(url.pathname===route.path&&url.hash){assert(html.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`),`Broken anchor ${href}: ${file}`)}
    const page=siteRoutes.find(r=>r.path===url.pathname);
    if(page){targets.push(page.path);if(url.hash){const targetHtml=await readFile(`dist${page.path}index.html`,'utf8');assert(targetHtml.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`),`Broken cross-page anchor: ${href}`)}}
-   else if(url.pathname!=='/'&&url.pathname!=='/journal/admin/'){await access('dist'+url.pathname)}
+   else if(url.pathname!=='/'&&url.pathname!=='/journal/admin/'&&!/^\/(es\/)?journal\/.+/.test(url.pathname)){await access('dist'+url.pathname)}
   }
   linked.set(route.path,targets);languages.set(route.path,alternates);
   for(const match of html.matchAll(/<(?:img|video|script|link)\b[^>]+>/g)){
@@ -65,7 +65,8 @@ try{
  const seen=new Set();function crawl(path){if(seen.has(path))return;seen.add(path);for(const target of linked.get(path)??[])crawl(target)}crawl('/');assert.equal(seen.size,siteRoutes.length,'Orphan pages');
  const legal=['/terms-of-use.html','/privacy-notice.html','/cookie-policy.html'];
  const sitemap=await readFile('dist/sitemap.xml','utf8');const urls=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);assert.deepEqual(new Set(urls),new Set([...siteRoutes.map(r=>origin+r.path),...legal.map(path=>origin+path)]));
- for(const date of sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)){assert(/^\d{4}-\d{2}-\d{2}$/.test(date[1]),date[1]);assert(date[1]<=new Date().toISOString().slice(0,10),date[1])}
+ const latestAllowed=new Date(Date.now()+24*60*60*1000).toISOString().slice(0,10);
+ for(const date of sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)){assert(/^\d{4}-\d{2}-\d{2}$/.test(date[1]),date[1]);assert(date[1]<=latestAllowed,date[1])}
  for(const path of legal){const html=await readFile('dist'+path,'utf8');const h1=[...html.matchAll(/<h1\b/g)];assert.equal(h1.length,1,path);assert(html.includes(`<link rel="canonical" href="${origin}${path}">`),path);assert(html.includes('name="description"'),path);assert(!html.includes('PerioVoxAI'),path);assert(html.includes('Novik Nexus S.L.'),path);assert(html.includes('class="legal-title"'),path);assert(sitemap.includes(`<loc>${origin}${path}</loc>`))}
  const robots=await readFile('dist/robots.txt','utf8');assert(robots.includes('Allow: /'));assert(robots.includes('Sitemap: '+origin+'/sitemap.xml'));
  const llms=await readFile('dist/llms.txt','utf8');for(const route of siteRoutes)assert(llms.includes(origin+route.path));

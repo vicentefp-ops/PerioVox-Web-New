@@ -91,6 +91,16 @@
       "permanent": true
     },
     {
+      "source": "/voice-perio-charting-software-comparison",
+      "destination": "/voice-perio-charting-software-comparison/",
+      "permanent": true
+    },
+    {
+      "source": "/voice-perio-charting-software-comparison/index.html",
+      "destination": "/voice-perio-charting-software-comparison/",
+      "permanent": true
+    },
+    {
       "source": "/periodontal-chart-comparison/index.html",
       "destination": "/periodontal-chart-comparison/",
       "permanent": true
@@ -148,6 +158,16 @@
     {
       "source": "/es/comparar-periodontogramas",
       "destination": "/es/comparar-periodontogramas/",
+      "permanent": true
+    },
+    {
+      "source": "/es/comparar-software-periodontograma-voz",
+      "destination": "/es/comparar-software-periodontograma-voz/",
+      "permanent": true
+    },
+    {
+      "source": "/es/comparar-software-periodontograma-voz/index.html",
+      "destination": "/es/comparar-software-periodontograma-voz/",
       "permanent": true
     },
     {
@@ -280,6 +300,51 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=1209600, stale-while-revalidate=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/favicon.ico",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, stale-while-revalidate=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/favicon.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, stale-while-revalidate=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/favicon-32.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, stale-while-revalidate=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/favicon-48.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, stale-while-revalidate=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/apple-touch-icon.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, stale-while-revalidate=2592000"
         }
       ]
     },
