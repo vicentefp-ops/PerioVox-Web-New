@@ -26,6 +26,8 @@ The product details above describe PerioVox. Protocol availability and third-par
 - [Qué es un periodontograma](https://periovox.ai/es/periodontograma/)
 - [How voice periodontal charting works](https://periovox.ai/voice-periodontal-charting/)
 - [Cómo hacer un periodontograma por voz](https://periovox.ai/es/periodontograma-por-voz/)
+- [Compare voice AI perio charting software](https://periovox.ai/voice-perio-charting-software-comparison/)
+- [Comparar software de periodontograma por voz](https://periovox.ai/es/comparar-software-periodontograma-voz/)
 - [Compare periodontal charts](https://periovox.ai/periodontal-chart-comparison/)
 - [Comparar periodontogramas](https://periovox.ai/es/comparar-periodontogramas/)
 - [Dental software integrations](https://periovox.ai/dental-software-integrations/)
