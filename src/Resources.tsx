@@ -25,7 +25,7 @@ export default function Resources({route}:{route:SiteRoute}){
      <p className="guide-note">{t.note}</p>
     </div></div>
     <section className="guide-related"><h2>{t.related}</h2><ResourceCards lang={lang} exclude={guide.id}/></section>
-   </article>:<ResourceCards lang={lang}/>}
+   </article>:<ResourceCards lang={lang} headingLevel={2}/>}
    <section className="resource-cta"><p className="eyebrow"><span/>PERIOVOX</p><h2>{t.cta}</h2><p>{t.ctaText}</p><a className="button" data-conversion="start_free" href="https://app.periovox.ai/">{c.start}<ArrowUpRight size={19}/></a><a className="text-link" href={home+'#chart'}>{c.discover}<ArrowUpRight size={18}/></a></section>
   </main>
   <footer className="footer resource-footer section-wrap"><ResourceFooterLinks lang={lang}/><div className="resource-footer-bottom"><a href="mailto:info@periovox.ai">info@periovox.ai</a><a href="https://wa.me/34690957910" target="_blank" rel="noreferrer">WhatsApp</a><a href={'/terms-of-use.html#'+lang}>{c.terms}</a><a href={'/privacy-notice.html#'+lang}>{c.privacy}</a><a href={'/cookie-policy.html#'+lang}>{c.cookies}</a><button onClick={()=>setCookieSettings(true)}>{c.cookieSettings}</button></div><p className="disclaimer">© 2026 PerioVox · Novik Nexus · {c.disclaimer}</p></footer>

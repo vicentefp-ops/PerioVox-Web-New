@@ -17,6 +17,10 @@ try{
   const description=metas.find(m=>m.name==='description')?.content;
   assert.equal(title,expected.title,`Wrong title: ${file}`);assert(title.length<=65,`Long title (${title.length}): ${title}`);assert(!titles.has(title),`Duplicate title: ${file}`);titles.add(title);
   assert.equal(description,expected.description);assert(description.length<=160,`Long description (${description.length}): ${file}`);assert(!descriptions.has(description),`Duplicate description: ${file}`);descriptions.add(description);
+  if(route.kind==='resources'){
+   let previous=0;
+   for(const heading of html.matchAll(/<h([1-6])\b/g)){const level=Number(heading[1]);assert(level<=previous+1,`Heading level skipped: ${file}`);previous=level;}
+  }
   assert.equal(h1.length,1,`One H1 required: ${file}`);if(route.guide)assert.equal(text(h1[0][1]),route.guide.h1);
   assert(html.startsWith(`<!doctype html><html lang="${route.lang}">`),`Wrong document language: ${file}`);
   assert.equal(links.filter(l=>l.rel==='canonical').length,1);assert.equal(links.find(l=>l.rel==='canonical').href,expected.url);
