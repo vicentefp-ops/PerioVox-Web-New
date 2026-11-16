@@ -10,7 +10,7 @@ Features include periodontal charts, visit comparisons, Lang diagrams, IDRA, pat
 
 EMS has placed its trust in PerioVox. Workflow options based on the EMS Guided Biofilm Therapy protocol are available in selected markets; availability varies by country.
 
-PerioVox is integrated in Orca, an AI-based practice management platform, as a plugin. It does not advertise a public self-serve API. Learn about Orca at https://orca.clinic/.
+PerioVox collaborates with Orca, an AI-based practice management platform. Contact the teams for the scope and availability of the integration. It does not advertise a public self-serve API. Learn about Orca at https://orca.clinic/.
 
 PerioVox is an informational support tool. Clinicians retain responsibility for reviewing records, diagnosis and treatment decisions.
 
