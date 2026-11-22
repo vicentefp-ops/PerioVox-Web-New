@@ -26,13 +26,15 @@ try{
  await writeFile('dist/sitemap.xml',sitemap);
  await writeFile('public/sitemap.xml',sitemap);
  writeLastmodManifest(dates);
- const llms=await readFile('public/llms.txt','utf8');
  const marker='## Journal articles\n';
- const markerAt=llms.indexOf(marker);
- if(markerAt<0)throw new Error('public/llms.txt is missing the Journal articles section');
  const articles=await journalArticleLines();
- const nextLlms=llms.slice(0,markerAt)+marker+'\n'+articles.lines.join('\n')+'\n';
- await writeFile('dist/llms.txt',nextLlms);
- await writeFile('public/llms.txt',nextLlms);
+ for(const name of ['llms.txt','llms-full.txt']){
+  const llms=await readFile('public/'+name,'utf8');
+  const markerAt=llms.indexOf(marker);
+  if(markerAt<0)throw new Error('public/'+name+' is missing the Journal articles section');
+  const nextLlms=llms.slice(0,markerAt)+marker+'\n'+articles.lines.join('\n')+'\n';
+  await writeFile('dist/'+name,nextLlms);
+  await writeFile('public/'+name,nextLlms);
+ }
  console.log(`llms.txt journal articles: ${articles.lines.length} from ${articles.source}`);
 }finally{await server.close()}

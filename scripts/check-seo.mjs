@@ -35,7 +35,9 @@ try{
   assert.equal(metas.find(m=>m.property==='og:url')?.content,expected.url);assert.equal(metas.find(m=>m.property==='og:title')?.content,title);
   assert(!metas.find(m=>m.name==='robots').content.includes('noindex'));
   const scripts=[...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];assert.equal(scripts.length,1);const schema=JSON.parse(scripts[0][1]);const nodes=schema['@graph'];
-  const software=nodes.find(n=>[].concat(n['@type']).includes('SoftwareApplication'));assert.equal(software.offers.price,0);assert.equal(software.isAccessibleForFree,true);assert.deepEqual(software.inLanguage,['es','en','fr']);assert(!software.aggregateRating&&!software.review,'Do not fabricate reviews');
+  const softwareNodes=nodes.filter(n=>[].concat(n['@type']).includes('SoftwareApplication'));assert.equal(softwareNodes.length,1,'One SoftwareApplication node');const software=softwareNodes[0];assert.equal(software.name,'PerioVox');assert.equal(software.applicationCategory,'HealthApplication');assert.equal(software.operatingSystem,'Web browser');assert.equal(software.offers.price,0);assert.equal(software.isAccessibleForFree,true);assert.deepEqual(software.inLanguage,['es','en','fr']);assert(!software.aggregateRating&&!software.review,'Do not fabricate reviews');assert(!JSON.stringify(schema).includes('aggregateRating'),'Do not fabricate ratings');
+  const publisher=software.publisher;assert.equal(publisher['@type'],'Organization');assert.equal(publisher.name,'Novik Nexus SL');assert.equal(publisher.legalName,'Novik Nexus S.L.');assert.equal(publisher.url,'https://periovox.ai');assert.equal(publisher.logo.url,origin+'/media/logo-periovox.png');
+  if(route.kind==='home'){assert(nodes.some(n=>n['@type']==='Organization'&&String(n['@id']).endsWith('#brand')));assert(nodes.some(n=>n['@type']==='WebSite'&&n.name==='PerioVox'&&n.url===origin+'/'));}
   const org=nodes.find(n=>n['@type']==='Organization'&&String(n['@id']).endsWith('#brand'));
   assert.equal(org.name,'PerioVox');assert.equal(org.legalName,'Novik Nexus S.L.');assert.equal(org.parentOrganization.name,'Novik Nexus S.L.');assert.equal(org.parentOrganization.url,'https://noviknexus.com');
   assert.equal(org.founder.name,'Vicente Ferrer Pérez');assert.equal(org.founder.honorificPrefix,'Prof. Dr.');assert.equal(org.founder.jobTitle,route.lang==='es'?'Odontólogo':'Dentist');assert.equal(org.founder.worksFor.name,'Clínica Ferrer');assert.equal(org.founder.worksFor.url,'https://clinicaferrer.com');
@@ -75,7 +77,13 @@ try{
  const robots=await readFile('dist/robots.txt','utf8');assert(robots.includes('Allow: /'));assert(robots.includes('Sitemap: '+origin+'/sitemap.xml'));
  const llms=await readFile('dist/llms.txt','utf8');for(const route of siteRoutes)assert(llms.includes(origin+route.path));
  assert(llms.includes('https://noviknexus.com'));assert(llms.includes('Novik Nexus S.L.'));assert(llms.includes('## Journal articles'));
+ assert(llms.includes('coming soon'),'Orca must stay coming soon in llms.txt');
  assert([...llms.matchAll(/https:\/\/periovox\.ai\/(?:es\/)?journal\/[a-z0-9-]+\//g)].length>=8,'Journal articles missing from llms.txt');
+ const full=await readFile('dist/llms-full.txt','utf8');
+ for(const route of siteRoutes)assert(full.includes(origin+route.path),`llms-full.txt missing ${route.path}`);
+ assert(full.includes('Novik Nexus S.L.'));assert(full.includes('## Journal articles'));assert(full.includes('coming soon'));
+ assert([...full.matchAll(/https:\/\/periovox\.ai\/(?:es\/)?journal\/[a-z0-9-]+\//g)].length>=8,'Journal articles missing from llms-full.txt');
+ assert(robots.includes('Allow: /llms.txt'));assert(robots.includes('Allow: /llms-full.txt'));assert(!/Disallow:\s*\/llms/i.test(robots));
  const config=JSON.parse(await readFile('vercel.json','utf8'));
  assert(!JSON.stringify(config.redirects).includes('accept-language'),'Accept-Language must not redirect the homepage');
  assert(config.redirects.some(rule=>rule.source==='/'&&rule.destination==='/es/'&&rule.has?.some(item=>item.type==='cookie'&&item.key==='pv_web_language')),'An explicit Spanish choice still opens /es/');

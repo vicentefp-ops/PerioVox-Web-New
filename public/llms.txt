@@ -1,18 +1,20 @@
 # PerioVox
 
-> Free AI voice periodontal charting software for dental professionals. Free today. Free forever.
+> Free voice-controlled periodontal charting for dentists and hygienists, by Novik Nexus S.L. Free today. Free forever.
 
-PerioVox converts measurements dictated by a dental professional into a structured periodontal chart. It works in a web browser with an everyday periodontal probe and a compatible microphone, without additional hardware or a second person recording the measurements.
+PerioVox is free voice periodontal charting software for dentists, dental hygienists and periodontists. The clinician probes with an everyday periodontal probe, dictates the measurements, and reviews a structured periodontal chart in the web browser. There is no additional hardware, no desktop installation, and no second person is required to type the measurements.
 
-Voice dictation understands 97 languages. The application interface is available in Spanish, English and French. The website is available in Spanish and English.
+Voice dictation understands 97 languages through Gemini Live. The application interface is available in Spanish, English and French. The website is available in Spanish and English. Tooth numbering can be ADA or FDI.
 
-Features include periodontal charts, visit comparisons, Lang diagrams, IDRA, patient reports with QR access, ADA and FDI tooth numbering, and CSV exports for audits and research.
+A detailed periodontal chart records probing depths at six sites per tooth (three buccal and three lingual or palatal), gingival margin or recession, bleeding on probing, suppuration, plaque, mobility, furcation and notes. A natural tooth, an implant and a missing tooth are recorded differently. Clinical attachment level is read from probing depth and the gingival margin. PerioVox documents those measurements. It does not state that it calculates clinical attachment level, and it does not state that it assigns an AAP stage or grade.
+
+Features stated on the site: voice periodontal charting, visit comparisons, Lang diagrams, IDRA, patient reports with QR access, and CSV export for case review, audits and research. A correction can change a value or return to a previous tooth. The site does not publish a count of minutes per chart.
 
 EMS has placed its trust in PerioVox. Workflow options based on the EMS Guided Biofilm Therapy protocol are available in selected markets; availability varies by country.
 
 PerioVox collaborates with Orca, an AI-based practice management platform. The integration is in preparation and coming soon. It does not advertise a public self-serve API. Learn about Orca at https://orca.clinic/.
 
-PerioVox is an informational support tool. Clinicians retain responsibility for reviewing records, diagnosis and treatment decisions.
+PerioVox is an informational support tool. Clinicians retain responsibility for reviewing records, diagnosis and treatment decisions. The privacy notice says personal data and patient-identifiable clinical data are not intended to be collected unless a separate written arrangement says so.
 
 ## Product and educational pages
 
