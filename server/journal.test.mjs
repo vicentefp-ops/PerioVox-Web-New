@@ -71,6 +71,15 @@ test('real SSR renders safe articles, metadata and private admin',async()=>{
  const html=renderJournalDocument({lang:'es',posts:[snapshot],post:snapshot},root);assert.equal([...html.matchAll(/<h1\b/g)].length,1);assert.match(html,/<link rel="canonical" href="https:\/\/periovox.ai\/es\/journal\/explorar-y-registrar\//);assert.match(html,/@type":"BlogPosting/);assert.match(html,/hreflang="en"/);assert.equal(html.includes('<script>alert(1)</script>'),false);assert.match(html,/&lt;script&gt;/);assert.equal(JSON.parse(html.match(/<script id="journal-data" type="application\/json">([\s\S]*?)<\/script>/)[1]).post.es.body,snapshot.es.body);assert.match(html,/\\u003cscript/);
  const spanish=renderJournalDocument({lang:'es',posts:[],post:{...snapshot,en:undefined}},root);assert.equal(spanish.includes('hreflang="en"'),false);
  const admin=renderJournalDocument({lang:'es',admin:true,posts:[]},root);assert.match(admin,/noindex,nofollow/);assert.equal(admin.includes('article-body'),false);assert.match(admin,/JournalAdmin-/);assert.equal(html.includes('JournalAdmin-'),false);
+ const choosing={...en,slug:'choosing-voice-periodontal-charting-software',title:'Voice Periodontal Charting: 7 Criteria for Choosing Software',seoTitle:'Voice Periodontal Charting: Choosing Software | PerioVox',seoDescription:'Seven criteria for choosing voice periodontal charting: probe, languages, corrections, follow-up, and cost. Discover PerioVox, free today and forever.'};
+ const guide=renderJournalDocument({lang:'en',posts:[],post:{...snapshot,en:choosing}},root);
+ assert.match(guide,/<title>Choose Free Voice Perio Charting Software \| PerioVox<\/title>/);
+ assert.match(guide,/name="description" content="Seven criteria for hygienists and dentists choosing voice perio charting: probe, languages, corrections and cost. PerioVox is free today and forever."/);
+ assert.match(guide,/<h1[^>]*>Voice Periodontal Charting: 7 Criteria for Choosing Software<\/h1>/);
+ assert.match(guide,/rel="canonical" href="https:\/\/periovox\.ai\/journal\/choosing-voice-periodontal-charting-software\/"/);
+ const edited={...choosing,seoTitle:'A newer editorial title | PerioVox'};
+ const kept=renderJournalDocument({lang:'en',posts:[],post:{...snapshot,en:edited}},root);
+ assert.match(kept,/<title>A newer editorial title \| PerioVox<\/title>/);
 });
 
 test('published rich text preserves nested formatting and safely renders images and links',async()=>{

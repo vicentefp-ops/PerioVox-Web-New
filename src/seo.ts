@@ -7,7 +7,7 @@ export const iconLinks='<link rel="icon" href="/favicon.ico" sizes="any"/><link 
 const brand=`${ORIGIN}/#brand`,software=`${ORIGIN}/#software`,website=`${ORIGIN}/#website`;
 export const homeMeta={
  es:{title:'Periodontograma gratis por voz con IA | PerioVox',description:'Crea periodontogramas gratis por voz con IA, hoy y siempre. Dicta en 97 idiomas, compara visitas y genera informes. Con tu sonda habitual.'},
- en:{title:'Free AI Periodontal Charting Software | PerioVox',description:'Create periodontal charts by voice with AI. Free today and forever. Dictate in 97 languages, compare visits and create patient reports. No special probe.'}
+ en:{title:'Free Periodontal Chart Software by Voice | PerioVox',description:'Free periodontal chart software for dentists and hygienists. Dictate by voice with your everyday probe in the browser. PerioVox is free today and forever.'}
 };
 export function metadata(route:SiteRoute){
  const data=route.kind==='home'?homeMeta[route.lang]:route.kind==='resources'?resourceCopy[route.lang]:route.kind==='journal'?journalCopy[route.lang]:route.guide!;
