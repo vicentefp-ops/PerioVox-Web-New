@@ -11,7 +11,9 @@ const labels = {
     arch: 'MAXILLARY ARCH · BUCCAL',
     complete: 'REGISTRO COMPLETO',
     note: 'Los implantes y los dientes ausentes se identifican durante la exploración.',
-    alt: 'Periodontograma vestibular superior de PerioVox con el caso de ejemplo completo.',
+    altStart: 'Periodontograma vestibular del maxilar superior de ejemplo en PerioVox, antes de registrar los hallazgos.',
+    altReveal: 'Periodontograma vestibular del maxilar superior de ejemplo mientras se completa por voz con PerioVox.',
+    altFinal: 'Periodontograma vestibular del maxilar superior de ejemplo, completado por voz con PerioVox.',
   },
   en: {
     eyebrow: 'An example case, step by step',
@@ -20,7 +22,9 @@ const labels = {
     arch: 'MAXILLARY ARCH · BUCCAL',
     complete: 'CHART COMPLETE',
     note: 'Implants and missing teeth are identified during the examination.',
-    alt: 'PerioVox maxillary buccal periodontal chart showing the completed example case.',
+    altStart: 'Empty example of a maxillary buccal periodontal chart in PerioVox, before findings are entered.',
+    altReveal: 'Example maxillary buccal periodontal chart filling in by voice with PerioVox.',
+    altFinal: 'Completed example of a maxillary buccal periodontal chart filled in by voice with PerioVox.',
   },
 };
 
@@ -74,13 +78,13 @@ export default function ChartScroll({ lang }: { lang: Language }) {
           <div className="chart-story-frame-top" aria-hidden="true"><span>PERIOVOX / CLINICAL WORKSPACE</span><span>{t.arch}</span></div>
           <div className="chart-story-window">
             {reduce ? (
-              <img className="chart-story-reduced" src="/periodontogram-final.webp" alt={t.alt} width="2372" height="1240" loading="lazy" decoding="async" />
+              <img className="chart-story-reduced" src="/periodontogram-final.webp" alt={t.altFinal} width="2372" height="1240" loading="lazy" decoding="async" />
             ) : (
-              <motion.div className="chart-story-canvas" style={{ x: isMobile ? mobilePan : 0 }} aria-hidden="true">
-                <img className="chart-story-start" src="/periodontogram-start.webp" alt="" width="2364" height="1260" loading="lazy" decoding="async" />
-                <motion.img className="chart-story-reveal" src="/periodontogram-final.webp" alt="" width="2372" height="1240" loading="lazy" decoding="async" style={{ clipPath: revealClip }} />
+              <motion.div className="chart-story-canvas" style={{ x: isMobile ? mobilePan : 0 }}>
+                <img className="chart-story-start" src="/periodontogram-start.webp" alt={t.altStart} width="2364" height="1260" loading="lazy" decoding="async" />
+                <motion.img className="chart-story-reveal" src="/periodontogram-final.webp" alt={t.altReveal} width="2372" height="1240" loading="lazy" decoding="async" style={{ clipPath: revealClip }} />
                 <motion.div className="chart-story-scan" style={{ left: scanLeft, opacity: scanOpacity }} />
-                <motion.img className="chart-story-final" src="/periodontogram-final.webp" alt="" width="2372" height="1240" loading="lazy" decoding="async" style={{ opacity: finalOpacity }} />
+                <motion.img className="chart-story-final" src="/periodontogram-final.webp" alt={t.altFinal} width="2372" height="1240" loading="lazy" decoding="async" style={{ opacity: finalOpacity }} />
               </motion.div>
             )}
           </div>
@@ -91,7 +95,6 @@ export default function ChartScroll({ lang }: { lang: Language }) {
           <span className="chart-story-status" role="status">{reduce || complete ? t.complete : ''}</span>
           <p>{t.note}</p>
         </div>
-        <span className="chart-story-sr-only">{t.alt}</span>
       </div>
     </section>
   );
