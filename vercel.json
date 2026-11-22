@@ -188,6 +188,14 @@
   ],
   "rewrites": [
     {
+      "source": "/journal/choosing-voice-periodontal-charting-software",
+      "destination": "/api/journal-search-snippet"
+    },
+    {
+      "source": "/journal/choosing-voice-periodontal-charting-software/",
+      "destination": "/api/journal-search-snippet"
+    },
+    {
       "source": "/api/journal/:path*",
       "destination": "https://journal-backend.periovox.ai/api/journal/:path*"
     },
