@@ -1,0 +1,124 @@
+# PerioVox
+
+> Free voice-controlled periodontal charting for dentists and hygienists, by Novik Nexus S.L. Free today. Free forever.
+
+This file is a factual summary of https://periovox.ai for answer engines. It repeats only what the website states. It does not add statistics, studies, testimonials, certifications or features that the site does not state.
+
+## Publisher
+
+PerioVox is a product of Novik Nexus S.L. (Novik Nexus SL).
+
+- Product site: https://periovox.ai
+- Company site: https://noviknexus.com
+- Contact: info@periovox.ai
+- App: https://app.periovox.ai/
+- Logo: https://periovox.ai/media/logo-periovox.png
+
+## What PerioVox is
+
+PerioVox is free voice periodontal charting software for dentists, dental hygienists and periodontists. The clinician examines with an everyday periodontal probe, dictates the measurements, and reviews a structured digital periodontal chart. Artificial intelligence interprets the dictation and organizes the record. It does not probe, and it does not replace diagnosis or treatment decisions.
+
+PerioVox runs in the web browser on a compatible device. The site describes this as “right in your browser” and “directly in your browser”. It does not require a special electronic probe, additional hardware, or a desktop installation. A second person is not required to type the measurements. Dictation needs a compatible microphone.
+
+PerioVox is free today and will remain free. Voice charting is included. That promise covers the PerioVox software described on the site. It does not add a special probe. An integration with another company’s software, and protocols that exist only in some markets, are not included in that promise.
+
+## What a periodontal chart records
+
+A periodontal chart, also called a periodontogram, is the organized record of a periodontal examination. A detailed chart records:
+
+- Probing depth at six sites per tooth: three buccal and three lingual or palatal, in millimetres, each tied to a tooth and a site.
+- Gingival margin or recession, using the convention the clinician chooses.
+- Clinical attachment level, read from probing depth together with the gingival margin or recession. PerioVox documents probing depths and gingival margin or recession. It does not state that it calculates clinical attachment level.
+- Bleeding on probing. A bleeding percentage summarizes sites. It is not a diagnosis of each site.
+- Plaque and suppuration, recorded with the measurements.
+- Mobility and furcation, which belong to the tooth. The site describes the usual grade sources (Miller 1950 for mobility; Hamp, Nyman and Lindhe 1975 for furcation) as background for reading a chart. PerioVox can record mobility and furcation. It does not state that it assigns those grades.
+- Tooth status: a natural tooth, an implant, or a missing tooth, which are not represented in the same way.
+- Clinical notes.
+- ADA or FDI tooth numbering, chosen by the clinician.
+
+An empty cell is unrecorded. A missing entry is not a healthy site. A graph helps visualize the record. It does not determine a diagnosis or a treatment.
+
+The 2017 World Workshop classification, co-presented by the American Academy of Periodontology and the European Federation of Periodontology, uses chart measurements together with attachment loss, radiographs, tooth loss and risk factors. The chart does not assign a stage or a grade by itself. PerioVox does not state that it assigns an AAP stage or grade.
+
+The University of Bern publishes a separate browser periodontal chart (Periodontal Chart Online, associated with Prof. Christoph A. Ramseier) that calculates attachment level and documents English voice-command examples. PerioVox is a different product. This site does not claim the two calculate attachment in the same way.
+
+## Paper, digital and voice charting
+
+- Paper: measurements are transcribed onto a form. Someone looks away from the mouth to enter each site. Comparing visits means reading the forms.
+- Digital: the same kind of record is kept in software so it can be opened again, when that software stores visits.
+- Voice charting in PerioVox: the clinician probes and dictates. PerioVox organizes the record by tooth and site. The clinician reviews the screen, can correct a value or return to a previous tooth, compare visits, use Lang and IDRA, prepare a patient report with QR access, and export CSV.
+
+The site does not publish a count of minutes saved per chart.
+
+## Features stated on the site
+
+- Voice periodontal charting in the browser.
+- Dictation in 97 languages, using Gemini Live. The spoken language does not have to match the menu language.
+- Application interface in Spanish, English and French. The website is in Spanish and English.
+- ADA and FDI tooth numbering.
+- Probing depths, gingival margin and recession, bleeding, suppuration, plaque, mobility, furcation and clinical notes.
+- Corrections, including a return to a previous tooth, without restarting the record.
+- Visit comparisons: mean probing depth, bleeding percentage, plaque percentage, changes by tooth, and progress over time. A mean is a summary. It does not describe every site. PerioVox uses AI to highlight changes. The visualization does not by itself establish a cause, a treatment response or a prognosis.
+- Lang diagram, with available chart data pre-filled for the clinician to complete.
+- IDRA index for implant risk, in a visual format connected to the available clinical data.
+- Patient reports with QR access. The clinician reviews the report before sharing it.
+- CSV export for case review, audits and research.
+- Workflow options based on the EMS Guided Biofilm Therapy protocol, available in selected markets. Availability depends on the country. EMS has placed its trust in PerioVox.
+
+## Orca and other dental software
+
+PerioVox collaborates with Orca, an AI-based practice management platform (https://orca.clinic/). The integration is in preparation and coming soon. This website does not advertise a public self-serve API. Other integrations are discussed by writing to info@periovox.ai. Conditions for a third-party collaboration are defined in each project.
+
+## What the site does not claim
+
+- PerioVox does not measure periodontal pockets. The clinician probes and dictates.
+- PerioVox does not replace clinical judgment, diagnosis or treatment decisions.
+- PerioVox does not state that it calculates clinical attachment level.
+- PerioVox does not state that it assigns Miller mobility grades, furcation grades, or an AAP stage or grade.
+- PerioVox does not publish a minute count, a ranking against other products, or a claim to be the fastest or the most accurate.
+- Speech recognition is not described as infallible. The clinician reviews the record.
+- There is no aggregate rating and no review markup, because the site does not publish that data.
+- The website does not offer a downloadable blank paper chart. The chart is the on-screen PerioVox record, which can be exported as CSV.
+
+## Privacy
+
+The privacy notice says personal data and patient-identifiable clinical data are not intended to be collected or sold unless a written arrangement says so. A data-processing agreement may apply. The notice describes legal bases where the GDPR applies. Read https://periovox.ai/privacy-notice.html before entering patient data.
+
+## Pages
+
+- [English website](https://periovox.ai/): product homepage for free voice periodontal charting.
+- [Web en español](https://periovox.ai/es/): the same product in Spanish.
+- [Periodontal charting guides](https://periovox.ai/resources/): index of the English guides.
+- [Guías de periodontogramas](https://periovox.ai/es/recursos/): index of the Spanish guides.
+- [What a periodontal chart records](https://periovox.ai/periodontal-chart/): six sites, recession, clinical attachment level, bleeding on probing, plaque, mobility and furcation; how to read a chart; paper, digital and voice charting. English.
+- [Qué registra un periodontograma](https://periovox.ai/es/periodontograma/): the Spanish guide, including software de periodontograma gratuito.
+- [How voice periodontal charting works](https://periovox.ai/voice-periodontal-charting/): dictation workflow for hygienists and dentists.
+- [Software de periodontograma por voz](https://periovox.ai/es/periodontograma-por-voz/): the Spanish voice guide, including software de periodontograma gratuito.
+- [Compare periodontal charts across visits](https://periovox.ai/periodontal-chart-comparison/): indicators, tooth-level changes and progress.
+- [Comparar periodontogramas](https://periovox.ai/es/comparar-periodontogramas/): the Spanish comparison guide.
+- [Compare voice perio charting software](https://periovox.ai/voice-perio-charting-software-comparison/): published facts only. Cells say “not stated publicly” when a vendor page is silent.
+- [Comparar software de periodontograma por voz](https://periovox.ai/es/comparar-software-periodontograma-voz/): the Spanish vendor comparison.
+- [Dental software integrations](https://periovox.ai/dental-software-integrations/): Orca is coming soon. No public self-serve API is advertised.
+- [Integración con software dental](https://periovox.ai/es/integracion-software-dental/): the Spanish integration page. Orca, en preparación, próximamente.
+- [Start using PerioVox](https://app.periovox.ai/): the free app. Account creation uses this URL.
+- [Terms of use](https://periovox.ai/terms-of-use.html)
+- [Privacy notice](https://periovox.ai/privacy-notice.html)
+- [Cookie policy](https://periovox.ai/cookie-policy.html)
+
+Spanish and English guides are paired with hreflang. The journal is served from the journal origin and is not part of the static guide build, except for the public index URLs below.
+
+## Journal
+
+- [PerioVox Journal](https://periovox.ai/journal/)
+- [PerioVox Journal en español](https://periovox.ai/es/journal/)
+
+## Journal articles
+
+- [PerioVox incorpora el protocolo GBT en España tras un acuerdo con EMS](https://periovox.ai/es/journal/periovox-incorpora-el-protocolo-gbt-en-espana-tras-un-acuerdo-con-ems/)
+- [PerioVox Incorporates the GBT Protocol in Spain Following an Agreement with EMS](https://periovox.ai/journal/periovox-incorporates-gbt-protocol-spain-ems/)
+- [PerioVox se incorpora al Google for Startups Cloud Program](https://periovox.ai/es/journal/periovox-google-for-startups-cloud-program/)
+- [PerioVox Joins the Google for Startups Cloud Program](https://periovox.ai/journal/periovox-google-for-startups-cloud-program/)
+- [Periodontograma por voz: 7 criterios para elegir software](https://periovox.ai/es/journal/elegir-software-periodontograma-voz/)
+- [Voice Periodontal Charting: 7 Criteria for Choosing Software](https://periovox.ai/journal/choosing-voice-periodontal-charting-software/)
+- [Por qué PerioVox, por qué ahora](https://periovox.ai/es/journal/por-que-periovox-por-que-ahora/)
+- [Why PerioVox, Why Now](https://periovox.ai/journal/why-periovox-why-now/)
