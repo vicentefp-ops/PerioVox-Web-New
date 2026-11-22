@@ -77,9 +77,11 @@ test('real SSR renders safe articles, metadata and private admin',async()=>{
  assert.match(guide,/name="description" content="Seven criteria for hygienists and dentists choosing voice perio charting: probe, languages, corrections and cost. PerioVox is free today and forever."/);
  assert.match(guide,/<h1[^>]*>Voice Periodontal Charting: 7 Criteria for Choosing Software<\/h1>/);
  assert.match(guide,/rel="canonical" href="https:\/\/periovox\.ai\/journal\/choosing-voice-periodontal-charting-software\/"/);
- const edited={...choosing,seoTitle:'A newer editorial title | PerioVox'};
+ const edited={...choosing,seoTitle:'A newer editorial title | PerioVox',seoDescription:'A description that is not the public snippet.'};
  const kept=renderJournalDocument({lang:'en',posts:[],post:{...snapshot,en:edited}},root);
- assert.match(kept,/<title>A newer editorial title \| PerioVox<\/title>/);
+ assert.match(kept,/<title>Choose Free Voice Perio Charting Software \| PerioVox<\/title>/);
+ assert.match(kept,/name="description" content="Seven criteria for hygienists and dentists choosing voice perio charting: probe, languages, corrections and cost. PerioVox is free today and forever."/);
+ assert.match(kept,/<h1[^>]*>Voice Periodontal Charting: 7 Criteria for Choosing Software<\/h1>/);
 });
 
 test('published rich text preserves nested formatting and safely renders images and links',async()=>{

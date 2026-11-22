@@ -1,18 +1,10 @@
 import {ORIGIN,homeSchema,headMarkup,iconLinks} from './seo';
 import {journalCopy,journalPath,postPath,type JournalProps,type JournalText} from './journal-model';
+import {searchSnippets} from '../server/journal-search-snippets.mjs';
 const escape=(s:string)=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
-// Search snippets for published articles whose stored SEO title is not in this repo.
-// Wording uses only claims already visible on the article. The editorial H1 stays in the database.
-const searchSnippets:Record<string,{replaces:string;title:string;description:string}>={
- 'choosing-voice-periodontal-charting-software':{
-  replaces:'Voice Periodontal Charting: Choosing Software | PerioVox',
-  title:'Choose Free Voice Perio Charting Software | PerioVox',
-  description:'Seven criteria for hygienists and dentists choosing voice perio charting: probe, languages, corrections and cost. PerioVox is free today and forever.'
- }
-};
 export function publicMeta(lang:JournalProps['lang'],text:JournalText){
- const curated=lang==='en'?searchSnippets[text.slug]:undefined;
- if(curated&&text.seoTitle===curated.replaces)return curated;
+ const curated=lang==='en'?searchSnippets[text.slug as keyof typeof searchSnippets]:undefined;
+ if(curated)return curated;
  const title=text.seoTitle||((text.title.length>45?text.title.slice(0,42).trimEnd()+'…':text.title)+' | PerioVox Journal');
  return {title,description:text.seoDescription||text.summary.slice(0,160)};
 }
